@@ -1,7 +1,7 @@
 public class Item
 {
 	private final String name;
-	private final int price;
+	private int price;
 	private final int calories;
 
 	public Item(String name, int priceInCents, int calories)
@@ -18,6 +18,11 @@ public class Item
 	public int getPrice()
 	{
 		return price;
+	}
+
+	public void setPrice(int price)
+	{
+		this.price = price;
 	}
 
 	public int getCalories()
