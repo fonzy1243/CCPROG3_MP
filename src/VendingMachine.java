@@ -35,6 +35,12 @@
 		return count;
 	}
 
+	/**
+	 * #NEVERNEST
+	 * @param item
+	 * @param slotNumber
+	 * @param quantity
+	 */
 	public void addItemToSlot(Item item, int slotNumber, int quantity)
 	{
 		for (Slot slot : slots)
