@@ -37,6 +37,7 @@
 
 	/**
 	 * #NEVERNEST
+	 * see the guard clauses technique in its full glory
 	 * @param item item to be added to a slot.
 	 * @param slotNumber index of slot to be added to.
 	 * @param quantity amount of items to be added to the slot.
@@ -79,6 +80,12 @@
 			slots[slotNumber].getItemList().add(item);
 		}
 	}
+
+	// TODO: coin change problem w/ dynamic programming
+//	private int getChange()
+//	{
+//
+//	}
 
 	public void dispenseItem(int slotNumber)
 	{
