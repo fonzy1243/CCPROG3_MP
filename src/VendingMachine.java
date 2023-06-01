@@ -19,13 +19,13 @@
 		return slots;
 	}
 
-	public int getAvailability(Item item)
+	public int getAvailability(String itemName)
 	{
 		int count = 0;
 
 		for (Slot slot : slots)
 		{
-			if (slot.getItemList().get(0).getName().equals(item.getName()))
+			if (slot.getItemList().get(0).getName().equals(itemName))
 			{
 				count += slot.getItemList().size();
 			}
