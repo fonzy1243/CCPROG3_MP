@@ -36,6 +36,13 @@
 
 	public void addItemToSlot(Item item, int slotNumber, int quantity)
 	{
+		if (slots[slotNumber].getItemList().size() > 0 &&
+		    !item.getName().equals(slots[slotNumber].getItemList().get(0).getName()))
+		{
+			// Error handling here
+			return;
+		}
+
 		int totalItemCount = 0;
 
 		for (Slot slot : slots)
@@ -45,6 +52,7 @@
 
 		if (totalItemCount + quantity > itemLimit)
 		{
+			// Error handling here
 			return;
 		}
 
