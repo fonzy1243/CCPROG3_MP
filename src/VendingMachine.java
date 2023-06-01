@@ -55,6 +55,7 @@ public class VendingMachine
 	}
 
 	// for testing
+	// actually we should probably move this back to slot
 	public void printSlotItems(int slotNumber)
 	{
 		int count = 0;
