@@ -10,5 +10,7 @@ public class Main
 		machine1.addItemToSlot(reverse, 0, 2);
 
 		machine1.getSlots()[0].printSlotItems();
+
+		System.out.println("Deez nuts count: " + machine1.getAvailability("deez nuts"));
 	}
 }
