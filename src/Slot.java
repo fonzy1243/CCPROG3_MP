@@ -15,14 +15,6 @@ public class Slot
 		return this.itemList;
 	}
 
-	public void addItem(Item newItem, int quantity)
-	{
-		for (int i = 0; i < quantity; i++)
-		{
-			itemList.add(newItem);
-		}
-	}
-
 	// for testing
 	// actually we should probably move this back to slot
 	public void printSlotItems()

@@ -43,12 +43,15 @@
 			totalItemCount += slot.getItemList().size();
 		}
 
-		if (totalItemCount >= itemLimit)
+		if (totalItemCount + quantity > itemLimit)
 		{
 			return;
 		}
 
-		slots[slotNumber].addItem(item, quantity);
+		for (int i = 0; i < quantity; i++)
+		{
+			slots[slotNumber].getItemList().add(item);
+		}
 	}
 
 	public void dispenseItem(int slotNumber)
