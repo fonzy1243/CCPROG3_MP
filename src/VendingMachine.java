@@ -25,7 +25,8 @@
 
 		for (Slot slot : slots)
 		{
-			if (slot.getItemList().get(0).getName().equals(itemName))
+			if (slot.getItemList().size() > 0 &&
+			    slot.getItemList().get(0).getName().equals(itemName))
 			{
 				count += slot.getItemList().size();
 			}
