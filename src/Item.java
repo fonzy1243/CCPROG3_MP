@@ -1,7 +1,7 @@
 public class Item
 {
-	private String name;
-	private int price;
+	private final String name;
+	private final int price;
 	private final int calories;
 
 	public Item(String name, int priceInCents, int calories)
@@ -17,5 +17,10 @@ public class Item
 	public int getPrice()
 	{
 		return price;
+	}
+
+	public int getCalories()
+	{
+		return calories;
 	}
 }
