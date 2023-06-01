@@ -37,9 +37,9 @@
 
 	/**
 	 * #NEVERNEST
-	 * @param item
-	 * @param slotNumber
-	 * @param quantity
+	 * @param item item to be added to a slot.
+	 * @param slotNumber index of slot to be added to.
+	 * @param quantity amount of items to be added to the slot.
 	 */
 	public void addItemToSlot(Item item, int slotNumber, int quantity)
 	{
