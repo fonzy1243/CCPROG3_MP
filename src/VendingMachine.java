@@ -1,23 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class VendingMachine
+ public class VendingMachine
 {
 	private static final int itemLimit = 69;
 
-	private final List<Slot> slots;
+	private final Slot[] slots;
 
 	public VendingMachine(int slotCount)
 	{
-		slots = new ArrayList<>(slotCount);
+		slots = new Slot[slotCount];
 
 		for (int i = 0; i < slotCount; i++)
 		{
-			slots.add(new Slot());
+			slots[i] = new Slot();
 		}
 	}
 
-	public List<Slot> getSlots()
+	public Slot[] getSlots()
 	{
 		return slots;
 	}
@@ -51,7 +48,7 @@ public class VendingMachine
 			return;
 		}
 
-		slots.get(slotNumber).addItem(item, quantity);
+		slots[slotNumber].addItem(item, quantity);
 	}
 
 	public void dispenseItem(int slotNumber)
