@@ -3,19 +3,18 @@ import java.util.List;
 
 public class VendingMachine
 {
-	private static int itemLimit = 69;
-	private static final int initSlotCount = 8;
-	private List<Slot> slots;
+	private static final int itemLimit = 69;
 
-	public VendingMachine()
+	private final List<Slot> slots;
+
+	public VendingMachine(int slotCount)
 	{
-		slots = new ArrayList<>(initSlotCount);
+		slots = new ArrayList<>(slotCount);
 	}
 
-	public void addSlot()
+	public List<Slot> getSlots()
 	{
-		Slot newSlot = new Slot();
-		slots.add(newSlot);
+		return slots;
 	}
 
 	public int getAvailability(Item item)
@@ -33,12 +32,26 @@ public class VendingMachine
 		return count;
 	}
 
-	public void buyItem(int slotNumber)
+	public void addItemToSlot(Item item, int slotNumber, int quantity)
+	{
+		int totalItemCount = 0;
+
+		for (Slot slot : slots)
+		{
+			totalItemCount += slot.getItemList().size();
+		}
+
+		if (totalItemCount >= itemLimit)
+		{
+			return;
+		}
+
+		slots.get(slotNumber).addItem(item, quantity);
+	}
+
+	public void dispenseItem(int slotNumber)
 	{
 
 	}
-
-	public void performMaintenance()
-	{}
 }
 
