@@ -22,4 +22,6 @@ public class Slot
 			itemList.add(newItem);
 		}
 	}
+
+
 }
