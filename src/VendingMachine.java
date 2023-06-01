@@ -82,14 +82,27 @@
 	}
 
 	// TODO: coin change problem w/ dynamic programming
-//	private int getChange()
-//	{
-//
-//	}
-
-	public void dispenseItem(int slotNumber)
+	private void getChange(int paymentAmount)
 	{
+	}
 
+	public void dispenseItem(int slotNumber, int paymentAmount)
+	{
+		if (slots[slotNumber].getItemList().size() == 0)
+		{
+			// Error handling here for if no items in slot
+			return;
+		}
+
+		if (slots[slotNumber].getItemList().get(0).getPrice() > paymentAmount)
+		{
+			// Error handling here for insufficient payment
+			return;
+		}
+
+		getChange(paymentAmount);
+
+		slots[slotNumber].getItemList().remove(0);
 	}
 }
 
