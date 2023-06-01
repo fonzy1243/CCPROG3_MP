@@ -10,6 +10,7 @@ public class Item
 		this.price = priceInCents;
 		this.calories = calories;
 	}
+
 	public String getName()
 	{
 		return name;
