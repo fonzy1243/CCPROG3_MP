@@ -1,14 +1,13 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Slot
 {
-	private static final int initItemCount = 10;
-	private List<Item> itemList;
+	private final List<Item> itemList;
 
 	public Slot()
 	{
-		itemList = new ArrayList<>(initItemCount);
+		itemList = new LinkedList<>();
 	}
 
 	public List<Item> getItemList()
