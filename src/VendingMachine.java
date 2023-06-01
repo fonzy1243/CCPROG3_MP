@@ -54,21 +54,6 @@ public class VendingMachine
 		slots.get(slotNumber).addItem(item, quantity);
 	}
 
-	// for testing
-	// actually we should probably move this back to slot
-	public void printSlotItems(int slotNumber)
-	{
-		int count = 0;
-		for (Item item : slots.get(slotNumber).getItemList())
-		{
-			count++;
-			System.out.println("Item " + count + ":");
-			System.out.println("Item name: "+ item.getName());
-			System.out.println("Item price: " + (float) item.getPrice() / 100);
-			System.out.println("Item calories: " + item.getCalories());
-		}
-	}
-
 	public void dispenseItem(int slotNumber)
 	{
 
