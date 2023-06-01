@@ -10,6 +10,11 @@ public class VendingMachine
 	public VendingMachine(int slotCount)
 	{
 		slots = new ArrayList<>(slotCount);
+
+		for (int i = 0; i < slotCount; i++)
+		{
+			slots.add(new Slot());
+		}
 	}
 
 	public List<Slot> getSlots()
@@ -47,6 +52,20 @@ public class VendingMachine
 		}
 
 		slots.get(slotNumber).addItem(item, quantity);
+	}
+
+	// for testing
+	public void printSlotItems(int slotNumber)
+	{
+		int count = 0;
+		for (Item item : slots.get(slotNumber).getItemList())
+		{
+			count++;
+			System.out.println("Item " + count + ":");
+			System.out.println("Item name: "+ item.getName());
+			System.out.println("Item price: " + (float) item.getPrice() / 100);
+			System.out.println("Item calories: " + item.getCalories());
+		}
 	}
 
 	public void dispenseItem(int slotNumber)
