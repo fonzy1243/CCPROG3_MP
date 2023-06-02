@@ -85,7 +85,7 @@
 		}
 	}
 
-	// TODO: coin change problem w/ dynamic programming
+	// TODO: greedy algorithm for coin change
 	private void getChange(int paymentAmount)
 	{
 	}
