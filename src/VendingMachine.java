@@ -4,6 +4,8 @@
 
 	private final Slot[] slots;
 
+	private Denomination denominations;
+
 	public VendingMachine(int slotCount)
 	{
 		slots = new Slot[slotCount];
@@ -12,6 +14,8 @@
 		{
 			slots[i] = new Slot();
 		}
+
+		denominations = new Denomination();
 	}
 
 	public Slot[] getSlots()
