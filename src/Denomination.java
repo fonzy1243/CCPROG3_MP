@@ -3,7 +3,7 @@ import java.util.Map;
 
 public class Denomination
 {
-	private Map<Integer, Integer> denominationStock;
+	private final Map<Integer, Integer> denominationStock;
 
 	public Denomination()
 	{
@@ -36,8 +36,13 @@ public class Denomination
 	{
 		if (!denominationStock.containsKey(value))
 		{
-
+			// Error handling here
 			return;
 		}
+
+		int newDenominationQuantity = denominationStock.get(value) + quantity;
+
+		denominationStock.remove(value);
+		denominationStock.put(value, newDenominationQuantity);
 	}
 }
