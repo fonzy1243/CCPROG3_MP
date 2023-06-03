@@ -16,7 +16,6 @@ public class Slot
 	}
 
 	// for testing
-	// actually we should probably move this back to slot
 	public void printSlotItems()
 	{
 		int count = 0;

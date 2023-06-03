@@ -88,8 +88,14 @@
 	// TODO: greedy algorithm for coin change or dp whatever
 	private void getChange(int paymentAmount)
 	{
+
 	}
 
+	/**
+	 * #NEVERNEST PART 2
+	 * @param slotNumber
+	 * @param paymentAmount
+	 */
 	public void dispenseItem(int slotNumber, int paymentAmount)
 	{
 		if (slots[slotNumber].getItemList().size() == 0)
