@@ -1,4 +1,7 @@
- public class VendingMachine
+import java.util.LinkedList;
+import java.util.List;
+
+public class VendingMachine
 {
 	private static final int itemLimit = 69;
 
@@ -86,15 +89,30 @@
 	}
 
 	// TODO: greedy algorithm for coin change or dp whatever
-	private void getChange(int paymentAmount)
+	// https://personal.utdallas.edu/~sxb027100/cs6363/coin.pdf
+	private List<Integer> getChange(int changeValue)
 	{
+		List<Integer> coinChangeValues = new LinkedList<>();
 
+		while (changeValue > 0)
+		{
+			for (int value : denominations.getDenominationList())
+			{
+				if (value <= changeValue)
+				{
+					changeValue -= value;
+					coinChangeValues.add(value);
+				}
+			}
+		}
+
+		return coinChangeValues;
 	}
 
 	/**
 	 * #NEVERNEST PART 2
-	 * @param slotNumber
-	 * @param paymentAmount
+	 * @param slotNumber slot number of the item to be dispensed.
+	 * @param paymentAmount amount paid by the buyer.
 	 */
 	public void dispenseItem(int slotNumber, int paymentAmount)
 	{
@@ -110,9 +128,24 @@
 			return;
 		}
 
-		getChange(paymentAmount);
+		List<Integer> coinChangeValues = getChange(paymentAmount -
+		                                           slots[slotNumber].getItemList().get(0).getPrice());
 
 		slots[slotNumber].getItemList().remove(0);
+
+		System.out.println("Change = " + ((float) (paymentAmount - slots[slotNumber].getItemList().get(0).getPrice()) /
+		                                  100));
+		printChange(coinChangeValues);
+	}
+
+	// for testing change
+	public void printChange(List<Integer> coinChangeValues)
+	{
+		for (int coinValue : coinChangeValues)
+		{
+			System.out.print(((float) coinValue / 100) + ", ");
+		}
+		System.out.println();
 	}
 }
 

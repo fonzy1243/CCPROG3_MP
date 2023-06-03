@@ -1,9 +1,9 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Denomination
 {
 	private final Map<Integer, Integer> denominationStock;
+	private final List<Integer> denominationList;
 
 	public Denomination()
 	{
@@ -25,6 +25,9 @@ public class Denomination
 		denominationStock.put(10000, 500);
 		denominationStock.put(50000, 500);
 		denominationStock.put(100000, 500);
+
+		denominationList = new ArrayList<>(denominationStock.keySet());
+		denominationList.sort(Collections.reverseOrder());
 	}
 
 	public Map<Integer, Integer> getDenominationStock()
@@ -36,7 +39,13 @@ public class Denomination
 	{
 		if (!denominationStock.containsKey(value))
 		{
-			// Error handling here
+			// Error handling for no value found
+			return;
+		}
+
+		if (quantity <= 0)
+		{
+			// Error handling for invalid quantity
 			return;
 		}
 
@@ -44,5 +53,30 @@ public class Denomination
 
 		denominationStock.remove(value);
 		denominationStock.put(value, newDenominationQuantity);
+	}
+
+	public void removeDenomination(int value, int quantity)
+	{
+		if (!denominationStock.containsKey(value))
+		{
+			// Error handling for no value found
+			return;
+		}
+
+		if (quantity <= 0)
+		{
+			// Error handling for invalid quantity
+			return;
+		}
+
+		int newDenominationQuantity = denominationStock.get(value) - quantity;
+
+		denominationStock.remove(value);
+		denominationStock.put(value, newDenominationQuantity);
+	}
+
+	public List<Integer> getDenominationList()
+	{
+		return denominationList;
 	}
 }
