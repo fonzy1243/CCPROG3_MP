@@ -98,9 +98,10 @@ public class VendingMachine
 		{
 			for (int value : denominations.getDenominationList())
 			{
-				if (value <= changeValue)
+				if (value <= changeValue && denominations.getDenominationStock().get(value) > 0)
 				{
 					changeValue -= value;
+					denominations.removeDenomination(value, 1);
 					coinChangeValues.add(value);
 				}
 			}
