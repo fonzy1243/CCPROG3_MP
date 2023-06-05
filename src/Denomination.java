@@ -69,7 +69,14 @@ public class Denomination
 			return;
 		}
 
+		if (denominationStock.get(value) - quantity < 0)
+		{
+			// Error handling for insufficient stock
+			return;
+		}
+
 		int newDenominationQuantity = denominationStock.get(value) - quantity;
+
 
 		denominationStock.remove(value);
 		denominationStock.put(value, newDenominationQuantity);
