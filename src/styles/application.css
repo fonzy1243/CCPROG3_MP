@@ -1,3 +1,13 @@
-.label {
+.root {
+    -fx-background-color: #1e2633;
+}
 
+.label, .button {
+    -fx-font-size: 14;
+    -fx-font-family: "Nunito";
+    src: url("/fonts/Nunito-Regular.ttf");
+}
+
+#createMenuVBox, #mainMenuVBox {
+    -fx-alignment: Center;
 }
