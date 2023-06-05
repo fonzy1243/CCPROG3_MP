@@ -1,5 +1,4 @@
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class VendingMachine
 {
@@ -88,26 +87,47 @@ public class VendingMachine
 		}
 	}
 
-	// TODO: greedy algorithm for coin change or dp whatever
-	// https://personal.utdallas.edu/~sxb027100/cs6363/coin.pdf
+	// TODO: greedy algorithm for coin change or dp whatever you wanna do @Roi
 	private List<Integer> getChange(int changeValue)
 	{
-		List<Integer> coinChangeValues = new LinkedList<>();
+		int[] dp = new int[changeValue + 1];
+		Arrays.fill(dp, Integer.MAX_VALUE);
 
-		while (changeValue > 0)
+		int[] coinsUsed = new int[changeValue + 1];
+
+		// base case
+		dp[0] = 0;
+
+		for (int i = 1; i < changeValue + 1; i++)
 		{
-			for (int value : denominations.getDenominationList())
+			for (int coin : denominations.getDenominationList())
 			{
-				if (value <= changeValue && denominations.getDenominationStock().get(value) > 0)
+				if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE && dp[i - coin] + 1 < dp[i])
 				{
-					changeValue -= value;
-					denominations.removeDenomination(value, 1);
-					coinChangeValues.add(value);
+					dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+					coinsUsed[i] = coin;
 				}
 			}
 		}
 
-		return coinChangeValues;
+		if (dp[changeValue] != Integer.MAX_VALUE)
+		{
+			List<Integer> selectedCoins = new ArrayList<>();
+			int value = changeValue;
+
+			while (value > 0)
+			{
+				selectedCoins.add(coinsUsed[value]);
+				value -= coinsUsed[value];
+			}
+
+			return selectedCoins;
+		}
+		else
+		{
+			// Error handling here
+			return Collections.emptyList();
+		}
 	}
 
 	/**
@@ -136,17 +156,23 @@ public class VendingMachine
 
 		System.out.println("Change = " + ((float) (paymentAmount - slots[slotNumber].getItemList().get(0).getPrice()) /
 		                                  100));
+
 		printChange(coinChangeValues);
 	}
 
 	// for testing change
 	public void printChange(List<Integer> coinChangeValues)
 	{
+		int realChange = 0;
+
 		for (int coinValue : coinChangeValues)
 		{
+			realChange += coinValue;
 			System.out.print(((float) coinValue / 100) + ", ");
 		}
 		System.out.println();
+
+		System.out.println("Real change = " + ((float) realChange / 100));
 	}
 }
 
