@@ -7,7 +7,7 @@ public class VendingMachine
 
 	private final Slot[] slots;
 
-	private Denomination denominations;
+	private final Denomination denominations;
 
 	public VendingMachine(int slotCount)
 	{
