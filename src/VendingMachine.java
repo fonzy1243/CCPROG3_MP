@@ -90,27 +90,44 @@ public class VendingMachine
 	// TODO: greedy algorithm for coin change or dp whatever you wanna do @Roi
 	private List<Integer> getChange(int changeValue)
 	{
-		int changeValueCopy = changeValue;
+		int[] dp = new int[changeValue + 1];
+		Arrays.fill(dp, Integer.MAX_VALUE);
 
-		List<Integer> change = new ArrayList<>();
+		int[] coinsUsed = new int[changeValue + 1];
 
-		for (int denomination : denominations.getDenominationList())
+		// base case
+		dp[0] = 0;
+
+		for (int i = 1; i < changeValue + 1; i++)
 		{
-			while (changeValueCopy >= denomination && denominations.getDenominationStock().get(denomination) > 0)
+			for (int coin : denominations.getDenominationList())
 			{
-				change.add(denomination);
-				changeValueCopy -= denomination;
-				denominations.getDenominationStock().put(denomination, denominations.getDenominationStock().get(denomination) - 1);
+				if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE && dp[i - coin] + 1 < dp[i])
+				{
+					dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+					coinsUsed[i] = coin;
+				}
 			}
 		}
 
-		if (changeValueCopy > 0)
+		if (dp[changeValue] != Integer.MAX_VALUE)
+		{
+			List<Integer> selectedCoins = new ArrayList<>();
+			int value = changeValue;
+
+			while (value > 0)
+			{
+				selectedCoins.add(coinsUsed[value]);
+				value -= coinsUsed[value];
+			}
+
+			return selectedCoins;
+		}
+		else
 		{
 			// Error handling here
-			return null;
+			return Collections.emptyList();
 		}
-
-		return change;
 	}
 
 	/**
