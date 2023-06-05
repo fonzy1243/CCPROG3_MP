@@ -6,9 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="SceneController"
-            prefHeight="720" prefWidth="720">
-
-</AnchorPane>
+            fx:controller="VendingMachineViewer"
+            prefHeight="720" prefWidth="720"
+            fx:id="mainMenuVBox">
+    <children>
+        <Button fx:id="createButton"
+                text="Create Vending Machine"
+                onAction="#switchToCreateMenu"/>
+    </children>
+</VBox>
