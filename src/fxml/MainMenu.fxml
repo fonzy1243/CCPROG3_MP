@@ -8,11 +8,11 @@
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="VendingMachineViewer"
+            fx:controller="Viewer.VendingMachineViewer"
             prefHeight="720" prefWidth="720"
             fx:id="mainMenuVBox">
     <children>
-        <Button fx:id="createButton"
+        <Button fx:id="createMenuButton"
                 text="Create Vending Machine"
                 onAction="#switchToCreateMenu"/>
     </children>

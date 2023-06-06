@@ -1,3 +1,6 @@
+package Model;
+
+import Viewer.VendingMachineViewer;
 import javafx.application.Application;
 
 public class Main

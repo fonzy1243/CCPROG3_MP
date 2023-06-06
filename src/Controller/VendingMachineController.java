@@ -1,3 +1,9 @@
+package Controller;
+
+import Model.RegularVendingMachine;
+import Model.SpecialVendingMachine;
+import Model.VendingMachine;
+
 import java.util.LinkedList;
 
 public class VendingMachineController

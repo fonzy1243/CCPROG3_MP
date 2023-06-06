@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,10 +24,10 @@ public class Slot
 		for (Item item : itemList)
 		{
 			count++;
-			System.out.println("Item " + count + ":");
-			System.out.println("Item name: "+ item.getName());
-			System.out.println("Item price: " + (float) item.getPrice() / 100);
-			System.out.println("Item calories: " + item.getCalories());
+			System.out.println("Model.Item " + count + ":");
+			System.out.println("Model.Item name: "+ item.getName());
+			System.out.println("Model.Item price: " + (float) item.getPrice() / 100);
+			System.out.println("Model.Item calories: " + item.getCalories());
 		}
 	}
 }

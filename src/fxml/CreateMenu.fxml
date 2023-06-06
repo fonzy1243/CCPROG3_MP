@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="VendingMachineViewer"
-            prefHeight="720.0" prefWidth="720.0"
-            fx:id="createMenuVBox">
-    <children>
-        <Button fx:id="returnButton"
-                text="Return to Main Menu"
-                onAction="#switchToMainMenu"/>
-    </children>
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Viewer.VendingMachineViewer"
+      prefHeight="720.0" prefWidth="720.0"
+      fx:id="createMenuVBox">
+    <Button fx:id="createRegularButton"
+            text="Create Regular Machine"/>
+    <Button fx:id="testButton"
+            text="Return to Model.Main Menu"
+            onAction="#switchToMainMenu"/>
 </VBox>

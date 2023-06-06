@@ -1,14 +1,15 @@
+package Viewer;
+
+import Controller.VendingMachineController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,18 +18,22 @@ import java.util.Objects;
 public class VendingMachineViewer extends Application
 {
 	@FXML
-	public VBox mainMenuVBox;
+	VBox mainMenuVBox;
 	@FXML
-	public VBox createMenuVBox;
+	VBox createMenuVBox;
 	@FXML
-	private Button createButton;
+	Button createRegularButton;
 	@FXML
-	private Button returnButton;
+	Button createMenuButton;
+	@FXML
+	Button testButton;
+	@FXML
+	Button returnButton;
 
 	@FXML
-	private Scene scene;
+	Scene scene;
 	@FXML
-	private Parent root;
+	Parent root;
 	private VendingMachineController controller;
 
 	public VendingMachineViewer()
@@ -45,8 +50,6 @@ public class VendingMachineViewer extends Application
 
 			scene = new Scene(root, 720, 720);
 
-			Font defaultFont = Font.loadFont(getClass().getResourceAsStream("fonts/Nunito-Regular.ttf"), 12);
-
 			String css = Objects
 					.requireNonNull(this.getClass()
 					.getResource("styles/application.css"))
@@ -54,6 +57,7 @@ public class VendingMachineViewer extends Application
 
 			scene.getStylesheets().add(css);
 			stage.setScene(scene);
+			stage.setResizable(false);
 			stage.setTitle("Vending Machine Factory Simulator");
 			stage.show();
 		}
@@ -69,9 +73,10 @@ public class VendingMachineViewer extends Application
 		displayMenuScene(event);
 	}
 
+	@FXML
 	public void switchToCreateMenu(ActionEvent event) throws IOException
 	{
-		root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/CreateMenu.fxml")));
+//		testButton.setDisable(true);
 		displayMenuScene(event);
 	}
 
