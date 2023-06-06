@@ -11,14 +11,17 @@
       fx:controller="Controller.CreateMenuController"
       prefHeight="720.0" prefWidth="720.0"
       fx:id="createMenuVBox">
+    <Label text="Create Vending Machine"
+           styleClass="title-label"/>
     <Button fx:id="createRegularButton"
             text="Create Regular Machine"
-            styleClass="regular-button"/>
+            styleClass="regular-button"
+            onAction="#createRegularMachine"/>
     <Button fx:id="createSpecialButton"
             text="Create Special Machine"
             styleClass="regular-button"/>
     <Button fx:id="returnButton"
-            text="Return to Main Menu"
-            styleClass="regular-button"
+            text="Back"
+            styleClass="nav-button"
             onAction="#returnToMainMenu"/>
 </VBox>
