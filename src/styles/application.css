@@ -1,13 +1,31 @@
 .root {
-    -fx-background-color: #1e2633;
+    -fx-background-color: #282a3d;
 }
 
 .label, .button {
-    -fx-font-size: 14;
+    -fx-font-smoothing-type: lcd;
     -fx-font-family: "Nunito";
     src: url("/fonts/Nunito-Regular.ttf");
 }
 
 #createMenuVBox, #mainMenuVBox {
     -fx-alignment: Center;
+}
+
+.regular-button {
+    -fx-background-color: linear-gradient(to bottom left, #f78361, #f54b64);
+    -fx-background-radius: 15;
+
+    -fx-border-radius: 30 0 0 30;
+    -fx-pref-height: 130;
+    -fx-pref-width: 230;
+
+    -fx-text-fill: white;
+    -fx-font-size: 24;
+    -fx-text-alignment: center;
+
+    -fx-effect: dropshadow(gaussian, #0f101c, 20, 0.001, 5, -1);
+
+    -fx-wrap-text: true;
+
 }
