@@ -1,13 +1,12 @@
 package Viewer;
 
-import Controller.MainMenuController;
-import Controller.VendingMachineController;
+import Controller.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class VendingMachineViewer extends Application
 {
-	private VendingMachineController controller;
+	private final VendingMachineController controller;
 
 	public VendingMachineViewer()
 	{
@@ -15,14 +14,11 @@ public class VendingMachineViewer extends Application
 	}
 
 	@Override
-	public void start(Stage stage) throws Exception
+	public void start(Stage stage)
 	{
 		MainMenuController mainMenuController = new MainMenuController();
 
+		mainMenuController.setVendingMachineController(this.controller);
 		mainMenuController.openMainMenu(stage);
 	}
-
-
-
-
 }
