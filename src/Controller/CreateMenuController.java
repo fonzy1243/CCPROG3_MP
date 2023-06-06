@@ -24,36 +24,49 @@ public class CreateMenuController
 	@FXML
 	Button returnButton;
 
-	private Stage stage;
-	private Parent root;
-	private Scene scene;
+	private final ButtonAnimator buttonAnimator;
+	private VendingMachineController vendingMachineController;
 
 	public CreateMenuController()
 	{
-
+		this.buttonAnimator = new ButtonAnimator();
 	}
 
-	@FXML
+	public void setVendingMachineController(VendingMachineController vendingMachineController)
+	{
+		this.vendingMachineController = vendingMachineController;
+	}
+
 	public void openCreateMenu()
 	{
-		createMenuVBox.setSpacing(15);
-		createSpecialButton.setDisable(true);
-	}
 
-	public void returnToMainMenu(ActionEvent event) throws IOException
+		createMenuVBox.setSpacing(12);
+		createSpecialButton.setDisable(true);
+
+		buttonAnimator.resizeWhenHovered(createRegularButton);
+		buttonAnimator.resizeWhenHovered(returnButton);
+	}
+	@FXML
+	private void createRegularMachine()
 	{
-		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MainMenu.fxml")));
+		vendingMachineController.createRegularMachine(8);
+	}
+	@FXML
+	private void returnToMainMenu(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+		Parent root = loader.load();
+
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root);
 
-		returnButton.setDisable(true);
+		MainMenuController mainMenuController = loader.getController();
+		mainMenuController.openMainMenu(stage);
 
 		String css = Objects
 				.requireNonNull(this.getClass()
 						.getResource("/styles/application.css"))
 				.toExternalForm();
-
-		createRegularButton.setDisable(true);
 
 		scene.getStylesheets().add(css);
 		stage.setScene(scene);
