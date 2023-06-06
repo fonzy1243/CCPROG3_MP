@@ -1,11 +1,30 @@
+@font-face {
+    font-family: 'Nunito ExtraBold';
+    src: url("/fonts/Nunito-ExtraBold.ttf");
+}
+
+@font-face {
+    font-family: 'Nunito Bold';
+    src: url("/fonts/Nunito-Bold.ttf");
+}
+
+@font-face {
+    font-family: 'Nunito SemiBold';
+    src: url("/fonts/Nunito-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: 'Nunito Medium';
+    src: url("/fonts/Nunito-Medium.ttf");
+}
+
 .root {
     -fx-background-color: #282a3d;
 }
 
-.label, .button {
+.button {
     -fx-font-smoothing-type: lcd;
-    -fx-font-family: "Nunito";
-    src: url("/fonts/Nunito-Regular.ttf");
+    -fx-font-family: "Nunito SemiBold";
 }
 
 #createMenuVBox, #mainMenuVBox {
@@ -24,8 +43,25 @@
     -fx-font-size: 24;
     -fx-text-alignment: center;
 
-    -fx-effect: dropshadow(gaussian, #0f101c, 20, 0.001, 5, -1);
+    -fx-effect: dropshadow(gaussian, #1c1d2b, 20, 0.001, 5, -1);
 
     -fx-wrap-text: true;
+}
 
+.nav-button {
+    -fx-background-color: #93d25f;
+    -fx-background-radius: 30;
+
+    -fx-max-height: 30;
+    -fx-max-width: 120;
+
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-text-alignment: center;
+}
+
+.title-label {
+    -fx-font-size: 32;
+    -fx-font-family: "Nunito Bold";
+    -fx-text-fill: #fac252;
 }
