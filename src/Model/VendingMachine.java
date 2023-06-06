@@ -104,7 +104,8 @@ public class VendingMachine
 		{
 			for (int coin : denominations.getDenominationList())
 			{
-				if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE && dp[i - coin] + 1 < dp[i])
+				if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE && dp[i - coin] + 1 < dp[i] &&
+				    denominations.getDenominationStock().get(coin) > 0)
 				{
 					dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
 					coinsUsed[i] = coin;
@@ -121,6 +122,11 @@ public class VendingMachine
 			{
 				selectedCoins.add(coinsUsed[value]);
 				value -= coinsUsed[value];
+			}
+
+			for (int coin : selectedCoins)
+			{
+				denominations.removeDenomination(coin, 1);
 			}
 
 			return selectedCoins;
