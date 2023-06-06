@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 public class VendingMachineController
 {
-	private LinkedList<VendingMachine> vendingMachines;
+	private final LinkedList<VendingMachine> vendingMachines;
 
 	public VendingMachineController()
 	{
@@ -23,6 +23,11 @@ public class VendingMachineController
 	public void createSpecialMachine(int slotCount)
 	{
 		vendingMachines.addFirst(new SpecialVendingMachine(slotCount));
+	}
+
+	public LinkedList<VendingMachine> getVendingMachines()
+	{
+		return vendingMachines;
 	}
 
 	public void purchaseItem()
