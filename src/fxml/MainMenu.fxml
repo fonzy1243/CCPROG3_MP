@@ -7,26 +7,23 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.MainMenuController"
-            prefHeight="720.0" prefWidth="720.0"
-            fx:id="mainMenuVBox">
-    <children>
-        <Label fx:id="mainMenuLabel"
-               text="Main Menu"
-               styleClass="title-label"/>
-        <Button fx:id="createMenuButton"
-                text="Create Vending Machine"
-                styleClass="regular-button"
-                onAction="#goToCreateMenu"/>
-        <Button fx:id="testVendingMachineButton"
-                text="Test Vending Machine"
-                styleClass="regular-button"
-                />
-        <Button fx:id="exitButton"
-                text="Exit"
-                styleClass="nav-button"
-                onAction="#exit"
-                />
-    </children>
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.MainMenuController"
+      prefHeight="720.0" prefWidth="720.0"
+      fx:id="mainMenuVBox">
+    <Label fx:id="mainMenuLabel"
+           text="Main Menu"
+           styleClass="title-label"/>
+    <Button fx:id="createMenuButton"
+            text="Create Vending Machine"
+            styleClass="regular-button"
+            onAction="#goToCreateMenu"/>
+    <Button fx:id="testVendingMachineButton"
+            text="Test Vending Machine"
+            styleClass="regular-button"
+            onAction="#goToTestMenu"/>
+    <Button fx:id="exitButton"
+            text="Exit"
+            styleClass="nav-button"
+            onAction="#exit"/>
 </VBox>
