@@ -32,6 +32,5 @@ public class VendingMachineController
 
 	public void purchaseItem()
 	{
-//		vendingMachines.get(0).dispenseItem();
 	}
 }
