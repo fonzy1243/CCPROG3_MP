@@ -39,7 +39,6 @@ public class CreateMenuController
 
 	public void openCreateMenu()
 	{
-
 		createMenuVBox.setSpacing(12);
 		createSpecialButton.setDisable(true);
 
