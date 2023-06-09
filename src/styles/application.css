@@ -4,7 +4,8 @@
 }
 
 @font-face {
-    font-family: 'Nunito Bold';
+    font-family: 'Nunito';
+    font-weight: bold;
     src: url("/fonts/Nunito-Bold.ttf");
 }
 
@@ -27,7 +28,7 @@
     -fx-font-family: "Nunito SemiBold";
 }
 
-#createMenuVBox, #mainMenuVBox {
+#createMenuVBox, #mainMenuVBox, #testMenuVbox {
     -fx-alignment: Center;
 }
 
@@ -49,7 +50,7 @@
 }
 
 .nav-button {
-    -fx-background-color: #93d25f;
+    -fx-background-color: #476dbf;
     -fx-background-radius: 30;
 
     -fx-max-height: 30;
@@ -60,8 +61,13 @@
     -fx-text-alignment: center;
 }
 
+.add-button {
+    -fx-background-color: #98ceb9;
+}
+
 .title-label {
     -fx-font-size: 32;
-    -fx-font-family: "Nunito Bold";
-    -fx-text-fill: #fac252;
+    -fx-font-family: "Nunito";
+    -fx-font-weight: bold;
+    -fx-text-fill: #f39661;
 }
