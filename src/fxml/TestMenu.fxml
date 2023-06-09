@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.TestMenuController"
+      prefHeight="720.0" prefWidth="720.0"
+      fx:id="testMenuVbox">
+    <Label text="Test Machine Features"
+           styleClass="title-label"/>
+    <Button fx:id="vendingFeaturesButton"
+            styleClass="regular-button"
+            text="Vending Features"
+    />
+    <Button fx:id="maintenanceButton"
+            styleClass="regular-button"
+            text="Maintenance Features"
+    />
+    <Button fx:id="returnButton"
+            styleClass="nav-button"
+            text="Back"
+    />
+</VBox>
