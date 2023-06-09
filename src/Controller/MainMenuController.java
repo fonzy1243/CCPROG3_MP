@@ -112,14 +112,35 @@ public class MainMenuController
 	private void goToCreateMenu(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateMenu.fxml"));
+		openMenuScene(event, loader, "create");
+	}
+
+	@FXML
+	private void goToTestMenu(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
+		openMenuScene(event, loader, "test");
+	}
+
+	private void openMenuScene(ActionEvent event, FXMLLoader loader, String menu) throws IOException
+	{
 		root = loader.load();
 
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 
-		CreateMenuController createMenuController = loader.getController();
-		createMenuController.setVendingMachineController(vendingMachineController);
-		createMenuController.openCreateMenu();
+		if (menu.equals("create"))
+		{
+			CreateMenuController createMenuController = loader.getController();
+			createMenuController.setVendingMachineController(vendingMachineController);
+			createMenuController.openCreateMenu();
+		}
+		else if (menu.equals("test"))
+		{
+			TestMenuController testMenuController = loader.getController();
+			testMenuController.setVendingMachineController(vendingMachineController);
+			testMenuController.openTestMenu();
+		}
 
 		String css = Objects
 				.requireNonNull(this.getClass()
