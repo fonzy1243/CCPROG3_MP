@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class CreateMenuController
+public class CreateMenuController extends MenuController
 {
 	@FXML
 	VBox createMenuVBox;
@@ -48,27 +48,7 @@ public class CreateMenuController
 	@FXML
 	private void createRegularMachine()
 	{
-		vendingMachineController.createRegularMachine(8);
+		vendingMachineController.createRegularMachine(10);
 	}
-	@FXML
-	private void returnToMainMenu(ActionEvent event) throws IOException
-	{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-		Parent root = loader.load();
 
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Scene scene = new Scene(root);
-
-		MainMenuController mainMenuController = loader.getController();
-		mainMenuController.openMainMenu(stage);
-
-		String css = Objects
-				.requireNonNull(this.getClass()
-						.getResource("/styles/application.css"))
-				.toExternalForm();
-
-		scene.getStylesheets().add(css);
-		stage.setScene(scene);
-		stage.show();
-	}
 }
