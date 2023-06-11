@@ -6,11 +6,11 @@ import javafx.stage.Stage;
 
 public class VendingMachineViewer extends Application
 {
-	private final VendingMachineController controller;
+	private static VendingMachineController controller;
 
 	public VendingMachineViewer()
 	{
-		this.controller = new VendingMachineController();
+		controller = new VendingMachineController();
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class VendingMachineViewer extends Application
 	{
 		MainMenuController mainMenuController = new MainMenuController();
 
-		mainMenuController.setVendingMachineController(this.controller);
+		mainMenuController.setVendingMachineController(controller);
 		mainMenuController.openMainMenu(stage);
 	}
 }
