@@ -49,20 +49,47 @@
     -fx-wrap-text: true;
 }
 
-.nav-button {
+.nav-button, .slot-back-button {
     -fx-background-color: #476dbf;
     -fx-background-radius: 30;
 
-    -fx-max-height: 30;
-    -fx-max-width: 120;
-
     -fx-text-fill: white;
-    -fx-font-size: 20;
+
     -fx-text-alignment: center;
 }
 
-.add-button {
-    -fx-background-color: #98ceb9;
+.nav-button {
+    -fx-max-height: 30;
+    -fx-max-width: 120;
+
+    -fx-font-size: 20;
+}
+
+.slot-button, .add-button, .insert-coin-button {
+    -fx-background-color: #a8bd5d;
+    -fx-background-radius: 30;
+
+    -fx-text-fill: white;
+}
+
+.slot-button, .slot-back-button {
+    -fx-pref-height: 65;
+    -fx-pref-width: 65;
+}
+
+.slot-back-button {
+    -fx-font-size: 24;
+}
+
+.slot-button {
+    -fx-font-size: 25;
+}
+
+.insert-coin-button {
+    -fx-pref-height: 60;
+    -fx-pref-width: 85;
+
+    -fx-font-size: 20;
 }
 
 .title-label {
