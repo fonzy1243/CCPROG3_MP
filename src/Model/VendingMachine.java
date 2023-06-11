@@ -22,6 +22,11 @@ public class VendingMachine
 		denominations = new Denomination();
 	}
 
+	public Denomination getDenominations()
+	{
+		return denominations;
+	}
+
 	public Slot[] getSlots()
 	{
 		return slots;
