@@ -2,12 +2,18 @@ package Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
-public class TestMenuController
+public class TestMenuController extends MenuController
 {
 	@FXML
 	private VBox testMenuVbox;
@@ -39,8 +45,21 @@ public class TestMenuController
 		buttonAnimator.resizeWhenHovered(returnButton);
 	}
 
-	public void returnToMainMenu(ActionEvent event)
+	@FXML
+	private void goToVendingMenu(ActionEvent event) throws IOException
 	{
+		if (vendingMachineController == null)
+		{
+			System.out.println("Error: No vending machine controller.");
+			return;
+		}
 
+		if (vendingMachineController.getVendingMachines().size() == 0)
+		{
+			System.out.println("No vending machines");
+			return;
+		}
+
+		openMenuScene(event, null, "vending", vendingMachineController);
 	}
 }
