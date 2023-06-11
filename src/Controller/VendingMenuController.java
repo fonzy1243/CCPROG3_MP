@@ -1,9 +1,12 @@
 package Controller;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -39,11 +42,19 @@ public class VendingMenuController extends MenuController
 	{
 		Label paymentLabel = new Label();
 
+		Image coinSlotImage = new Image("/images/coin-slot.png", 0, 245, true, true);
+
+		ImageView coinSlotView = new ImageView(coinSlotImage);
+
+		Label title = new Label("INSERT HERE");
+		title.getStyleClass().add("title-label");
+
 		buttonGrid = new GridPane();
 		buttonGrid.setAlignment(Pos.CENTER);
 
 		buttonGrid.setHgap(5);
 		buttonGrid.setVgap(5);
+		buttonGrid.setPadding(new Insets(10, 0, 0, 0));
 
 		int column = 0;
 		int row = 0;
@@ -90,7 +101,7 @@ public class VendingMenuController extends MenuController
 		paymentLabel.getStyleClass().add("title-label");
 		paymentLabel.setText(String.valueOf(payment));
 
-		vBox.getChildren().addAll(paymentLabel, buttonGrid);
+		vBox.getChildren().addAll(coinSlotView, title, paymentLabel, buttonGrid);
 		vBox.setStyle("-fx-alignment: Center");
 		vBox.setMinSize(720, 720);
 
@@ -99,6 +110,8 @@ public class VendingMenuController extends MenuController
 
 	public void openVendingMenu()
 	{
+		Button backButton = new Button();
+		Label label = new Label("Select a slot:");
 		buttonGrid = new GridPane();
 
 		buttonGrid.setAlignment(Pos.CENTER);
@@ -123,7 +136,7 @@ public class VendingMenuController extends MenuController
 			buttonAnimator.resizeWhenHovered(button);
 		}
 
-		Button backButton = new Button();
+
 		backButton.getStyleClass().add("slot-back-button");
 		backButton.setText("⌫");
 
@@ -141,7 +154,7 @@ public class VendingMenuController extends MenuController
 		buttonGrid.add(backButton, backButtonColumn, backButtonRow);
 		buttonAnimator.resizeWhenHovered(backButton);
 
-		Label label = new Label("Select a slot:");
+
 		label.getStyleClass().add("title-label");
 
 		vBox.getChildren().addAll(label, buttonGrid);
