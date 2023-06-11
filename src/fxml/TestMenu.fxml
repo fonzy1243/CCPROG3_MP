@@ -16,13 +16,13 @@
     <Button fx:id="vendingFeaturesButton"
             styleClass="regular-button"
             text="Vending Features"
-    />
+            onAction="#goToVendingMenu"/>
     <Button fx:id="maintenanceButton"
             styleClass="regular-button"
             text="Maintenance Features"
-    />
+            />
     <Button fx:id="returnButton"
             styleClass="nav-button"
             text="Back"
-    />
+            onAction="#returnToMainMenu"/>
 </VBox>
