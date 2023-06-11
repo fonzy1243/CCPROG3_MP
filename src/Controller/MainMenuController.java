@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class MainMenuController
+public class MainMenuController extends MenuController
 {
 	@FXML
 	Button testVendingMachineButton;
@@ -28,8 +28,6 @@ public class MainMenuController
 	VBox mainMenuVBox;
 	@FXML
 	Label mainMenuLabel;
-	private Scene scene;
-	private Parent root;
 
 	private final ButtonAnimator buttonAnimator;
 	private static VendingMachineController vendingMachineController;
@@ -50,9 +48,9 @@ public class MainMenuController
 		try
 		{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-			root = loader.load();
+			Parent root = loader.load();
 
-			scene = new Scene(root, 720, 720);
+			Scene scene = new Scene(root, 720, 720);
 
 			if (mainMenuVBox == null)
 			{
@@ -89,12 +87,6 @@ public class MainMenuController
 
 			buttonAnimator.resizeWhenHovered(exitButton);
 
-			stage.setOnCloseRequest(windowEvent ->
-			{
-				Platform.exit();
-				System.exit(0);
-			});
-
 			System.out.println(vendingMachineController.getVendingMachines().size());
 
 			stage.setScene(scene);
@@ -112,54 +104,14 @@ public class MainMenuController
 	private void goToCreateMenu(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateMenu.fxml"));
-		openMenuScene(event, loader, "create");
+		openMenuScene(event, loader, "create", vendingMachineController);
 	}
 
 	@FXML
 	private void goToTestMenu(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
-		openMenuScene(event, loader, "test");
-	}
-
-	private void openMenuScene(ActionEvent event, FXMLLoader loader, String menu) throws IOException
-	{
-		root = loader.load();
-
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-
-		if (menu.equals("create"))
-		{
-			CreateMenuController createMenuController = loader.getController();
-			createMenuController.setVendingMachineController(vendingMachineController);
-			createMenuController.openCreateMenu();
-		}
-		else if (menu.equals("test"))
-		{
-			TestMenuController testMenuController = loader.getController();
-			testMenuController.setVendingMachineController(vendingMachineController);
-			testMenuController.openTestMenu();
-		}
-
-		String css = Objects
-				.requireNonNull(this.getClass()
-						.getResource("/styles/application.css"))
-				.toExternalForm();
-
-		stage.setOnCloseRequest(windowEvent ->
-		{
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("Close window attempted");
-			alert.setHeaderText("You tried to close the window.");
-			alert.setContentText("This window cannot be closed in this menu.");
-			alert.showAndWait();
-			windowEvent.consume();
-		});
-
-		scene.getStylesheets().add(css);
-		stage.setScene(scene);
-		stage.show();
+		openMenuScene(event, loader, "test", vendingMachineController);
 	}
 
 	@FXML
