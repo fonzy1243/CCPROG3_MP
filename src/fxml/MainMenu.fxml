@@ -6,24 +6,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="Controller.MainMenuController"
-      prefHeight="720.0" prefWidth="720.0"
-      fx:id="mainMenuVBox">
-    <Label fx:id="mainMenuLabel"
-           text="Main Menu"
-           styleClass="title-label"/>
-    <Button fx:id="createMenuButton"
-            text="Create Vending Machine"
-            styleClass="regular-button"
-            onAction="#goToCreateMenu"/>
-    <Button fx:id="testVendingMachineButton"
-            text="Test Vending Machine"
-            styleClass="regular-button"
-            onAction="#goToTestMenu"/>
-    <Button fx:id="exitButton"
-            text="Exit"
-            styleClass="nav-button"
-            onAction="#exit"/>
-</VBox>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.MainMenuController"
+            prefHeight="720.0" prefWidth="720.0"
+            styleClass="rounded-pane">
+    <AnchorPane styleClass="top-bar"
+                fx:id="topBar">
+        <HBox alignment="BASELINE_RIGHT" prefWidth="709" style="-fx-hgap: 25">
+            <Button text="—"
+                    styleClass="minimize-button"
+                    fx:id="minimizeButton"/>
+            <Button text="✕"
+                    styleClass="close-button"
+                    onAction="#closeApp"/>
+        </HBox>
+    </AnchorPane>
+    <VBox fx:id="mainMenuVBox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+        <Label fx:id="mainMenuLabel"
+               text="Main Menu"
+               styleClass="title-label"/>
+        <Button fx:id="createMenuButton"
+                text="Create Vending Machine"
+                styleClass="regular-button"
+                onAction="#goToCreateMenu"/>
+        <Button fx:id="testVendingMachineButton"
+                text="Test Vending Machine"
+                styleClass="regular-button"
+                onAction="#goToTestMenu"/>
+        <Button fx:id="exitButton"
+                text="Exit"
+                styleClass="nav-back-button"
+                onAction="#closeApp"/>
+    </VBox>
+</AnchorPane>
