@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="150.0" prefWidth="350.0"
             styleClass="rounded-popup-pane">
-    <AnchorPane styleClass="top-bar-popup">
+    <AnchorPane styleClass="top-bar-popup" fx:id="topBar">
         <HBox alignment="BASELINE_RIGHT" prefWidth="330" style="-fx-hgap: 25">
             <Button text="✕"
                     styleClass="close-button"
