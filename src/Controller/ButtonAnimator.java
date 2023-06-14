@@ -2,7 +2,6 @@ package Controller;
 
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ButtonAnimator
