@@ -6,22 +6,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
+<AnchorPane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="Controller.CreateMenuController"
       prefHeight="720.0" prefWidth="720.0"
-      fx:id="createMenuVBox">
-    <Label text="Create Vending Machine"
-           styleClass="title-label"/>
-    <Button fx:id="createRegularButton"
-            text="Create Regular Machine"
-            styleClass="regular-button"
-            onAction="#createRegularMachine"/>
-    <Button fx:id="createSpecialButton"
-            text="Create Special Machine"
-            styleClass="regular-button"/>
-    <Button fx:id="returnButton"
-            text="Back"
-            styleClass="nav-button"
-            onAction="#returnToMainMenu"/>
-</VBox>
+        styleClass="rounded-pane">
+    <AnchorPane styleClass="top-bar"
+                fx:id="topBar">
+        <HBox alignment="BASELINE_RIGHT" prefWidth="709" style="-fx-hgap: 25">
+            <Button text="—"
+                    styleClass="minimize-button"
+                    fx:id="minimizeButton"/>
+            <Button text="✕"
+                    styleClass="close-button"
+                    onAction="#closeApp"/>
+        </HBox>
+    </AnchorPane>
+    <VBox fx:id="createMenuVBox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+        <Label text="Create Vending Machine"
+               styleClass="title-label"/>
+        <Button fx:id="createRegularButton"
+                text="Create Regular Machine"
+                styleClass="regular-button"
+                onAction="#createRegularMachine"/>
+        <Button fx:id="createSpecialButton"
+                text="Create Special Machine"
+                styleClass="regular-button"/>
+        <Button fx:id="returnButton"
+                text="Back"
+                styleClass="nav-back-button"
+                onAction="#returnToMainMenu"/>
+    </VBox>
+</AnchorPane>
