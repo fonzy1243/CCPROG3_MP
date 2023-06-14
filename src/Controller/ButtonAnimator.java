@@ -6,6 +6,7 @@ import javafx.util.Duration;
 
 public class ButtonAnimator
 {
+	// test comment
 	public void resizeWhenHovered(Button button)
 	{
 		ScaleTransition newScale = new ScaleTransition(Duration.millis(25));
