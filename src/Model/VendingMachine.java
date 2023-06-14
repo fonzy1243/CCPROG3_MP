@@ -52,24 +52,26 @@ public class VendingMachine
 	 * #NEVERNEST
 	 * see the guard clauses technique in its full glory
 	 * @param item item to be added to a slot.
-	 * @param slotNumber index of slot to be added to.
+	 * @param slotNumber index + 1 of slot to be added to.
 	 * @param quantity amount of items to be added to the slot.
 	 */
 	public void addItemToSlot(Item item, int slotNumber, int quantity)
 	{
+		int index = slotNumber - 1;
+
 		for (Slot slot : slots)
 		{
 			if (slot.getItemList().size() > 0 &&
 			    slot.getItemList().get(0).getName().equals(item.getName()) &&
-			    slot != slots[slotNumber])
+			    slot != slots[index])
 			{
 				// Error handling here
 				return;
 			}
 		}
 
-		if (slots[slotNumber].getItemList().size() > 0 &&
-		    !item.getName().equals(slots[slotNumber].getItemList().get(0).getName()))
+		if (slots[index].getItemList().size() > 0 &&
+		    !item.getName().equals(slots[index].getItemList().get(0).getName()))
 		{
 			// Error handling here
 			return;
@@ -90,11 +92,10 @@ public class VendingMachine
 
 		for (int i = 0; i < quantity; i++)
 		{
-			slots[slotNumber].getItemList().add(item);
+			slots[index].getItemList().add(item);
 		}
 	}
 
-	// TODO: greedy algorithm for coin change or dp whatever you wanna do @Roi
 	private List<Integer> getChange(int changeValue)
 	{
 		int[] dp = new int[changeValue + 1];
