@@ -9,11 +9,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class VendingMenuController extends MenuController
@@ -275,8 +277,16 @@ public class VendingMenuController extends MenuController
 			continueButton.getStyleClass().add("nav-continue-button");
 			continueButton.setOnAction(event ->
 			{
-				vBox.getChildren().clear();
-				openVendingMenu();
+				if (payment == 0)
+				{
+					openPopup("Please insert payment.");
+					event.consume();
+				}
+				else
+				{
+					vBox.getChildren().clear();
+					openVendingMenu();
+				}
 			});
 
 			buttonAnimator.resizeWhenHovered(backButton);
