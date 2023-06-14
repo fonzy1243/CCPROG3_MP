@@ -14,6 +14,7 @@ public class Denomination
 		// Centavo coins
 		denominationStock.put(1, 1000);
 		denominationStock.put(5, 1000);
+		denominationStock.put(10, 1000);
 		denominationStock.put(25, 1000);
 
 		// Peso bills
