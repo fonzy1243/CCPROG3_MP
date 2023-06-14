@@ -146,12 +146,14 @@ public abstract class MenuController
 			scene.setFill(Color.TRANSPARENT);
 
 			Label popupLabel = (Label) root.lookup("#popupLabel");
+			popupLabel.setText(text);
 
 			Button closeButton = (Button) root.lookup("#closeButton");
 			closeButton.setOnAction(event -> popupStage.close());
 
+			AnchorPane topBar = (AnchorPane) root.lookup("#topBar");
 
-			popupLabel.setText(text);
+			moveApp(topBar, popupStage);
 
 			String css = Objects
 					.requireNonNull(this.getClass()
@@ -159,6 +161,7 @@ public abstract class MenuController
 					.toExternalForm();
 
 			scene.getStylesheets().add(css);
+
 			popupStage.setResizable(false);
 			popupStage.setScene(scene);
 			popupStage.show();
