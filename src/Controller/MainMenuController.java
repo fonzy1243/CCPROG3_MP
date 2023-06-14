@@ -4,20 +4,29 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class MainMenuController extends MenuController
 {
+	@FXML
+	AnchorPane topBar;
+	@FXML
+	Button minimizeButton;
 	@FXML
 	Button testVendingMachineButton;
 	@FXML
@@ -50,7 +59,8 @@ public class MainMenuController extends MenuController
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
 			Parent root = loader.load();
 
-			Scene scene = new Scene(root, 720, 720);
+			Scene scene = new Scene(root, 730, 730);
+			scene.setFill(Color.TRANSPARENT);
 
 			if (mainMenuVBox == null)
 			{
@@ -65,6 +75,7 @@ public class MainMenuController extends MenuController
 			scene.getStylesheets().add(css);
 
 			mainMenuVBox.setSpacing(12);
+			mainMenuVBox.setAlignment(Pos.CENTER);
 
 			if (createMenuButton == null)
 			{
@@ -86,6 +97,20 @@ public class MainMenuController extends MenuController
 			}
 
 			buttonAnimator.resizeWhenHovered(exitButton);
+
+			if (minimizeButton == null)
+			{
+				minimizeButton = (Button) root.lookup("#minimizeButton");
+			}
+
+			minimizeButton.setOnAction(event -> minimizeApp(stage));
+
+			if (topBar == null)
+			{
+				topBar = (AnchorPane) root.lookup("#topBar");
+			}
+
+			moveApp(topBar, stage);
 
 			System.out.println(vendingMachineController.getVendingMachines().size());
 
@@ -112,12 +137,5 @@ public class MainMenuController extends MenuController
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
 		openMenuScene(event, loader, "test", vendingMachineController);
-	}
-
-	@FXML
-	private void exit()
-	{
-		Platform.exit();
-		System.exit(0);
 	}
 }
