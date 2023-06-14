@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -15,6 +16,10 @@ import java.util.Objects;
 
 public class CreateMenuController extends MenuController
 {
+	@FXML
+	AnchorPane topBar;
+	@FXML
+	Button minimizeButton;
 	@FXML
 	VBox createMenuVBox;
 	@FXML
@@ -44,6 +49,9 @@ public class CreateMenuController extends MenuController
 
 		buttonAnimator.resizeWhenHovered(createRegularButton);
 		buttonAnimator.resizeWhenHovered(returnButton);
+
+		moveApp(topBar, stage);
+		minimizeButton.setOnAction(event -> minimizeApp(stage));
 	}
 	@FXML
 	private void createRegularMachine()
