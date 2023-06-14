@@ -109,7 +109,7 @@
     -fx-wrap-text: true;
 }
 
-.nav-back-button, .slot-back-button {
+.nav-back-button, .slot-back-button, .item-back-button {
     -fx-background-color: #476dbf;
     -fx-background-radius: 30;
 
@@ -130,6 +130,17 @@
     -fx-background-radius: 30;
 
     -fx-text-fill: white;
+}
+
+.add-button, .item-back-button {
+    -fx-min-width: 64;
+    -fx-min-height: 32;
+    -fx-max-width: 64;
+    -fx-max-height: 32;
+
+    -fx-font-size: 16;
+
+    -fx-effect: dropshadow(gaussian, #c24c5c, 10, 0.000001, 2, 1);
 }
 
 .slot-button, .slot-back-button {
@@ -169,4 +180,25 @@
     -fx-max-width: 310;
     -fx-wrap-text: true;
     -fx-border-insets: 0 0 10 0;
+}
+
+.item-display-background {
+    -fx-background-color: #FD6479;
+    -fx-background-radius: 30;
+    -fx-effect: dropshadow(gaussian, #1c1d2b, 25, 0.015, 15, 4);
+}
+
+.item-name, .item-other {
+    -fx-font-family: "Nunito";
+    -fx-text-fill: white;
+}
+
+.item-name {
+    -fx-font-size: 24.5;
+    -fx-font-weight: bold;
+}
+
+.item-other {
+    -fx-font-size: 19;
+    -fx-font-weight: normal;
 }
