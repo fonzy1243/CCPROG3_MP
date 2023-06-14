@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Item;
+import Model.Slot;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,13 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class VendingMenuController extends MenuController
@@ -50,11 +50,10 @@ public class VendingMenuController extends MenuController
 
 		vBox = new VBox();
 
-		uiManager.setAnchors();
+		uiManager.setVboxAnchors();
 
 		buttonAnimator = new ButtonAnimator();
 	}
-
 
 	public void setVendingMachineController(VendingMachineController controller)
 	{
@@ -86,11 +85,9 @@ public class VendingMenuController extends MenuController
 
 		payment = 0;
 
-		UIManager.setButtonGridGaps(buttonGrid);
-		uiManager.setupPaymentButtons(paymentLabel, buttonGrid);
+		UIManager.setButtonGridGaps(buttonGrid, 5);
+		uiManager.setupPaymentButtons("insert-coin-button", buttonGrid, paymentLabel);
 		uiManager.setupNavButtons(backButton, continueButton, backButtonTooltip, navButtons);
-
-		System.out.println((float) payment / 100);
 
 		vBox.getChildren().addAll(coinSlotView, title, paymentLabel, buttonGrid, navButtons);
 		vBox.setStyle("-fx-alignment: Center");
@@ -112,7 +109,7 @@ public class VendingMenuController extends MenuController
 
 		buttonGrid = new GridPane();
 
-		UIManager.setButtonGridGaps(buttonGrid);
+		UIManager.setButtonGridGaps(buttonGrid, 5);
 		uiManager.setupSlotGrid(backButton);
 
 		vBox.getChildren().addAll(label, buttonGrid);
@@ -122,17 +119,84 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
+	public void openDispenseMenu(Slot slot)
+	{
+		System.out.println(slot.getItemList().size());
+
+		Label sceneTitle = new Label("Purchasing Item");
+		sceneTitle.getStyleClass().add("title-label");
+		sceneTitle.setPadding(new Insets(0, 0, 25,0));
+
+		AnchorPane itemDisplayBackground = new AnchorPane();
+		itemDisplayBackground.setPrefSize(540, 360);
+		itemDisplayBackground.setMaxSize(540, 360);
+		itemDisplayBackground.getStyleClass().add("item-display-background");
+
+		String itemName = slot.getItemList().get(0).getName();
+		Label itemNameLabel = new Label(itemName + " - " + vendingMachineController.getVendingMachines().getLast().
+				getAvailability(itemName) + " left");
+		itemNameLabel.getStyleClass().add("item-name");
+		AnchorPane.setTopAnchor(itemNameLabel, 42.0);
+		AnchorPane.setLeftAnchor(itemNameLabel, 40.0);
+
+		Label itemPriceLabel = new Label("₱" + (float) slot.getItemList().get(0).getPrice() / 100);
+		itemPriceLabel.getStyleClass().add("item-other");
+		AnchorPane.setTopAnchor(itemPriceLabel,85.0);
+		AnchorPane.setLeftAnchor(itemPriceLabel, 40.0);
+
+		Label itemCalorieLabel = new Label(slot.getItemList().get(0).getCalories() + " kcal");
+		itemCalorieLabel.getStyleClass().add("item-other");
+		AnchorPane.setTopAnchor(itemCalorieLabel,85.0);
+		AnchorPane.setLeftAnchor(itemCalorieLabel, 147.0);
+
+		Label paymentTitle = new Label("Payment:");
+		paymentTitle.getStyleClass().add("item-other");
+		AnchorPane.setTopAnchor(paymentTitle, 121.0);
+		AnchorPane.setLeftAnchor(paymentTitle, 345.0);
+
+		Label paymentLabel = new Label("₱" + (float) payment / 100);
+		paymentLabel.getStyleClass().add("item-other");
+		AnchorPane.setTopAnchor(paymentLabel, 155.0);
+		AnchorPane.setLeftAnchor(paymentLabel, 345.0);
+
+		GridPane addPaymentButtons = new GridPane();
+		UIManager.setButtonGridGaps(addPaymentButtons, 18);
+		AnchorPane.setTopAnchor(addPaymentButtons, 138.0);
+		AnchorPane.setLeftAnchor(addPaymentButtons, 40.0);
+
+		HBox transactionButtons = new HBox();
+
+		Button cancelButton = new Button("✕");
+		cancelButton.getStyleClass().add("item-back-button");
+		Button buyButton = new Button("Buy");
+		buyButton.getStyleClass().add("add-button");
+
+		uiManager.setupPaymentButtons("add-button", addPaymentButtons, paymentLabel);
+
+		transactionButtons.getChildren().addAll(cancelButton, buyButton);
+		transactionButtons.setSpacing(12);
+		AnchorPane.setTopAnchor(transactionButtons, 210.0);
+		AnchorPane.setLeftAnchor(transactionButtons, 345.0);
+
+		itemDisplayBackground.getChildren().addAll(itemNameLabel, itemPriceLabel, itemCalorieLabel,
+				paymentTitle, paymentLabel, addPaymentButtons, transactionButtons);
+
+		vBox.getChildren().addAll(sceneTitle, itemDisplayBackground);
+		vBox.setPadding(new Insets(0, 0, 35, 0));
+		root = vBox;
+	}
+
 	private class UIManager
 	{
 		private Label addPaymentLabel()
 		{
 			Label paymentLabel = new Label();
 			paymentLabel.getStyleClass().add("title-label");
-			paymentLabel.setText(String.valueOf(payment));
+			paymentLabel.setText("₱" + payment);
 			return paymentLabel;
 		}
 
-		private void setAnchors()
+		private void setVboxAnchors()
 		{
 			AnchorPane.setTopAnchor(vBox, 20.0);
 			AnchorPane.setRightAnchor(vBox, 0.0);
@@ -175,6 +239,16 @@ public class VendingMenuController extends MenuController
 				buttonGrid.add(button, column, row);
 
 				buttonAnimator.resizeWhenHovered(button);
+
+				int slotIndex = i;
+				button.setOnAction(event ->
+				{
+					vBox.getChildren().clear();
+					Item testItem = new Item("California Maki", 1500, 47);
+					System.out.println("Item added to slot " + (slotIndex + 1));
+					vendingMachineController.getVendingMachines().getLast().addItemToSlot(testItem, slotIndex + 1, 3);
+					openDispenseMenu(vendingMachineController.getVendingMachines().getLast().getSlots()[slotIndex]);
+				});
 			}
 
 			backButton.getStyleClass().add("slot-back-button");
@@ -195,37 +269,46 @@ public class VendingMenuController extends MenuController
 			buttonAnimator.resizeWhenHovered(backButton);
 		}
 
-		public static void setButtonGridGaps(GridPane buttonGrid)
+		public static void setButtonGridGaps(GridPane buttonGrid, double gap)
 		{
 			buttonGrid.setAlignment(Pos.CENTER);
-			buttonGrid.setHgap(5);
-			buttonGrid.setVgap(5);
+			buttonGrid.setHgap(gap);
+			buttonGrid.setVgap(gap);
 		}
 
-		public void setupPaymentButtons(Label paymentLabel, GridPane buttonGrid)
+		private void setupPaymentButtons(String style, GridPane addPaymentButtons, Label paymentLabel)
 		{
 			int column = 0;
 			int row = 0;
 			int maxColumns = 3;
 
-			for (int denomination : vendingMachineController.getVendingMachines().getLast()
-					.getDenominations().getDenominationList())
+			for (int denomination : vendingMachineController.getVendingMachines().getLast().
+					getDenominations().getDenominationList())
 			{
 				Button button = new Button();
-				button.getStyleClass().add("insert-coin-button");
+				button.getStyleClass().add(style);
+
+				if (denomination >= 100000 && !style.equals("add-button"))
+				{
+					button.setStyle("-fx-font-size: 19");
+				}
+				else if (denomination >= 100000)
+				{
+					button.setStyle("-fx-font-size: 14.5");
+				}
 
 				if (denomination < 100)
 				{
-					button.setText(String.valueOf((float) denomination / 100));
+					button.setText(denomination + "¢");
 				}
 				else
 				{
-					button.setText(String.valueOf(denomination / 100));
+					button.setText("₱" + denomination / 100);
 				}
 
-				buttonGrid.add(button, column, row);
-
 				buttonAnimator.resizeWhenHovered(button);
+
+				addPaymentButtons.add(button, column, row);
 
 				column++;
 
@@ -237,7 +320,7 @@ public class VendingMenuController extends MenuController
 
 				button.setOnAction(event ->
 				{
-					paymentLabel.setText(String.valueOf((float) (payment + denomination) / 100));
+					paymentLabel.setText("₱" + (float) (payment + denomination) / 100);
 					payment += denomination;
 				});
 			}
@@ -246,12 +329,11 @@ public class VendingMenuController extends MenuController
 		public static void initializeTitleBar(AnchorPane titleBar, HBox titleBarButtons, AnchorPane rootAnchorPane)
 		{
 			titleBar.getStyleClass().add("top-bar");
+			titleBar.getChildren().add(titleBarButtons);
 
 			titleBarButtons.setPrefWidth(709);
 			titleBarButtons.setStyle("-fx-hgap: 25");
 			titleBarButtons.setAlignment(Pos.BASELINE_RIGHT);
-
-			titleBar.getChildren().add(titleBarButtons);
 
 			rootAnchorPane.getChildren().add(titleBar);
 		}
@@ -271,7 +353,10 @@ public class VendingMenuController extends MenuController
 					throw new RuntimeException(exception);
 				}
 
-				openPopup("Your " + (float) payment / 100 + " has been returned.");
+				if (payment > 0)
+				{
+					openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
+				}
 			});
 
 			continueButton.getStyleClass().add("nav-continue-button");
