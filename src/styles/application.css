@@ -19,17 +19,77 @@
     src: url("/fonts/Nunito-Medium.ttf");
 }
 
-.root {
-    -fx-background-color: #282a3d;
+.root, .tooltip, .root-shadow {
+    -fx-background-color: TRANSPARENT;
 }
 
-.button {
+.root, .root-shadow {
+    -fx-border-radius: 50;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, #1c1d2b, 10, 0.01, 0, 0);
+    -fx-background-insets: 20 10 10 10;
+}
+
+
+.rounded-pane, .rounded-popup-pane {
+    -fx-background-color: #282a3d;
+    -fx-background-radius: 0 0 10 10;
+}
+
+.rounded-pane {
+    -fx-min-height: 720;
+    -fx-min-width: 720;
+}
+
+.rounded-popup-pane {
+    -fx-min-height: 150;
+    -fx-min-width: 350;
+}
+
+.button, .tooltip {
     -fx-font-smoothing-type: lcd;
     -fx-font-family: "Nunito SemiBold";
 }
 
 #createMenuVBox, #mainMenuVBox, #testMenuVbox {
     -fx-alignment: Center;
+}
+
+.close-button, .minimize-button, .top-bar, .top-bar-popup {
+    -fx-background-color: #34364f;
+}
+
+.close-button, .minimize-button {
+    -fx-background-radius: 0;
+    -fx-max-height: 18;
+    -fx-pref-width: 30;
+    -fx-font-size: 9;
+    -fx-text-fill: white;
+}
+
+.close-button:hover {
+    -fx-background-color: #f54b64;
+}
+
+.minimize-button:hover {
+    -fx-background-color: #4a4c6e;
+}
+
+.top-bar, .top-bar-popup {
+    -fx-min-height: 20;
+    -fx-pref-height: 20;
+}
+
+.top-bar {
+    -fx-pref-width: 720;
+    -fx-background-insets: 0 0 0 10;
+    -fx-background-radius: 10 10 0 0;
+}
+
+.top-bar-popup {
+    -fx-background-insets: 0 0 0 10;
+    -fx-background-radius: 10 10 0 0;
+    -fx-pref-width: 340;
 }
 
 .regular-button {
@@ -49,7 +109,7 @@
     -fx-wrap-text: true;
 }
 
-.nav-button, .slot-back-button {
+.nav-back-button, .slot-back-button {
     -fx-background-color: #476dbf;
     -fx-background-radius: 30;
 
@@ -58,14 +118,14 @@
     -fx-text-alignment: center;
 }
 
-.nav-button {
-    -fx-max-height: 30;
-    -fx-max-width: 120;
+.nav-back-button, .nav-continue-button {
+    -fx-pref-height: 30;
+    -fx-pref-width: 120;
 
     -fx-font-size: 20;
 }
 
-.slot-button, .add-button, .insert-coin-button {
+.slot-button, .add-button, .insert-coin-button, .nav-continue-button {
     -fx-background-color: #a8bd5d;
     -fx-background-radius: 30;
 
@@ -92,9 +152,21 @@
     -fx-font-size: 22;
 }
 
+.title-label, .popup-label {
+    -fx-font-family: "Nunito";
+    -fx-text-fill: #f39661;
+}
+
 .title-label {
     -fx-font-size: 32;
-    -fx-font-family: "Nunito";
     -fx-font-weight: bold;
-    -fx-text-fill: #f39661;
+}
+
+.popup-label {
+    -fx-font-size: 28;
+    -fx-font-weight: normal;
+    -fx-text-alignment: left;
+    -fx-max-width: 310;
+    -fx-wrap-text: true;
+    -fx-border-insets: 0 0 10 0;
 }
