@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -89,10 +90,11 @@ public abstract class MenuController
 			}
 			default ->
 			{
-
+				// Do nothing.
 			}
 		}
 
+		// Get CSS filepath.
 		String css = Objects
 				.requireNonNull(this.getClass()
 						.getResource("/styles/application.css"))
@@ -148,6 +150,24 @@ public abstract class MenuController
 			Label popupLabel = (Label) root.lookup("#popupLabel");
 			popupLabel.setText(text);
 
+			// If somehow the text is longer than this such that it no longer fits, the user is trolling.
+			if (text.length() >= 115)
+			{
+				popupLabel.setStyle("-fx-font-size: 16");
+			}
+			else if (text.length() >= 85)
+			{
+				popupLabel.setStyle("-fx-font-size: 18");
+			}
+			else if (text.length() >= 65)
+			{
+				popupLabel.setStyle("-fx-font-size: 20");
+			}
+			else if (text.length() >= 45)
+			{
+				popupLabel.setStyle("-fx-font-size:  22");
+			}
+
 			Button closeButton = (Button) root.lookup("#closeButton");
 			closeButton.setOnAction(event -> popupStage.close());
 
@@ -162,7 +182,6 @@ public abstract class MenuController
 
 			scene.getStylesheets().add(css);
 
-			popupStage.setResizable(false);
 			popupStage.setScene(scene);
 			popupStage.show();
 		} catch (Exception exception)

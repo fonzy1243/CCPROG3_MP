@@ -52,29 +52,26 @@ public class VendingMachine
 	 * #NEVERNEST
 	 * see the guard clauses technique in its full glory
 	 * @param item item to be added to a slot.
-	 * @param slotNumber index + 1 of slot to be added to.
+	 * @param slotIndex index of slot to be added to.
 	 * @param quantity amount of items to be added to the slot.
 	 */
-	public void addItemToSlot(Item item, int slotNumber, int quantity)
+	public boolean addItemToSlot(Item item, int slotIndex, int quantity)
 	{
-		int index = slotNumber - 1;
 
 		for (Slot slot : slots)
 		{
 			if (slot.getItemList().size() > 0 &&
 			    slot.getItemList().get(0).getName().equals(item.getName()) &&
-			    slot != slots[index])
+			    slot != slots[slotIndex])
 			{
-				// Error handling here
-				return;
+				return false;
 			}
 		}
 
-		if (slots[index].getItemList().size() > 0 &&
-		    !item.getName().equals(slots[index].getItemList().get(0).getName()))
+		if (slots[slotIndex].getItemList().size() > 0 &&
+		    !item.getName().equals(slots[slotIndex].getItemList().get(0).getName()))
 		{
-			// Error handling here
-			return;
+			throw new IllegalStateException("Different item found in slot. Please submit a bug report.");
 		}
 
 		int totalItemCount = 0;
@@ -86,14 +83,15 @@ public class VendingMachine
 
 		if (totalItemCount + quantity > itemLimit)
 		{
-			// Error handling here
-			return;
+			return false;
 		}
 
 		for (int i = 0; i < quantity; i++)
 		{
-			slots[index].getItemList().add(item);
+			slots[slotIndex].getItemList().add(item);
 		}
+
+		return true;
 	}
 
 	private List<Integer> getChange(int changeValue)
@@ -146,32 +144,36 @@ public class VendingMachine
 
 	/**
 	 * #NEVERNEST PART 2
-	 * @param slotNumber slot number of the item to be dispensed.
+	 * @param slotIndex slot index of the item to be dispensed.
 	 * @param paymentAmount amount paid by the buyer.
 	 */
-	public void dispenseItem(int slotNumber, int paymentAmount)
+	public List<Integer> dispenseItem(int slotIndex, int paymentAmount)
 	{
-		if (slots[slotNumber].getItemList().size() == 0)
+		if (slots[slotIndex].getItemList().size() == 0)
 		{
 			// Error handling here for if no items in slot
-			return;
+			// Handle with exception
+			// The action event should include slot size checking, so if this exception is thrown there is an error.
+			throw new IllegalStateException("Empty slot dispense attempt. Please submit a bug report.");
 		}
 
-		if (slots[slotNumber].getItemList().get(0).getPrice() > paymentAmount)
+		if (slots[slotIndex].getItemList().get(0).getPrice() > paymentAmount)
 		{
 			// Error handling here for insufficient payment
-			return;
+			return null;
 		}
 
 		List<Integer> coinChangeValues = getChange(paymentAmount -
-		                                           slots[slotNumber].getItemList().get(0).getPrice());
+		                                           slots[slotIndex].getItemList().get(0).getPrice());
 
-		slots[slotNumber].getItemList().remove(0);
+		slots[slotIndex].getItemList().remove(0);
 
-		System.out.println("Change = " + ((float) (paymentAmount - slots[slotNumber].getItemList().get(0).getPrice()) /
+		System.out.println("Change = " + ((float) (paymentAmount - slots[slotIndex].getItemList().get(0).getPrice()) /
 		                                  100));
 
 		printChange(coinChangeValues);
+
+		return coinChangeValues;
 	}
 
 	// for testing change

@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.List;
 
 public class VendingMenuController extends MenuController
 {
@@ -29,6 +30,7 @@ public class VendingMenuController extends MenuController
 	private final AnchorPane titleBar;
 	private final Button minimizeButton;
 	private final Button closeButton;
+	private final HBox titleBarButtons;
 	private final UIManager uiManager;
 	private int payment;
 
@@ -45,7 +47,7 @@ public class VendingMenuController extends MenuController
 		uiManager.initializeButtons();
 
 		titleBar = new AnchorPane();
-		HBox titleBarButtons = new HBox(minimizeButton, closeButton);
+		titleBarButtons = new HBox(minimizeButton, closeButton);
 		UIManager.initializeTitleBar(titleBar, titleBarButtons, rootAnchorPane);
 
 		vBox = new VBox();
@@ -67,6 +69,8 @@ public class VendingMenuController extends MenuController
 
 	public void openCoinInsertionMenu()
 	{
+		payment = 0;
+		
 		Tooltip backButtonTooltip = new Tooltip("Cancel transaction and return money.");
 
 		Button backButton = new Button("Back");
@@ -82,8 +86,6 @@ public class VendingMenuController extends MenuController
 
 		buttonGrid = new GridPane();
 		buttonGrid.setPadding(new Insets(10, 0, 0, 0));
-
-		payment = 0;
 
 		UIManager.setButtonGridGaps(buttonGrid, 5);
 		uiManager.setupPaymentButtons("insert-coin-button", buttonGrid, paymentLabel);
@@ -119,64 +121,51 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
-	public void openDispenseMenu(Slot slot)
+
+	public void openDispenseMenu(Slot slot, int slotIndex)
 	{
 		System.out.println(slot.getItemList().size());
 
-		Label sceneTitle = new Label("Purchasing Item");
-		sceneTitle.getStyleClass().add("title-label");
-		sceneTitle.setPadding(new Insets(0, 0, 25,0));
+		String itemName = slot.getItemList().get(0).getName();
 
 		AnchorPane itemDisplayBackground = new AnchorPane();
-		itemDisplayBackground.setPrefSize(540, 360);
-		itemDisplayBackground.setMaxSize(540, 360);
-		itemDisplayBackground.getStyleClass().add("item-display-background");
 
-		String itemName = slot.getItemList().get(0).getName();
+		Label sceneTitle = new Label("Purchasing Item");
 		Label itemNameLabel = new Label(itemName + " - " + vendingMachineController.getVendingMachines().getLast().
 				getAvailability(itemName) + " left");
-		itemNameLabel.getStyleClass().add("item-name");
-		AnchorPane.setTopAnchor(itemNameLabel, 42.0);
-		AnchorPane.setLeftAnchor(itemNameLabel, 40.0);
-
 		Label itemPriceLabel = new Label("₱" + (float) slot.getItemList().get(0).getPrice() / 100);
-		itemPriceLabel.getStyleClass().add("item-other");
-		AnchorPane.setTopAnchor(itemPriceLabel,85.0);
-		AnchorPane.setLeftAnchor(itemPriceLabel, 40.0);
-
 		Label itemCalorieLabel = new Label(slot.getItemList().get(0).getCalories() + " kcal");
-		itemCalorieLabel.getStyleClass().add("item-other");
-		AnchorPane.setTopAnchor(itemCalorieLabel,85.0);
-		AnchorPane.setLeftAnchor(itemCalorieLabel, 147.0);
 
 		Label paymentTitle = new Label("Payment:");
-		paymentTitle.getStyleClass().add("item-other");
-		AnchorPane.setTopAnchor(paymentTitle, 121.0);
-		AnchorPane.setLeftAnchor(paymentTitle, 345.0);
 
 		Label paymentLabel = new Label("₱" + (float) payment / 100);
-		paymentLabel.getStyleClass().add("item-other");
-		AnchorPane.setTopAnchor(paymentLabel, 155.0);
-		AnchorPane.setLeftAnchor(paymentLabel, 345.0);
+
+		uiManager.setupGUIElements(sceneTitle, itemDisplayBackground, itemNameLabel, itemPriceLabel, itemCalorieLabel, paymentTitle, paymentLabel);
 
 		GridPane addPaymentButtons = new GridPane();
 		UIManager.setButtonGridGaps(addPaymentButtons, 18);
-		AnchorPane.setTopAnchor(addPaymentButtons, 138.0);
-		AnchorPane.setLeftAnchor(addPaymentButtons, 40.0);
 
 		HBox transactionButtons = new HBox();
 
+		uiManager.setAnchors(itemNameLabel, itemPriceLabel, itemCalorieLabel,
+				paymentTitle, paymentLabel, addPaymentButtons, transactionButtons);
+
 		Button cancelButton = new Button("✕");
 		cancelButton.getStyleClass().add("item-back-button");
+		cancelButton.setOnAction(event ->
+		{
+			vBox.getChildren().clear();
+			openVendingMenu();
+		});
+
 		Button buyButton = new Button("Buy");
 		buyButton.getStyleClass().add("add-button");
+		buyButton.setOnAction(event -> produceChange(slot, slotIndex, itemName));
 
 		uiManager.setupPaymentButtons("add-button", addPaymentButtons, paymentLabel);
 
 		transactionButtons.getChildren().addAll(cancelButton, buyButton);
 		transactionButtons.setSpacing(12);
-		AnchorPane.setTopAnchor(transactionButtons, 210.0);
-		AnchorPane.setLeftAnchor(transactionButtons, 345.0);
 
 		itemDisplayBackground.getChildren().addAll(itemNameLabel, itemPriceLabel, itemCalorieLabel,
 				paymentTitle, paymentLabel, addPaymentButtons, transactionButtons);
@@ -186,8 +175,89 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
+	private void produceChange(Slot slot, int slotIndex, String itemName)
+	{
+		List<Integer> changeList = vendingMachineController.getVendingMachines().getLast().
+				dispenseItem(slotIndex, payment);
+
+		if (changeList == null)
+		{
+			openPopup("Please insert more money.");
+		}
+		else if (changeList.size() == 0 && payment > slot.getItemList().get(0).getPrice())
+		{
+			openPopup("Could not produce change. Try again at a later date.");
+			// to extract method
+			changeScene();
+		}
+		else if (payment == slot.getItemList().get(0).getPrice())
+		{
+			openPopup("You paid the exact amount and have received " + itemName);
+			// to extract method
+			changeScene();
+		}
+		else
+		{
+			StringBuilder stringBuilder = new StringBuilder();
+			changeList.forEach((change) -> stringBuilder.append("₱").append((float) change / 100).append(" "));
+
+			if (changeList.size() == 1)
+			{
+				openPopup("You have received " + itemName + ". Your change is " + stringBuilder);
+			}
+			else
+			{
+				openPopup("You have received " + itemName + ". Your change is ₱" +
+				          (float) (payment - slot.getItemList().get(0).getPrice()) / 100 + ": " + stringBuilder);
+			}
+
+			changeScene();
+		}
+	}
+
+
+	private void changeScene()
+	{
+		vBox.getChildren().clear();
+		rootAnchorPane.getChildren().remove(vBox);
+		openCoinInsertionMenu();
+	}
+
 	private class UIManager
 	{
+
+		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
+		{
+			sceneTitle.getStyleClass().add("title-label");
+			sceneTitle.setPadding(new Insets(0, 0, 25,0));
+			itemDisplayBackground.setPrefSize(540, 360);
+			itemDisplayBackground.setMaxSize(540, 360);
+			itemDisplayBackground.getStyleClass().add("item-display-background");
+			itemNameLabel.getStyleClass().add("item-name");
+			itemPriceLabel.getStyleClass().add("item-other");
+			itemCalorieLabel.getStyleClass().add("item-other");
+			paymentTitle.getStyleClass().add("item-other");
+			paymentLabel.getStyleClass().add("item-other");
+		}
+
+		private void setAnchors(Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel, GridPane addPaymentButtons, HBox transactionButtons)
+		{
+			AnchorPane.setTopAnchor(itemNameLabel, 42.0);
+			AnchorPane.setLeftAnchor(itemNameLabel, 40.0);
+			AnchorPane.setTopAnchor(itemPriceLabel,85.0);
+			AnchorPane.setLeftAnchor(itemPriceLabel, 40.0);
+			AnchorPane.setTopAnchor(itemCalorieLabel,85.0);
+			AnchorPane.setLeftAnchor(itemCalorieLabel, 147.0);
+			AnchorPane.setTopAnchor(paymentTitle, 121.0);
+			AnchorPane.setLeftAnchor(paymentTitle, 345.0);
+			AnchorPane.setTopAnchor(paymentLabel, 155.0);
+			AnchorPane.setLeftAnchor(paymentLabel, 345.0);
+			AnchorPane.setTopAnchor(addPaymentButtons, 138.0);
+			AnchorPane.setLeftAnchor(addPaymentButtons, 40.0);
+			AnchorPane.setTopAnchor(transactionButtons, 210.0);
+			AnchorPane.setLeftAnchor(transactionButtons, 345.0);
+		}
+
 		private Label addPaymentLabel()
 		{
 			Label paymentLabel = new Label();
@@ -216,7 +286,6 @@ public class VendingMenuController extends MenuController
 			minimizeButton.getStyleClass().add("minimize-button");
 			minimizeButton.setOnAction(event -> minimizeApp(stage));
 
-
 			closeButton.getStyleClass().add("close-button");
 			closeButton.setOnAction(event -> closeApp());
 		}
@@ -244,10 +313,21 @@ public class VendingMenuController extends MenuController
 				button.setOnAction(event ->
 				{
 					vBox.getChildren().clear();
+
+					// temporary testing code
 					Item testItem = new Item("California Maki", 1500, 47);
-					System.out.println("Item added to slot " + (slotIndex + 1));
-					vendingMachineController.getVendingMachines().getLast().addItemToSlot(testItem, slotIndex + 1, 3);
-					openDispenseMenu(vendingMachineController.getVendingMachines().getLast().getSlots()[slotIndex]);
+					if (!vendingMachineController.getVendingMachines().getLast().
+							addItemToSlot(testItem, slotIndex, 3))
+					{
+						openPopup("Cannot add item.");
+						openVendingMenu();
+					}
+					else
+					{
+						System.out.println("Item added to slot " + (slotIndex + 1));
+						openDispenseMenu(vendingMachineController.getVendingMachines().getLast().
+								getSlots()[slotIndex], slotIndex);
+					}
 				});
 			}
 
