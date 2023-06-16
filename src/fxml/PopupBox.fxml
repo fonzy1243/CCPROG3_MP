@@ -18,7 +18,7 @@
         </HBox>
     </AnchorPane>
     <VBox AnchorPane.topAnchor="10" AnchorPane.rightAnchor="0.0"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" alignment="CENTER">
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" alignment="CENTER" fx:id="vBox">
         <Label styleClass="popup-label" fx:id="popupLabel"/>
     </VBox>
 </AnchorPane>
