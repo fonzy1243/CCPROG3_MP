@@ -163,6 +163,10 @@ public abstract class MenuController
 			{
 				popupLabel.setStyle("-fx-font-size: 20");
 			}
+			else if (text.length() >= 45)
+			{
+				popupLabel.setStyle("-fx-font-size:  22");
+			}
 
 			Button closeButton = (Button) root.lookup("#closeButton");
 			closeButton.setOnAction(event -> popupStage.close());
