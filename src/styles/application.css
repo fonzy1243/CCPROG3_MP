@@ -183,7 +183,7 @@
 }
 
 .item-display-background {
-    -fx-background-color: #FD6479;
+    -fx-background-color: #e35a6d;
     -fx-background-radius: 30;
     -fx-effect: dropshadow(gaussian, #1c1d2b, 25, 0.015, 15, 4);
 }
