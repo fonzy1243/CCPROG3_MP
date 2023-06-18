@@ -6,6 +6,13 @@ import Model.VendingMachine;
 
 import java.util.LinkedList;
 
+/**
+ * Controls the vending machine functions through user input.
+ * <p>
+ * Each menu controller subclass shares the same static instance of a vending machine controller
+ * such that it can be used to manage the relationship between user input through the different
+ * menus and the application's vending machines.
+ */
 public class VendingMachineController
 {
 	private final LinkedList<VendingMachine> vendingMachines;
@@ -29,7 +36,6 @@ public class VendingMachineController
 	{
 		return vendingMachines;
 	}
-
 
 	public void purchaseItem()
 	{

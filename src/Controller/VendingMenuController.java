@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Item;
 import Model.Slot;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,10 +17,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controls user input in the vending features menu.
+ * @see Controller.MenuController
+ */
 public class VendingMenuController extends MenuController
 {
 	private Parent root;
@@ -130,7 +137,7 @@ public class VendingMenuController extends MenuController
 
 		AnchorPane itemDisplayBackground = new AnchorPane();
 
-		Label sceneTitle = new Label("Purchasing Item");
+		final Label sceneTitle = new Label("Purchasing Item");
 		Label itemNameLabel = new Label(itemName + " - " + vendingMachineController.getVendingMachines().getLast().
 				getAvailability(itemName) + " left");
 		Label itemPriceLabel = new Label("₱" + (float) slot.getItemList().get(0).getPrice() / 100);
@@ -160,7 +167,9 @@ public class VendingMenuController extends MenuController
 
 		Button buyButton = new Button("Buy");
 		buyButton.getStyleClass().add("add-button");
-		buyButton.setOnAction(event -> produceChange(slot, slotIndex, itemName));
+
+		buyButton.setOnAction(event ->
+				produceChange(slot, slotIndex, itemName, sceneTitle));
 
 		uiManager.setupPaymentButtons("add-button", addPaymentButtons, paymentLabel);
 
@@ -175,7 +184,7 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
-	private void produceChange(Slot slot, int slotIndex, String itemName)
+	private void produceChange(Slot slot, int slotIndex, String itemName, Label sceneTitle)
 	{
 		List<Integer> changeList = vendingMachineController.getVendingMachines().getLast().
 				dispenseItem(slotIndex, payment);
@@ -201,20 +210,32 @@ public class VendingMenuController extends MenuController
 			StringBuilder stringBuilder = new StringBuilder();
 			changeList.forEach((change) -> stringBuilder.append("₱").append((float) change / 100).append(" "));
 
-			if (changeList.size() == 1)
-			{
-				openPopup("You have received " + itemName + ". Your change is " + stringBuilder);
-			}
-			else
-			{
-				openPopup("You have received " + itemName + ". Your change is ₱" +
-				          (float) (payment - slot.getItemList().get(0).getPrice()) / 100 + ": " + stringBuilder);
-			}
+			Timeline timeline = new Timeline(
+					new KeyFrame(Duration.ZERO, event -> sceneTitle.setText("Dispensing item")),
+					new KeyFrame(Duration.millis(600), event -> sceneTitle.setText("Dispensing item.")),
+					new KeyFrame(Duration.millis(1200), event -> sceneTitle.setText("Dispensing item..")),
+					new KeyFrame(Duration.millis(1700), event -> sceneTitle.setText("Dispensing item...")),
+					new KeyFrame(Duration.millis(2200))
+			);
 
-			changeScene();
+			timeline.playFromStart();
+
+			timeline.setOnFinished(actionEvent ->
+			{
+				if (changeList.size() == 1)
+				{
+					openPopup("You have received " + itemName + ". Your change is " + stringBuilder);
+				}
+				else
+				{
+					openPopup("You have received " + itemName + ". Your change is ₱" +
+					          (float) (payment - slot.getItemList().get(0).getPrice()) / 100 + ": " + stringBuilder);
+				}
+
+				changeScene();
+			});
 		}
 	}
-
 
 	private void changeScene()
 	{

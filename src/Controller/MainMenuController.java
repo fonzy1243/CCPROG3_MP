@@ -16,6 +16,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controls user input in the main menu.
+ * Allows the user to navigate to submenus.
+ * @see Controller.MenuController
+ */
 public class MainMenuController extends MenuController
 {
 	@FXML
@@ -41,12 +46,19 @@ public class MainMenuController extends MenuController
 		this.buttonAnimator = new ButtonAnimator();
 	}
 
+	/**
+	 * Passes the program's vending machine controller (static) to the main menu scene controller.
+	 * @param controller manages vending machine functions such as dispensing item.
+	 */
 	public void setVendingMachineController(VendingMachineController controller)
 	{
 		vendingMachineController = controller;
 	}
 
-
+	/**
+	 * Opens the main menu scene through its FXML file.
+	 * @param stage application window.
+	 */
 	public void openMainMenu(Stage stage)
 	{
 		try
@@ -62,15 +74,19 @@ public class MainMenuController extends MenuController
 				mainMenuVBox = (VBox) root.lookup("#mainMenuVBox");
 			}
 
+			// Get the CSS file from the styles folder.
 			String css = Objects
 					.requireNonNull(this.getClass()
 							.getResource("/styles/application.css"))
 					.toExternalForm();
 
+			// Apply the CSS styles to the scene.
 			scene.getStylesheets().add(css);
 
 			mainMenuVBox.setSpacing(12);
 			mainMenuVBox.setAlignment(Pos.CENTER);
+
+			// Instantiate buttons from the FXML file and animate them.
 
 			if (createMenuButton == null)
 			{
@@ -105,6 +121,7 @@ public class MainMenuController extends MenuController
 				topBar = (AnchorPane) root.lookup("#topBar");
 			}
 
+			// Allow the user to click and drag the app through the top bar.
 			moveApp(topBar, stage);
 
 			System.out.println(vendingMachineController.getVendingMachines().size());
@@ -120,6 +137,11 @@ public class MainMenuController extends MenuController
 		}
 	}
 
+	/**
+	 * Opens the create menu scene through FXML and sets the controller to createMenuController.
+	 * @param event button click
+	 * @throws IOException if error occurs loading the FXML file
+	 */
 	@FXML
 	private void goToCreateMenu(ActionEvent event) throws IOException
 	{
@@ -127,6 +149,11 @@ public class MainMenuController extends MenuController
 		openMenuScene(event, loader, "create", vendingMachineController);
 	}
 
+	/**
+	 * Opens the create menu scene through FXML and sets the controller to testMenuController.
+	 * @param event button click
+	 * @throws IOException if error occurs loading the FXML file
+	 */
 	@FXML
 	private void goToTestMenu(ActionEvent event) throws IOException
 	{

@@ -8,6 +8,11 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/**
+ * Controls user input inside the test menu.
+ * Allows the user to navigate to submenus.
+ * @see Controller.MenuController
+ */
 public class TestMenuController extends MenuController
 {
 	@FXML
@@ -35,6 +40,9 @@ public class TestMenuController extends MenuController
 		this.vendingMachineController = vendingMachineController;
 	}
 
+	/**
+	 * Sets up test menu UI elements.
+	 */
 	public void openTestMenu()
 	{
 		testMenuVbox.setSpacing(12);
@@ -47,6 +55,11 @@ public class TestMenuController extends MenuController
 		minimizeButton.setOnAction(event -> minimizeApp(stage));
 	}
 
+	/**
+	 * Opens the vending menu scenes and sets the controller to vendingMenuController.
+	 * @param event button click
+	 * @throws IOException if error occurred while opening FXML
+	 */
 	@FXML
 	private void goToVendingMenu(ActionEvent event) throws IOException
 	{

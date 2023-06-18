@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -18,15 +17,34 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * MenuController is the abstract base class for all menu controlling functions
+ * which manages the interaction between the user and the application. A MenuController
+ * object encapsulates the application's UI elements and the controller for the application's
+ * vending machines.
+ * <p>
+ * All menu controller subclasses share the same stage, as a new window is not required for most of
+ * the application's functions (barring the open popup method and its uses).
+ */
 public abstract class MenuController
 {
 	protected Stage stage;
 
+	/**
+	 * Sets the stage (window) used by the menu controller.
+	 * @param stage application window
+	 */
 	public void setStage(Stage stage)
 	{
 		this.stage = stage;
 	}
 
+	/**
+	 * Goes from the menu controller's current scene to the main menu scene and returns control to the
+	 * mainMenuController.
+	 * @param event button click
+	 * @throws IOException if error occurred when loading FXML file
+	 */
 	@FXML
 	void returnToMainMenu(ActionEvent event) throws IOException
 	{
@@ -51,6 +69,15 @@ public abstract class MenuController
 		stage.show();
 	}
 
+	/**
+	 * Opens a menu scene and hands control to its respective controller. It maintains the same stage used
+	 * in the previous scene.
+	 * @param event button click
+	 * @param loader FXML loader (if used)
+	 * @param menu menu to be loaded, for example: <ul><li>vending</li><li>create</li><li>test</li></ul>
+	 * @param vendingMachineController controller for application's vending machines
+	 * @throws IOException if error occurred while loading FXML
+	 */
 	void openMenuScene(ActionEvent event, FXMLLoader loader, String menu,
 	                   VendingMachineController vendingMachineController) throws IOException
 	{
@@ -106,6 +133,9 @@ public abstract class MenuController
 		stage.show();
 	}
 
+	/**
+	 * Closes the application and all dependent windows.
+	 */
 	@FXML
 	void closeApp()
 	{
@@ -113,11 +143,20 @@ public abstract class MenuController
 		System.exit(0);
 	}
 
+	/**
+	 * Minimizes a window.
+	 * @param stage window to be minimized
+	 */
 	void minimizeApp(Stage stage)
 	{
 		stage.setIconified(true);
 	}
 
+	/**
+	 * Allows the user to click and drag the top bar to move the app around the screen.
+	 * @param topBar draggable anchor pane
+	 * @param stage application window
+	 */
 	void moveApp(AnchorPane topBar, Stage stage)
 	{
 		double[] x = {0};
@@ -136,6 +175,10 @@ public abstract class MenuController
 		});
 	}
 
+	/**
+	 * Opens a popup dialog box to inform the user of something.
+	 * @param text string to be displayed in the popup
+	 */
 	void openPopup(String text)
 	{
 		try

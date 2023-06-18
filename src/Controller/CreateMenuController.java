@@ -5,6 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Controls user input in the create menu.
+ * Allows the user to create vending machines.
+ * @see Controller.MenuController
+ */
 public class CreateMenuController extends MenuController
 {
 	@FXML
