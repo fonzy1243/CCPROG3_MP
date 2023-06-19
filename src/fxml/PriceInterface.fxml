@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.PriceInterfaceController"
+            prefHeight="720.0" prefWidth="720.0"
+            styleClass="rounded-pane">
+    <AnchorPane styleClass="top-bar"
+                fx:id="topBar">
+        <HBox alignment="BASELINE_RIGHT" prefWidth="709" style="-fx-hgap: 25">
+            <Button text="—"
+                    styleClass="minimize-button"
+                    fx:id="minimizeButton"/>
+            <Button text="✕"
+                    styleClass="close-button"
+                    onAction="#closeApp"/>
+        </HBox>
+    </AnchorPane>
+    <VBox fx:id="priceInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+        <Label text="Edit Price"
+               styleClass="title-label"/>
+        <ComboBox fx:id="slotDropdown" promptText="Slot"/>
+        <Label styleClass="text-field-label" fx:id="priceAmountLabel" text="test"/>
+        <HBox fx:id="priceBox" styleClass="input-field">
+            <TextField fx:id="priceTextField" promptText="Item Price"/>
+        </HBox>
+        <HBox fx:id="navButtons" alignment="CENTER">
+            <Button fx:id="backButton"
+                    styleClass="nav-back-button"
+                    text="Back"
+                    onAction="#back"/>
+            <Button fx:id="addButton"
+                    styleClass="nav-continue-button"
+                    text="Add"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
