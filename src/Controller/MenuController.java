@@ -115,6 +115,20 @@ public abstract class MenuController
 				testMenuController.setStage(stage);
 				testMenuController.openTestMenu();
 			}
+			case "maintenance" ->
+			{
+				MaintenanceMenuController maintenanceMenuController = loader.getController();
+				maintenanceMenuController.setVendingMachineController(vendingMachineController);
+				maintenanceMenuController.setStage(stage);
+				maintenanceMenuController.openMaintenanceMenu();
+			}
+			case "stock" ->
+			{
+				StockInterfaceController stockInterfaceController = loader.getController();
+				stockInterfaceController.setVendingMachineController(vendingMachineController);
+				stockInterfaceController.setStage(stage);
+				stockInterfaceController.openStockInterface();
+			}
 			default ->
 			{
 				// Do nothing.
