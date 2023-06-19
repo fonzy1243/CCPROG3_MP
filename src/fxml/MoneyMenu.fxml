@@ -33,7 +33,7 @@
         <Button fx:id="depositButton"
                 styleClass="regular-button"
                 text="Deposit History"
-        />
+                onAction="#goToDispenseInterface"/>
         <Button fx:id="returnButton"
                 styleClass="nav-back-button"
                 text="Back"
