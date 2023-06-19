@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Item;
 import Model.Slot;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,7 +38,7 @@ public class VendingMenuController extends MenuController
 	private final Button minimizeButton;
 	private final Button closeButton;
 	private final UIManager uiManager;
-	private List<Integer> paymentDenominations;
+	private final List<Integer> paymentDenominations;
 	private int payment;
 
 	public VendingMenuController()
@@ -60,7 +59,7 @@ public class VendingMenuController extends MenuController
 
 		vBox = new VBox();
 
-		List<Integer> paymentDenominations = new LinkedList<>();
+		paymentDenominations = new LinkedList<>();
 
 		UIManager.setVboxAnchors(vBox);
 
