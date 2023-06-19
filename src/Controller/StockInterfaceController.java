@@ -20,10 +20,14 @@ import java.util.Arrays;
 
 public class StockInterfaceController extends MenuController
 {
-	public Button addButton;
-	public TextField nameTextField;
-	public TextField priceTextField;
-	public TextField calorieTextField;
+	@FXML
+	private Button addButton;
+	@FXML
+	private TextField nameTextField;
+	@FXML
+	private TextField priceTextField;
+	@FXML
+	private TextField calorieTextField;
 	@FXML
 	private HBox navButtons;
 	@FXML
