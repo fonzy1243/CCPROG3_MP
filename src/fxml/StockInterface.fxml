@@ -28,21 +28,19 @@
                styleClass="title-label"/>
         <ComboBox fx:id="slotDropdown" promptText="Slot"/>
         <HBox fx:id="nameBox" styleClass="input-field">
-            <Label fx:id="nameLabel" styleClass="text-field-label"/>
             <TextField fx:id="nameTextField" promptText="Item Name"/>
         </HBox>
         <HBox fx:id="priceBox" styleClass="input-field">
-            <Label fx:id="priceLabel" styleClass="text-field-label"/>
             <TextField fx:id="priceTextField" promptText="Item Price"/>
         </HBox>
         <HBox fx:id="calorieBox" styleClass="input-field">
-            <Label fx:id="calorieLabel" styleClass="text-field-label"/>
             <TextField fx:id="calorieTextField" promptText="Item Calories"/>
         </HBox>
         <HBox fx:id="navButtons" alignment="CENTER">
             <Button fx:id="backButton"
                     styleClass="nav-back-button"
-                    text="Back"/>
+                    text="Back"
+                    onAction="#back"/>
             <Button fx:id="addButton"
                     styleClass="nav-continue-button"
                     text="Add"/>
