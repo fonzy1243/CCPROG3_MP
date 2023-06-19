@@ -27,7 +27,7 @@
         <Label text="Edit Price"
                styleClass="title-label"/>
         <ComboBox fx:id="slotDropdown" promptText="Slot"/>
-        <Label styleClass="text-field-label" fx:id="priceAmountLabel" text="test"/>
+        <Label styleClass="text-field-label" fx:id="priceAmountLabel" text="₱0"/>
         <HBox fx:id="priceBox" styleClass="input-field">
             <TextField fx:id="priceTextField" promptText="Item Price"/>
         </HBox>
