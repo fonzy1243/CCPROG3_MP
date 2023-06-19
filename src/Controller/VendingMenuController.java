@@ -168,7 +168,7 @@ public class VendingMenuController extends MenuController
 		buyButton.getStyleClass().add("add-button");
 
 		buyButton.setOnAction(event ->
-				produceChange(slot, slotIndex, itemName, sceneTitle));
+				produceChange(slot, slotIndex, itemName, sceneTitle, buyButton));
 
 		uiManager.setupPaymentButtons("add-button", addPaymentButtons, paymentLabel);
 
@@ -183,7 +183,7 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
-	private void produceChange(Slot slot, int slotIndex, String itemName, Label sceneTitle)
+	private void produceChange(Slot slot, int slotIndex, String itemName, Label sceneTitle, Button button)
 	{
 		List<Integer> changeList = vendingMachineController.getVendingMachines().getLast().
 				dispenseItem(slotIndex, payment);
@@ -200,22 +200,22 @@ public class VendingMenuController extends MenuController
 		}
 		else if (payment == slot.getItemList().get(0).getPrice())
 		{
-			openPopup("You paid the exact amount and have received " + itemName);
-			// to extract method
-			changeScene();
+			Timeline timeline = showProcessingText(sceneTitle, button);
+			timeline.playFromStart();
+
+			timeline.setOnFinished(actionEvent ->
+			{
+				openPopup("You paid the exact amount and have received " + itemName);
+				// to extract method
+				changeScene();
+			});
 		}
 		else
 		{
+			Timeline timeline = showProcessingText(sceneTitle, button);
+
 			StringBuilder stringBuilder = new StringBuilder();
 			changeList.forEach((change) -> stringBuilder.append("₱").append((float) change / 100).append(" "));
-
-			Timeline timeline = new Timeline(
-					new KeyFrame(Duration.ZERO, event -> sceneTitle.setText("Dispensing item")),
-					new KeyFrame(Duration.millis(600), event -> sceneTitle.setText("Dispensing item.")),
-					new KeyFrame(Duration.millis(1200), event -> sceneTitle.setText("Dispensing item..")),
-					new KeyFrame(Duration.millis(1700), event -> sceneTitle.setText("Dispensing item...")),
-					new KeyFrame(Duration.millis(2200))
-			);
 
 			timeline.playFromStart();
 
@@ -234,6 +234,18 @@ public class VendingMenuController extends MenuController
 				changeScene();
 			});
 		}
+	}
+
+	private Timeline showProcessingText(Label sceneTitle, Button button)
+	{
+		button.setDisable(true);
+		return new Timeline(
+				new KeyFrame(Duration.ZERO, event -> sceneTitle.setText("Dispensing item")),
+				new KeyFrame(Duration.millis(600), event -> sceneTitle.setText("Dispensing item.")),
+				new KeyFrame(Duration.millis(1200), event -> sceneTitle.setText("Dispensing item..")),
+				new KeyFrame(Duration.millis(1700), event -> sceneTitle.setText("Dispensing item...")),
+				new KeyFrame(Duration.millis(2200))
+		);
 	}
 
 	private void changeScene()
