@@ -57,10 +57,10 @@ public class MoneyMenuController extends MenuController
 	}
 
 	@FXML
-	private void goToPriceInterface(ActionEvent event) throws IOException
+	private void goToDispenseInterface(ActionEvent event) throws IOException
 	{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PriceInterface.fxml"));
-		openMenuScene(event, loader, "price", vendingMachineController);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/DispenseInterface.fxml"));
+		openMenuScene(event, loader, "dispense", vendingMachineController);
 	}
 
 	@FXML
