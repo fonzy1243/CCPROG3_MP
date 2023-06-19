@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.MaintenanceMenuController"
+            fx:controller="Controller.MoneyMenuController"
             prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
@@ -22,25 +22,17 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <VBox fx:id="maintenanceMenuVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+    <VBox fx:id="moneyMenuVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label text="Maintain Machine"
+        <Label text="Withdraw and Deposit Money"
                styleClass="title-label"/>
-        <Button fx:id="stockButton"
+        <Button fx:id="withdrawButton"
                 styleClass="regular-button"
-                text="Edit Stock"
-                onAction="#goToStockInterface"/>
-        <Button fx:id="priceButton"
+                text="Withdraw Money"
+                onAction="#goToWithdrawInterface"/>
+        <Button fx:id="depositButton"
                 styleClass="regular-button"
-                text="Edit Price"
-                onAction="#goToPriceInterface"/>
-        <Button fx:id="moneyButton"
-                styleClass="regular-button"
-                text="Collect/Replenish Money"
-                onAction="#goToMoneyMenu"/>
-        <Button fx:id="historyButton"
-                styleClass="regular-button"
-                text="Transaction History"
+                text="Deposit History"
         />
         <Button fx:id="returnButton"
                 styleClass="nav-back-button"

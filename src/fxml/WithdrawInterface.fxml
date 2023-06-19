@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.StockInterfaceController"
+            fx:controller="Controller.WithdrawInterfaceController"
             prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
@@ -22,19 +22,13 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <VBox fx:id="stockInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+    <VBox fx:id="withdrawInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label text="Edit Stock"
+        <Label text="Withdraw Money"
                styleClass="title-label"/>
-        <ComboBox fx:id="slotDropdown" promptText="Slot"/>
-        <HBox fx:id="nameBox" styleClass="input-field">
-            <TextField fx:id="nameTextField" promptText="Item Name"/>
-        </HBox>
-        <HBox fx:id="priceBox" styleClass="input-field">
-            <TextField fx:id="priceTextField" promptText="Item Price"/>
-        </HBox>
-        <HBox fx:id="calorieBox" styleClass="input-field">
-            <TextField fx:id="calorieTextField" promptText="Item Calories"/>
+        <Label styleClass="text-field-label" fx:id="moneyLabel" text="test"/>
+        <HBox fx:id="moneyBox" styleClass="input-field">
+            <TextField fx:id="moneyTextField" promptText="Money to withdraw..."/>
         </HBox>
         <HBox fx:id="navButtons" alignment="CENTER">
             <Button fx:id="backButton"
@@ -43,7 +37,7 @@
                     onAction="#back"/>
             <Button fx:id="addButton"
                     styleClass="nav-continue-button"
-                    text="Add"/>
+                    text="Withdraw"/>
         </HBox>
     </VBox>
 </AnchorPane>

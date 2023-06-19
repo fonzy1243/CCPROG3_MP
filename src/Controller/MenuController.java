@@ -129,6 +129,27 @@ public abstract class MenuController
 				stockInterfaceController.setStage(stage);
 				stockInterfaceController.openStockInterface();
 			}
+			case "price" ->
+			{
+				PriceInterfaceController priceInterfaceController = loader.getController();
+				priceInterfaceController.setVendingMachineController(vendingMachineController);
+				priceInterfaceController.setStage(stage);
+				priceInterfaceController.openPriceInterface();
+			}
+			case "money" ->
+			{
+				MoneyMenuController moneyMenuController = loader.getController();
+				moneyMenuController.setVendingMachineController(vendingMachineController);
+				moneyMenuController.setStage(stage);
+				moneyMenuController.openMoneyMenu();
+			}
+			case "withdraw" ->
+			{
+				WithdrawInterfaceController withdrawInterfaceController = loader.getController();
+				withdrawInterfaceController.setVendingMachineController(vendingMachineController);
+				withdrawInterfaceController.setStage(stage);
+				withdrawInterfaceController.openWithdrawInterface();
+			}
 			default ->
 			{
 				// Do nothing.

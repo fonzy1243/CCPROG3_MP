@@ -55,7 +55,7 @@
 }
 
 #createMenuVBox, #mainMenuVBox, #testMenuVbox, #maintenanceMenuVbox,
-#stockInterfaceVbox {
+#stockInterfaceVbox, #priceInterfaceVbox, #moneyMenuVbox, #withdrawInterfaceVbox {
     -fx-alignment: Center;
 }
 
@@ -228,6 +228,7 @@
 .text-field-label
 {
     -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 22;
     -fx-text-fill: white;
 }
 
