@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.MaintenanceMenuController"
+            prefHeight="720.0" prefWidth="720.0"
+            styleClass="rounded-pane">
+    <AnchorPane styleClass="top-bar"
+                fx:id="topBar">
+        <HBox alignment="BASELINE_RIGHT" prefWidth="709" style="-fx-hgap: 25">
+            <Button text="—"
+                    styleClass="minimize-button"
+                    fx:id="minimizeButton"/>
+            <Button text="✕"
+                    styleClass="close-button"
+                    onAction="#closeApp"/>
+        </HBox>
+    </AnchorPane>
+    <VBox fx:id="maintenanceMenuVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+        <Label text="Maintain Machine"
+               styleClass="title-label"/>
+        <Button fx:id="stockButton"
+                styleClass="regular-button"
+                text="Edit Stock"
+                onAction="#goToStockInterface"/>
+        <Button fx:id="priceButton"
+                styleClass="regular-button"
+                text="Edit Price"
+        />
+        <Button fx:id="moneyButton"
+                styleClass="regular-button"
+                text="Collect/Replenish Money"
+        />
+        <Button fx:id="returnButton"
+                styleClass="nav-back-button"
+                text="Back"
+                onAction="#returnToMainMenu"/>
+    </VBox>
+</AnchorPane>
