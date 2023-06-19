@@ -18,13 +18,18 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
+ * <h2>Menu Controller</h2>
+ * <br/>
  * MenuController is the abstract base class for all menu controlling functions
- * which manages the interaction between the user and the application. A MenuController
+ * which manage the interaction between the user and the application. A MenuController
  * object encapsulates the application's UI elements and the controller for the application's
  * vending machines.
- * <p>
+ * <hr/>
  * All menu controller subclasses share the same stage, as a new window is not required for most of
  * the application's functions (barring the open popup method and its uses).
+ * <hr/>
+ * All menu controller subclasses using the name interface handle input using text-fields, the difference
+ * in naming is simply just that.
  */
 public abstract class MenuController
 {
@@ -149,6 +154,13 @@ public abstract class MenuController
 				withdrawInterfaceController.setVendingMachineController(vendingMachineController);
 				withdrawInterfaceController.setStage(stage);
 				withdrawInterfaceController.openWithdrawInterface();
+			}
+			case "dispense" ->
+			{
+				DispenseInterfaceController dispenseInterfaceController = loader.getController();
+				dispenseInterfaceController.setVendingMachineController(vendingMachineController);
+				dispenseInterfaceController.setStage(stage);
+				dispenseInterfaceController.openDispenseInterface();
 			}
 			default ->
 			{
