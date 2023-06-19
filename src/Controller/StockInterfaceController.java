@@ -1,16 +1,24 @@
 package Controller;
 
 import Model.Slot;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
+
 public class StockInterfaceController extends MenuController
 {
+	@FXML
+	private HBox navButtons;
 	@FXML
 	private AnchorPane topBar;
 	@FXML
@@ -57,5 +65,19 @@ public class StockInterfaceController extends MenuController
 
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(actionEvent -> minimizeApp(stage));
+
+		for (Node button : navButtons.getChildren())
+		{
+			buttonAnimator.resizeWhenHovered((Button) button);
+		}
+
+		navButtons.setSpacing(7);
+	}
+
+	@FXML
+	private void back(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
+		openMenuScene(event, loader, "maintenance", vendingMachineController);
 	}
 }
