@@ -12,22 +12,22 @@ public class Denomination
 		denominationStock = new HashMap<>();
 
 		// Centavo coins
-		denominationStock.put(1, 1000);
-		denominationStock.put(5, 1000);
-		denominationStock.put(10, 1000);
-		denominationStock.put(25, 1000);
+		denominationStock.put(1, 501);
+		denominationStock.put(5, 500);
+		denominationStock.put(10, 500);
+		denominationStock.put(25, 500);
 
 		// Peso bills
-		denominationStock.put(100, 1000);
-		denominationStock.put(500, 1000);
-		denominationStock.put(1000, 1000);
+		denominationStock.put(100, 250);
+		denominationStock.put(500, 250);
+		denominationStock.put(1000, 250);
 
 		// Peso bills
-		denominationStock.put(2000, 500);
-		denominationStock.put(5000, 500);
-		denominationStock.put(10000, 500);
-		denominationStock.put(50000, 500);
-		denominationStock.put(100000, 500);
+		denominationStock.put(2000, 100);
+		denominationStock.put(5000, 100);
+		denominationStock.put(10000, 100);
+		denominationStock.put(50000, 100);
+		denominationStock.put(100000, 100);
 
 		denominationList = new ArrayList<>(denominationStock.keySet());
 		denominationList.sort(Collections.reverseOrder());
@@ -88,5 +88,20 @@ public class Denomination
 	public List<Integer> getDenominationList()
 	{
 		return denominationList;
+	}
+
+	public long calculateTotal()
+	{
+		long total = 0;
+
+		for (Map.Entry<Integer, Integer> entry : denominationStock.entrySet())
+		{
+			int denomination = entry.getKey();
+			int stock = entry.getValue();
+
+			total += (long) denomination * stock;
+		}
+
+		return total;
 	}
 }
