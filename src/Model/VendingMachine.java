@@ -168,11 +168,6 @@ public class VendingMachine
 
 		slots[slotIndex].getItemList().remove(0);
 
-		System.out.println("Change = " + ((float) (paymentAmount - slots[slotIndex].getItemList().get(0).getPrice()) /
-		                                  100));
-
-		printChange(coinChangeValues);
-
 		return coinChangeValues;
 	}
 
