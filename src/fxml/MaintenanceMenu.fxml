@@ -33,14 +33,18 @@
         <Button fx:id="priceButton"
                 styleClass="regular-button"
                 text="Edit Price"
-        />
+                onAction="#goToPriceInterface"/>
         <Button fx:id="moneyButton"
                 styleClass="regular-button"
                 text="Collect/Replenish Money"
+                onAction="#goToMoneyMenu"/>
+        <Button fx:id="historyButton"
+                styleClass="regular-button"
+                text="Transaction History"
         />
         <Button fx:id="returnButton"
                 styleClass="nav-back-button"
                 text="Back"
-                onAction="#returnToMainMenu"/>
+                onAction="#back"/>
     </VBox>
 </AnchorPane>
