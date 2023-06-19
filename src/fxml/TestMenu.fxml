@@ -33,7 +33,7 @@
         <Button fx:id="maintenanceButton"
                 styleClass="regular-button"
                 text="Maintenance Features"
-                />
+                onAction="#goToMaintenanceMenu"/>
         <Button fx:id="returnButton"
                 styleClass="nav-back-button"
                 text="Back"
