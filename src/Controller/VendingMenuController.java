@@ -37,7 +37,6 @@ public class VendingMenuController extends MenuController
 	private final AnchorPane titleBar;
 	private final Button minimizeButton;
 	private final Button closeButton;
-	private final HBox titleBarButtons;
 	private final UIManager uiManager;
 	private int payment;
 
@@ -51,15 +50,15 @@ public class VendingMenuController extends MenuController
 		minimizeButton = new Button("—");
 		closeButton = new Button("✕");
 
-		uiManager.initializeButtons();
+		uiManager.initializeTopBarButtons();
 
 		titleBar = new AnchorPane();
-		titleBarButtons = new HBox(minimizeButton, closeButton);
+		HBox titleBarButtons = new HBox(minimizeButton, closeButton);
 		UIManager.initializeTitleBar(titleBar, titleBarButtons, rootAnchorPane);
 
 		vBox = new VBox();
 
-		uiManager.setVboxAnchors();
+		UIManager.setVboxAnchors(vBox);
 
 		buttonAnimator = new ButtonAnimator();
 	}
@@ -244,7 +243,11 @@ public class VendingMenuController extends MenuController
 		openCoinInsertionMenu();
 	}
 
-	private class UIManager
+	/**
+	 * Nested class for additional abstraction as this menu has a lot of UI elements.
+	 * Its static methods can be reused for other menu controllers.
+	 */
+	protected class UIManager
 	{
 
 		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
@@ -287,7 +290,7 @@ public class VendingMenuController extends MenuController
 			return paymentLabel;
 		}
 
-		private void setVboxAnchors()
+		protected static void setVboxAnchors(VBox vBox)
 		{
 			AnchorPane.setTopAnchor(vBox, 20.0);
 			AnchorPane.setRightAnchor(vBox, 0.0);
@@ -302,7 +305,7 @@ public class VendingMenuController extends MenuController
 			return title;
 		}
 
-		public void initializeButtons()
+		public void initializeTopBarButtons()
 		{
 			minimizeButton.getStyleClass().add("minimize-button");
 			minimizeButton.setOnAction(event -> minimizeApp(stage));
@@ -370,7 +373,7 @@ public class VendingMenuController extends MenuController
 			buttonAnimator.resizeWhenHovered(backButton);
 		}
 
-		public static void setButtonGridGaps(GridPane buttonGrid, double gap)
+		protected static void setButtonGridGaps(GridPane buttonGrid, double gap)
 		{
 			buttonGrid.setAlignment(Pos.CENTER);
 			buttonGrid.setHgap(gap);
@@ -427,7 +430,7 @@ public class VendingMenuController extends MenuController
 			}
 		}
 
-		public static void initializeTitleBar(AnchorPane titleBar, HBox titleBarButtons, AnchorPane rootAnchorPane)
+		protected static void initializeTitleBar(AnchorPane titleBar, HBox titleBarButtons, AnchorPane rootAnchorPane)
 		{
 			titleBar.getStyleClass().add("top-bar");
 			titleBar.getChildren().add(titleBarButtons);
@@ -439,7 +442,7 @@ public class VendingMenuController extends MenuController
 			rootAnchorPane.getChildren().add(titleBar);
 		}
 
-		public void setupNavButtons(Button backButton, Button continueButton, Tooltip backButtonTooltip, HBox navButtons)
+		protected void setupNavButtons(Button backButton, Button continueButton, Tooltip backButtonTooltip, HBox navButtons)
 		{
 			backButton.getStyleClass().add("nav-back-button");
 			backButton.setTooltip(backButtonTooltip);

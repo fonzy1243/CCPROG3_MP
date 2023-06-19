@@ -2,6 +2,7 @@ package Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -63,18 +64,36 @@ public class TestMenuController extends MenuController
 	@FXML
 	private void goToVendingMenu(ActionEvent event) throws IOException
 	{
+		if (hasNoMachine())
+			return;
+
+		openMenuScene(event, null, "vending", vendingMachineController);
+	}
+
+	@FXML
+	private void goToMaintenanceMenu(ActionEvent event) throws IOException
+	{
+		if (hasNoMachine())
+			return;
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
+		openMenuScene(event, loader, "maintenance", vendingMachineController);
+	}
+
+	private boolean hasNoMachine()
+	{
 		if (vendingMachineController == null)
 		{
 			System.out.println("Error: No vending machine controller.");
-			return;
+			return true;
 		}
 
 		if (vendingMachineController.getVendingMachines().size() == 0)
 		{
 			System.out.println("No vending machines");
-			return;
+			return true;
 		}
 
-		openMenuScene(event, null, "vending", vendingMachineController);
+		return false;
 	}
 }
