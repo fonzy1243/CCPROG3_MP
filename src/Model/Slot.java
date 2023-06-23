@@ -17,6 +17,11 @@ public class Slot
 		return this.itemList;
 	}
 
+	public int getItemsCount()
+	{
+		return this.itemList.size();
+	}
+
 	// for testing
 	public void printSlotItems()
 	{
