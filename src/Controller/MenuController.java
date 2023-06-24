@@ -18,13 +18,18 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
+ * <h2>Menu Controller</h2>
+ * <br/>
  * MenuController is the abstract base class for all menu controlling functions
- * which manages the interaction between the user and the application. A MenuController
+ * which manage the interaction between the user and the application. A MenuController
  * object encapsulates the application's UI elements and the controller for the application's
  * vending machines.
- * <p>
+ * <hr/>
  * All menu controller subclasses share the same stage, as a new window is not required for most of
  * the application's functions (barring the open popup method and its uses).
+ * <hr/>
+ * All menu controller subclasses using the name interface handle input using text-fields, the difference
+ * in naming is simply just that.
  */
 public abstract class MenuController
 {
@@ -114,6 +119,48 @@ public abstract class MenuController
 				testMenuController.setVendingMachineController(vendingMachineController);
 				testMenuController.setStage(stage);
 				testMenuController.openTestMenu();
+			}
+			case "maintenance" ->
+			{
+				MaintenanceMenuController maintenanceMenuController = loader.getController();
+				maintenanceMenuController.setVendingMachineController(vendingMachineController);
+				maintenanceMenuController.setStage(stage);
+				maintenanceMenuController.openMaintenanceMenu();
+			}
+			case "stock" ->
+			{
+				StockInterfaceController stockInterfaceController = loader.getController();
+				stockInterfaceController.setVendingMachineController(vendingMachineController);
+				stockInterfaceController.setStage(stage);
+				stockInterfaceController.openStockInterface();
+			}
+			case "price" ->
+			{
+				PriceInterfaceController priceInterfaceController = loader.getController();
+				priceInterfaceController.setVendingMachineController(vendingMachineController);
+				priceInterfaceController.setStage(stage);
+				priceInterfaceController.openPriceInterface();
+			}
+			case "money" ->
+			{
+				MoneyMenuController moneyMenuController = loader.getController();
+				moneyMenuController.setVendingMachineController(vendingMachineController);
+				moneyMenuController.setStage(stage);
+				moneyMenuController.openMoneyMenu();
+			}
+			case "withdraw" ->
+			{
+				WithdrawInterfaceController withdrawInterfaceController = loader.getController();
+				withdrawInterfaceController.setVendingMachineController(vendingMachineController);
+				withdrawInterfaceController.setStage(stage);
+				withdrawInterfaceController.openWithdrawInterface();
+			}
+			case "dispense" ->
+			{
+				DispenseInterfaceController dispenseInterfaceController = loader.getController();
+				dispenseInterfaceController.setVendingMachineController(vendingMachineController);
+				dispenseInterfaceController.setStage(stage);
+				dispenseInterfaceController.openDispenseInterface();
 			}
 			default ->
 			{

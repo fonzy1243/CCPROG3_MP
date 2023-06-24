@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Item;
 import Model.Slot;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -37,8 +37,8 @@ public class VendingMenuController extends MenuController
 	private final AnchorPane titleBar;
 	private final Button minimizeButton;
 	private final Button closeButton;
-	private final HBox titleBarButtons;
 	private final UIManager uiManager;
+	private final List<Integer> paymentDenominations;
 	private int payment;
 
 	public VendingMenuController()
@@ -51,15 +51,17 @@ public class VendingMenuController extends MenuController
 		minimizeButton = new Button("—");
 		closeButton = new Button("✕");
 
-		uiManager.initializeButtons();
+		uiManager.initializeTopBarButtons();
 
 		titleBar = new AnchorPane();
-		titleBarButtons = new HBox(minimizeButton, closeButton);
+		HBox titleBarButtons = new HBox(minimizeButton, closeButton);
 		UIManager.initializeTitleBar(titleBar, titleBarButtons, rootAnchorPane);
 
 		vBox = new VBox();
 
-		uiManager.setVboxAnchors();
+		paymentDenominations = new LinkedList<>();
+
+		UIManager.setVboxAnchors(vBox);
 
 		buttonAnimator = new ButtonAnimator();
 	}
@@ -131,7 +133,12 @@ public class VendingMenuController extends MenuController
 
 	public void openDispenseMenu(Slot slot, int slotIndex)
 	{
-		System.out.println(slot.getItemList().size());
+		if (slot.getItemList().size() == 0)
+		{
+			openPopup("Slot has no items.");
+			openVendingMenu();
+			return;
+		}
 
 		String itemName = slot.getItemList().get(0).getName();
 
@@ -147,7 +154,8 @@ public class VendingMenuController extends MenuController
 
 		Label paymentLabel = new Label("₱" + (float) payment / 100);
 
-		uiManager.setupGUIElements(sceneTitle, itemDisplayBackground, itemNameLabel, itemPriceLabel, itemCalorieLabel, paymentTitle, paymentLabel);
+		uiManager.setupGUIElements(sceneTitle, itemDisplayBackground, itemNameLabel, itemPriceLabel, itemCalorieLabel,
+				paymentTitle, paymentLabel);
 
 		GridPane addPaymentButtons = new GridPane();
 		UIManager.setButtonGridGaps(addPaymentButtons, 18);
@@ -168,8 +176,7 @@ public class VendingMenuController extends MenuController
 		Button buyButton = new Button("Buy");
 		buyButton.getStyleClass().add("add-button");
 
-		buyButton.setOnAction(event ->
-				produceChange(slot, slotIndex, itemName, sceneTitle));
+		buyButton.setOnAction(event -> produceChange(slot, slotIndex, itemName, sceneTitle, buyButton));
 
 		uiManager.setupPaymentButtons("add-button", addPaymentButtons, paymentLabel);
 
@@ -184,8 +191,10 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
-	private void produceChange(Slot slot, int slotIndex, String itemName, Label sceneTitle)
+	private void produceChange(Slot slot, int slotIndex, String itemName, Label sceneTitle, Button button)
 	{
+		int itemPrice = slot.getItemList().get(0).getPrice();
+
 		List<Integer> changeList = vendingMachineController.getVendingMachines().getLast().
 				dispenseItem(slotIndex, payment);
 
@@ -193,35 +202,46 @@ public class VendingMenuController extends MenuController
 		{
 			openPopup("Please insert more money.");
 		}
-		else if (changeList.size() == 0 && payment > slot.getItemList().get(0).getPrice())
+		else if (changeList.size() == 0 && payment > itemPrice)
 		{
 			openPopup("Could not produce change. Try again at a later date.");
 			// to extract method
 			changeScene();
 		}
-		else if (payment == slot.getItemList().get(0).getPrice())
+		else if (payment == itemPrice)
 		{
-			openPopup("You paid the exact amount and have received " + itemName);
-			// to extract method
-			changeScene();
+			Timeline timeline = showProcessingText(sceneTitle, button);
+			timeline.playFromStart();
+
+			timeline.setOnFinished(actionEvent ->
+			{
+				for (Integer denomination : paymentDenominations)
+				{
+					vendingMachineController.getVendingMachines().getLast().getDenominations()
+							.addDenomination(denomination, 1);
+				}
+				openPopup("You paid the exact amount and have received " + itemName);
+				// to extract method
+				changeScene();
+			});
 		}
 		else
 		{
+			Timeline timeline = showProcessingText(sceneTitle, button);
+
 			StringBuilder stringBuilder = new StringBuilder();
 			changeList.forEach((change) -> stringBuilder.append("₱").append((float) change / 100).append(" "));
-
-			Timeline timeline = new Timeline(
-					new KeyFrame(Duration.ZERO, event -> sceneTitle.setText("Dispensing item")),
-					new KeyFrame(Duration.millis(600), event -> sceneTitle.setText("Dispensing item.")),
-					new KeyFrame(Duration.millis(1200), event -> sceneTitle.setText("Dispensing item..")),
-					new KeyFrame(Duration.millis(1700), event -> sceneTitle.setText("Dispensing item...")),
-					new KeyFrame(Duration.millis(2200))
-			);
 
 			timeline.playFromStart();
 
 			timeline.setOnFinished(actionEvent ->
 			{
+				for (Integer denomination : paymentDenominations)
+				{
+					vendingMachineController.getVendingMachines().getLast().getDenominations()
+							.addDenomination(denomination, 1);
+				}
+
 				if (changeList.size() == 1)
 				{
 					openPopup("You have received " + itemName + ". Your change is " + stringBuilder);
@@ -229,12 +249,24 @@ public class VendingMenuController extends MenuController
 				else
 				{
 					openPopup("You have received " + itemName + ". Your change is ₱" +
-					          (float) (payment - slot.getItemList().get(0).getPrice()) / 100 + ": " + stringBuilder);
+					          (float) (payment - itemPrice) / 100 + ": " + stringBuilder);
 				}
 
 				changeScene();
 			});
 		}
+	}
+
+	private Timeline showProcessingText(Label sceneTitle, Button button)
+	{
+		button.setDisable(true);
+		return new Timeline(
+				new KeyFrame(Duration.ZERO, event -> sceneTitle.setText("Dispensing item")),
+				new KeyFrame(Duration.millis(600), event -> sceneTitle.setText("Dispensing item.")),
+				new KeyFrame(Duration.millis(1200), event -> sceneTitle.setText("Dispensing item..")),
+				new KeyFrame(Duration.millis(1700), event -> sceneTitle.setText("Dispensing item...")),
+				new KeyFrame(Duration.millis(2200))
+		);
 	}
 
 	private void changeScene()
@@ -244,7 +276,11 @@ public class VendingMenuController extends MenuController
 		openCoinInsertionMenu();
 	}
 
-	private class UIManager
+	/**
+	 * Nested class for additional abstraction as this menu has a lot of UI elements.
+	 * Its static methods can be reused for other menu controllers.
+	 */
+	protected class UIManager
 	{
 
 		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
@@ -287,7 +323,7 @@ public class VendingMenuController extends MenuController
 			return paymentLabel;
 		}
 
-		private void setVboxAnchors()
+		protected static void setVboxAnchors(VBox vBox)
 		{
 			AnchorPane.setTopAnchor(vBox, 20.0);
 			AnchorPane.setRightAnchor(vBox, 0.0);
@@ -302,7 +338,7 @@ public class VendingMenuController extends MenuController
 			return title;
 		}
 
-		public void initializeButtons()
+		public void initializeTopBarButtons()
 		{
 			minimizeButton.getStyleClass().add("minimize-button");
 			minimizeButton.setOnAction(event -> minimizeApp(stage));
@@ -335,20 +371,8 @@ public class VendingMenuController extends MenuController
 				{
 					vBox.getChildren().clear();
 
-					// temporary testing code
-					Item testItem = new Item("California Maki", 1500, 47);
-					if (!vendingMachineController.getVendingMachines().getLast().
-							addItemToSlot(testItem, slotIndex, 3))
-					{
-						openPopup("Cannot add item.");
-						openVendingMenu();
-					}
-					else
-					{
-						System.out.println("Item added to slot " + (slotIndex + 1));
-						openDispenseMenu(vendingMachineController.getVendingMachines().getLast().
+					openDispenseMenu(vendingMachineController.getVendingMachines().getLast().
 								getSlots()[slotIndex], slotIndex);
-					}
 				});
 			}
 
@@ -370,7 +394,7 @@ public class VendingMenuController extends MenuController
 			buttonAnimator.resizeWhenHovered(backButton);
 		}
 
-		public static void setButtonGridGaps(GridPane buttonGrid, double gap)
+		protected static void setButtonGridGaps(GridPane buttonGrid, double gap)
 		{
 			buttonGrid.setAlignment(Pos.CENTER);
 			buttonGrid.setHgap(gap);
@@ -423,11 +447,12 @@ public class VendingMenuController extends MenuController
 				{
 					paymentLabel.setText("₱" + (float) (payment + denomination) / 100);
 					payment += denomination;
+					paymentDenominations.add(denomination);
 				});
 			}
 		}
 
-		public static void initializeTitleBar(AnchorPane titleBar, HBox titleBarButtons, AnchorPane rootAnchorPane)
+		protected static void initializeTitleBar(AnchorPane titleBar, HBox titleBarButtons, AnchorPane rootAnchorPane)
 		{
 			titleBar.getStyleClass().add("top-bar");
 			titleBar.getChildren().add(titleBarButtons);
@@ -439,7 +464,7 @@ public class VendingMenuController extends MenuController
 			rootAnchorPane.getChildren().add(titleBar);
 		}
 
-		public void setupNavButtons(Button backButton, Button continueButton, Tooltip backButtonTooltip, HBox navButtons)
+		protected void setupNavButtons(Button backButton, Button continueButton, Tooltip backButtonTooltip, HBox navButtons)
 		{
 			backButton.getStyleClass().add("nav-back-button");
 			backButton.setTooltip(backButtonTooltip);

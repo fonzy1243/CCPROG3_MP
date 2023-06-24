@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="Controller.TestMenuController"
-      prefHeight="720.0" prefWidth="720.0"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.DispenseInterfaceController"
+            prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
                 fx:id="topBar">
@@ -22,21 +22,22 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <VBox fx:id="testMenuVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+    <VBox fx:id="dispenseInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label text="Test Machine Features"
+        <Label text="Deposit Money"
                styleClass="title-label"/>
-        <Button fx:id="vendingFeaturesButton"
-                styleClass="regular-button"
-                text="Vending Features"
-                onAction="#goToVendingMenu"/>
-        <Button fx:id="maintenanceButton"
-                styleClass="regular-button"
-                text="Maintenance Features"
-                onAction="#goToMaintenanceMenu"/>
-        <Button fx:id="returnButton"
-                styleClass="nav-back-button"
-                text="Back"
-                onAction="#returnToMainMenu"/>
+        <Label fx:id="totalMoneyLabel" styleClass="title-label"/>
+        <GridPane fx:id="buttonGrid" styleClass="input-field">
+
+        </GridPane>
+        <HBox fx:id="navButtons" alignment="CENTER">
+            <Button fx:id="backButton"
+                    styleClass="nav-back-button"
+                    text="Back"
+                    onAction="#back"/>
+            <Button fx:id="addButton"
+                    styleClass="nav-continue-button"
+                    text="Withdraw"/>
+        </HBox>
     </VBox>
 </AnchorPane>

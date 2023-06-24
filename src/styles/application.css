@@ -31,8 +31,11 @@
 }
 
 
-.rounded-pane, .rounded-popup-pane {
+.rounded-pane, .rounded-popup-pane, .combo-box, .combo-box .list-cell {
     -fx-background-color: #282a3d;
+}
+
+.rounded-pane, .rounded-popup-pane {
     -fx-background-radius: 0 0 10 10;
 }
 
@@ -51,7 +54,8 @@
     -fx-font-family: "Nunito SemiBold";
 }
 
-#createMenuVBox, #mainMenuVBox, #testMenuVbox {
+#createMenuVBox, #mainMenuVBox, #testMenuVbox, #maintenanceMenuVbox,
+#stockInterfaceVbox, #priceInterfaceVbox, #moneyMenuVbox, #withdrawInterfaceVbox, #dispenseInterfaceVbox {
     -fx-alignment: Center;
 }
 
@@ -201,4 +205,42 @@
 .item-other {
     -fx-font-size: 19;
     -fx-font-weight: normal;
+}
+
+.combo-box, .text-field, .combo-box-base, .list-cell {
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+}
+
+.list-view {
+    -fx-background-color: #282a3d;
+}
+
+.combo-box, .text-field, .combo-box-base {
+    -fx-background-radius: 20;
+}
+
+.text-field {
+    -fx-background-color: #313349;
+}
+
+.text-field-label
+{
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 22;
+    -fx-text-fill: white;
+}
+
+.input-field {
+    -fx-alignment: center;
+}
+
+.combo-box {
+    -fx-font-family: "Nunito SemiBold";
+    -fx-text-fill: white;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #313349;
 }

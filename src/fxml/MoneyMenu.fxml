@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="Controller.TestMenuController"
-      prefHeight="720.0" prefWidth="720.0"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.MoneyMenuController"
+            prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
                 fx:id="topBar">
@@ -22,21 +22,21 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <VBox fx:id="testMenuVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+    <VBox fx:id="moneyMenuVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label text="Test Machine Features"
+        <Label text="Withdraw and Deposit Money"
                styleClass="title-label"/>
-        <Button fx:id="vendingFeaturesButton"
+        <Button fx:id="withdrawButton"
                 styleClass="regular-button"
-                text="Vending Features"
-                onAction="#goToVendingMenu"/>
-        <Button fx:id="maintenanceButton"
+                text="Withdraw Money"
+                onAction="#goToWithdrawInterface"/>
+        <Button fx:id="depositButton"
                 styleClass="regular-button"
-                text="Maintenance Features"
-                onAction="#goToMaintenanceMenu"/>
+                text="Deposit History"
+                onAction="#goToDispenseInterface"/>
         <Button fx:id="returnButton"
                 styleClass="nav-back-button"
                 text="Back"
-                onAction="#returnToMainMenu"/>
+                onAction="#back"/>
     </VBox>
 </AnchorPane>
