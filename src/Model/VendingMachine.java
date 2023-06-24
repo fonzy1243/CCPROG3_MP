@@ -171,6 +171,11 @@ public class VendingMachine
 		return coinChangeValues;
 	}
 
+	public List<Integer> withdrawMoney(int withdrawAmount)
+	{
+		return getChange(withdrawAmount);
+	}
+
 	// for testing change
 	public void printChange(List<Integer> coinChangeValues)
 	{

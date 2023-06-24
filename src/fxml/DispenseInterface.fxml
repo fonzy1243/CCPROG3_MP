@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.WithdrawInterfaceController"
+            fx:controller="Controller.DispenseInterfaceController"
             prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
@@ -22,14 +22,14 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <VBox fx:id="withdrawInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+    <VBox fx:id="dispenseInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label text="Withdraw Money"
+        <Label text="Deposit Money"
                styleClass="title-label"/>
-        <Label styleClass="text-field-label" fx:id="moneyLabel"/>
-        <HBox fx:id="moneyBox" styleClass="input-field">
-            <TextField fx:id="moneyTextField" promptText="Money to withdraw..."/>
-        </HBox>
+        <Label fx:id="totalMoneyLabel" styleClass="title-label"/>
+        <GridPane fx:id="buttonGrid" styleClass="input-field">
+
+        </GridPane>
         <HBox fx:id="navButtons" alignment="CENTER">
             <Button fx:id="backButton"
                     styleClass="nav-back-button"

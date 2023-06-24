@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Item;
 import Model.Slot;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -38,6 +38,7 @@ public class VendingMenuController extends MenuController
 	private final Button minimizeButton;
 	private final Button closeButton;
 	private final UIManager uiManager;
+	private final List<Integer> paymentDenominations;
 	private int payment;
 
 	public VendingMenuController()
@@ -57,6 +58,8 @@ public class VendingMenuController extends MenuController
 		UIManager.initializeTitleBar(titleBar, titleBarButtons, rootAnchorPane);
 
 		vBox = new VBox();
+
+		paymentDenominations = new LinkedList<>();
 
 		UIManager.setVboxAnchors(vBox);
 
@@ -212,6 +215,11 @@ public class VendingMenuController extends MenuController
 
 			timeline.setOnFinished(actionEvent ->
 			{
+				for (Integer denomination : paymentDenominations)
+				{
+					vendingMachineController.getVendingMachines().getLast().getDenominations()
+							.addDenomination(denomination, 1);
+				}
 				openPopup("You paid the exact amount and have received " + itemName);
 				// to extract method
 				changeScene();
@@ -228,6 +236,12 @@ public class VendingMenuController extends MenuController
 
 			timeline.setOnFinished(actionEvent ->
 			{
+				for (Integer denomination : paymentDenominations)
+				{
+					vendingMachineController.getVendingMachines().getLast().getDenominations()
+							.addDenomination(denomination, 1);
+				}
+
 				if (changeList.size() == 1)
 				{
 					openPopup("You have received " + itemName + ". Your change is " + stringBuilder);
@@ -433,6 +447,7 @@ public class VendingMenuController extends MenuController
 				{
 					paymentLabel.setText("₱" + (float) (payment + denomination) / 100);
 					payment += denomination;
+					paymentDenominations.add(denomination);
 				});
 			}
 		}

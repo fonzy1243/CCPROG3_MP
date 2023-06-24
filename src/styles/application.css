@@ -55,7 +55,7 @@
 }
 
 #createMenuVBox, #mainMenuVBox, #testMenuVbox, #maintenanceMenuVbox,
-#stockInterfaceVbox, #priceInterfaceVbox, #moneyMenuVbox, #withdrawInterfaceVbox {
+#stockInterfaceVbox, #priceInterfaceVbox, #moneyMenuVbox, #withdrawInterfaceVbox, #dispenseInterfaceVbox {
     -fx-alignment: Center;
 }
 

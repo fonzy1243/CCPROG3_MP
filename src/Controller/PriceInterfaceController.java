@@ -16,14 +16,17 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.util.List;
 
 public class PriceInterfaceController extends MenuController
 {
-	public HBox navButtons;
-	public Label priceAmountLabel;
-	public TextField priceTextField;
-	public Button addButton;
+	@FXML
+	private HBox navButtons;
+	@FXML
+	private Label priceAmountLabel;
+	@FXML
+	private TextField priceTextField;
+	@FXML
+	private Button addButton;
 	@FXML
 	private AnchorPane topBar;
 	@FXML
