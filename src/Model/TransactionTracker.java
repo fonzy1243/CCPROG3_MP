@@ -109,6 +109,10 @@ public class TransactionTracker
                         if (count > 0)
                         {
                             slots[i] = initialSlots[i];
+
+                            while (slots[i].getItemsCount() != count) {
+                                slots[i].getItemList().remove(0);
+                            }
                         }
                     }
                 }
