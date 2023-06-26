@@ -71,4 +71,65 @@ public class TransactionTracker
             exception.printStackTrace();
         }
     }
+
+    public void displayTransactionDetails()
+    {
+        System.out.println("Transaction Details");
+
+        for (int i = 0; i < initialSlots.length; i++)
+        {
+            System.out.println(initialSlots[i].getItemList().get(0).getName() + ": " + (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()));
+        }
+
+        System.out.println("Total amount collected: PhP" + (float) totalAmountCollected / 100);
+    }
+
+    public Slot[] readTransactionFile()
+    {
+        File transactionFile = new File("transactions.txt");
+        Slot[] slots = new Slot[10];
+
+        for (int i = 0; i < slots.length; i++)
+        {
+            slots[i] = new Slot();
+        }
+
+        if (transactionFile.exists())
+        {
+            try
+            {
+                java.util.Scanner scanner = new java.util.Scanner(transactionFile);
+
+                for (int i = 0; i < slots.length; i++)
+                {
+                    if (scanner.hasNextInt())
+                    {
+                        int count = scanner.nextInt();
+
+                        if (count > 0)
+                        {
+                            slots[i] = initialSlots[i];
+
+                            while (slots[i].getItemsCount() != count)
+                            {
+                                slots[i].getItemList().remove(0);
+                            }
+                        }
+                    }
+                }
+
+                scanner.close();
+            } catch (IOException exception)
+            {
+                System.out.println("Error occurred while reading file.");
+                exception.printStackTrace();
+            }
+        }
+        else
+        {
+            System.out.println("File does not exist.");
+        }
+
+        return slots;
+    }
 }
