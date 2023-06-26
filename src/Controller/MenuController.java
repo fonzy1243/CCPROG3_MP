@@ -40,21 +40,21 @@ public abstract class MenuController
 	protected static VendingMachineController vendingMachineController;
 
 	/**
-	 * Sets the stage (window) used by the menu controller.
-	 * @param stage application window
-	 */
-	public void setStage(Stage stage)
-	{
-		this.stage = stage;
-	}
-
-	/**
 	 * Passes the program's vending machine controller (static) to the main menu scene controller.
 	 * @param controller manages vending machine functions such as dispensing item.
 	 */
 	public void setVendingMachineController(VendingMachineController controller)
 	{
 		vendingMachineController = controller;
+	}
+
+	/**
+	 * Sets the stage (window) used by the menu controller.
+	 * @param stage application window
+	 */
+	protected void setStage(Stage stage)
+	{
+		this.stage = stage;
 	}
 
 	/**
