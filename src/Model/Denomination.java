@@ -2,11 +2,19 @@ package Model;
 
 import java.util.*;
 
+/**
+ * Denomination handles the different coins and bills used in vending machine transactions.
+ * Each coin/bill is represented in integer cents rather than its real value to avoid problems with checking
+ * floating-point number equality.
+ */
 public class Denomination
 {
 	private final Map<Integer, Integer> denominationStock;
 	private final List<Integer> denominationList;
 
+	/**
+	 * Initialize the denominations to be used when instantiating a Denomination object.
+	 */
 	public Denomination()
 	{
 		denominationStock = new HashMap<>();
@@ -33,11 +41,20 @@ public class Denomination
 		denominationList.sort(Collections.reverseOrder());
 	}
 
+	/**
+	 * Return the hash map of denominations in stock
+	 * @return denomination hash map
+	 */
 	public Map<Integer, Integer> getDenominationStock()
 	{
 		return denominationStock;
 	}
 
+	/**
+	 * Add denomination of a certain value
+	 * @param value value of denomination to be added
+	 * @param quantity quantity to be added
+	 */
 	public void addDenomination(int value, int quantity)
 	{
 		if (!denominationStock.containsKey(value))
@@ -58,6 +75,11 @@ public class Denomination
 		denominationStock.put(value, newDenominationQuantity);
 	}
 
+	/**
+	 * Remove denomination of a certain value
+	 * @param value value of denomination to be removed
+	 * @param quantity quantity to be removed
+	 */
 	public void removeDenomination(int value, int quantity)
 	{
 		if (!denominationStock.containsKey(value))
@@ -85,11 +107,19 @@ public class Denomination
 		denominationStock.put(value, newDenominationQuantity);
 	}
 
+	/**
+	 * Get the list of denominations
+	 * @return denomination list
+	 */
 	public List<Integer> getDenominationList()
 	{
 		return denominationList;
 	}
 
+	/**
+	 * Calculate the summation of all denominations
+	 * @return denomination total
+	 */
 	public long calculateTotal()
 	{
 		long total = 0;

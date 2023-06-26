@@ -2,6 +2,14 @@ package Model;
 
 import java.util.*;
 
+/**
+ * <h2>Vending Machine</h2>
+ * A Vending Machine consists of item slots that act as an interface for the user to know what is
+ * available for purchase. Each slot is mapped to a specific item, and it is assumed that the items stored
+ * in the slots are unique. A machine should be able to receive payment rom the user in different denominations,
+ * dispense the item based on user choice, and dispense change. Maintenance features include restocking/stocking items,
+ * setting item price, withdrawing/depositing money, and printing a summary of transactions.
+ */
 public class VendingMachine
 {
 	private static final int itemLimit = 69;
@@ -22,16 +30,29 @@ public class VendingMachine
 		denominations = new Denomination();
 	}
 
+	/**
+	 * Get the denominations used in the machine
+	 * @return denomination object
+	 */
 	public Denomination getDenominations()
 	{
 		return denominations;
 	}
 
+	/**
+	 * Get the array of slots in the machine
+	 * @return slot array
+	 */
 	public Slot[] getSlots()
 	{
 		return slots;
 	}
 
+	/**
+	 * Get the current quantity of an item
+	 * @param itemName item to be searched
+	 * @return item quantity
+	 */
 	public int getAvailability(String itemName)
 	{
 		int count = 0;
@@ -49,11 +70,11 @@ public class VendingMachine
 	}
 
 	/**
-	 * #NEVERNEST
-	 * see the guard clauses technique in its full glory
+	 * Adds an item to the slot
 	 * @param item item to be added to a slot.
 	 * @param slotIndex index of slot to be added to.
 	 * @param quantity amount of items to be added to the slot.
+	 * @return true if successful, false if error occurred
 	 */
 	public boolean addItemToSlot(Item item, int slotIndex, int quantity)
 	{
@@ -94,6 +115,11 @@ public class VendingMachine
 		return true;
 	}
 
+	/**
+	 * Get the list of coins/bills used for change
+	 * @param changeValue value of change used for calculating coins/bills returned
+	 * @return list of change coins/bills
+	 */
 	private List<Integer> getChange(int changeValue)
 	{
 		int[] dp = new int[changeValue + 1];
@@ -143,9 +169,10 @@ public class VendingMachine
 	}
 
 	/**
-	 * #NEVERNEST PART 2
+	 * Dispense an item from a slot.
 	 * @param slotIndex slot index of the item to be dispensed.
 	 * @param paymentAmount amount paid by the buyer.
+	 * @return list of change coins/bills
 	 */
 	public List<Integer> dispenseItem(int slotIndex, int paymentAmount)
 	{
@@ -171,6 +198,11 @@ public class VendingMachine
 		return coinChangeValues;
 	}
 
+	/**
+	 * Withdraws money from the machine.
+	 * @param withdrawAmount amount to be withdrawn
+	 * @return list of coins/bills received from the machine
+	 */
 	public List<Integer> withdrawMoney(int withdrawAmount)
 	{
 		return getChange(withdrawAmount);
