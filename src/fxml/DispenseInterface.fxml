@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.DispenseInterfaceController"
+            fx:controller="Viewer.DispenseInterfaceViewer"
             prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
@@ -35,9 +35,6 @@
                     styleClass="nav-back-button"
                     text="Back"
                     onAction="#back"/>
-            <Button fx:id="addButton"
-                    styleClass="nav-continue-button"
-                    text="Withdraw"/>
         </HBox>
     </VBox>
 </AnchorPane>

@@ -1,5 +1,6 @@
-package Controller;
+package Viewer;
 
+import Controller.VendingMachineController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,34 +19,47 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * <h2>Menu Controller</h2>
+ * <h2>Menu Viewer</h2>
  * <br/>
- * MenuController is the abstract base class for all menu controlling functions
- * which manage the interaction between the user and the application. A MenuController
+ * MenuViewer is the abstract base class for all menu controlling functions
+ * which manage the interaction between the user and the application. A MenuViewer
  * object encapsulates the application's UI elements and the controller for the application's
  * vending machines.
  * <hr/>
- * All menu controller subclasses share the same stage, as a new window is not required for most of
+ * All menu viewer subclasses share the same stage, as a new window is not required for most of
  * the application's functions (barring the open popup method and its uses).
  * <hr/>
- * All menu controller subclasses using the name interface handle input using text-fields, the difference
+ * All menu viewer subclasses using the name interface handle input using text-fields, the difference
  * in naming is simply just that.
  */
-public abstract class MenuController
+public abstract class MenuViewer
 {
+	/**
+	 * Application window
+	 */
 	protected Stage stage;
+	protected static VendingMachineController vendingMachineController;
+
+	/**
+	 * Passes the program's vending machine controller (static) to the main menu scene controller.
+	 * @param controller manages vending machine functions such as dispensing item.
+	 */
+	public void setVendingMachineController(VendingMachineController controller)
+	{
+		vendingMachineController = controller;
+	}
 
 	/**
 	 * Sets the stage (window) used by the menu controller.
 	 * @param stage application window
 	 */
-	public void setStage(Stage stage)
+	protected void setStage(Stage stage)
 	{
 		this.stage = stage;
 	}
 
 	/**
-	 * Goes from the menu controller's current scene to the main menu scene and returns control to the
+	 * Goes from the menu viewer's current scene to the main menu scene and returns control to the
 	 * mainMenuController.
 	 * @param event button click
 	 * @throws IOException if error occurred when loading FXML file
@@ -53,16 +67,18 @@ public abstract class MenuController
 	@FXML
 	void returnToMainMenu(ActionEvent event) throws IOException
 	{
+		// Load the main menu's FXML
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
 		Parent root = loader.load();
 
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, 730, 730);
 
+		// Create a viewer to handle user input and UI.
+		MainMenuViewer mainMenuViewer = loader.getController();
+		mainMenuViewer.openMainMenu(stage);
 
-		MainMenuController mainMenuController = loader.getController();
-		mainMenuController.openMainMenu(stage);
-
+		// Apply the application's CSS style.
 		String css = Objects
 				.requireNonNull(this.getClass()
 						.getResource("/styles/application.css"))
@@ -75,7 +91,7 @@ public abstract class MenuController
 	}
 
 	/**
-	 * Opens a menu scene and hands control to its respective controller. It maintains the same stage used
+	 * Opens a menu scene and hands UI control to its respective viewer. It maintains the same stage used
 	 * in the previous scene.
 	 * @param event button click
 	 * @param loader FXML loader (if used)
@@ -86,81 +102,93 @@ public abstract class MenuController
 	void openMenuScene(ActionEvent event, FXMLLoader loader, String menu,
 	                   VendingMachineController vendingMachineController) throws IOException
 	{
+		// Scene's root node
 		Parent root;
 
+		// Vending menu does not use an FXML file.
 		if (!menu.equals("vending"))
 		{
 			root = loader.load();
 		}
 		else
 		{
-			VendingMenuController vendingMenuController = new VendingMenuController();
-			vendingMenuController.setVendingMachineController(vendingMachineController);
-			vendingMenuController.setStage(stage);
-			vendingMenuController.openCoinInsertionMenu();
-			root = vendingMenuController.getRoot();
+			VendingMenuViewer vendingMenuViewer = new VendingMenuViewer();
+			vendingMenuViewer.setVendingMachineController(vendingMachineController);
+			vendingMenuViewer.setStage(stage);
+			vendingMenuViewer.openCoinInsertionMenu();
+			root = vendingMenuViewer.getRoot();
 		}
 
+		// Create a new scene.
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, 730, 730);
 
+		// Change the new scene to its corresponding menu scene and creates a viewer to handle UI.
 		switch (menu)
 		{
+			// Create viewer for create menu
 			case "create" ->
 			{
-				CreateMenuController createMenuController = loader.getController();
-				createMenuController.setVendingMachineController(vendingMachineController);
-				createMenuController.setStage(stage);
-				createMenuController.openCreateMenu();
+				CreateMenuViewer createMenuViewer = loader.getController();
+				createMenuViewer.setVendingMachineController(vendingMachineController);
+				createMenuViewer.setStage(stage);
+				createMenuViewer.openCreateMenu();
 			}
+			// Create viewer for test menu
 			case "test" ->
 			{
-				TestMenuController testMenuController = loader.getController();
+				TestMenuViewer testMenuController = loader.getController();
 				testMenuController.setVendingMachineController(vendingMachineController);
 				testMenuController.setStage(stage);
 				testMenuController.openTestMenu();
 			}
+			// Create viewer for maintenance menu
 			case "maintenance" ->
 			{
-				MaintenanceMenuController maintenanceMenuController = loader.getController();
+				MaintenanceMenuViewer maintenanceMenuController = loader.getController();
 				maintenanceMenuController.setVendingMachineController(vendingMachineController);
 				maintenanceMenuController.setStage(stage);
 				maintenanceMenuController.openMaintenanceMenu();
 			}
+			// Create viewer for stock interface
 			case "stock" ->
 			{
-				StockInterfaceController stockInterfaceController = loader.getController();
-				stockInterfaceController.setVendingMachineController(vendingMachineController);
-				stockInterfaceController.setStage(stage);
-				stockInterfaceController.openStockInterface();
+				StockInterfaceViewer stockInterfaceViewer = loader.getController();
+				stockInterfaceViewer.setVendingMachineController(vendingMachineController);
+				stockInterfaceViewer.setStage(stage);
+				stockInterfaceViewer.openStockInterface();
 			}
+			// Create viewer for price interface
 			case "price" ->
 			{
-				PriceInterfaceController priceInterfaceController = loader.getController();
-				priceInterfaceController.setVendingMachineController(vendingMachineController);
-				priceInterfaceController.setStage(stage);
-				priceInterfaceController.openPriceInterface();
+				PriceInterfaceViewer priceInterfaceViewer = loader.getController();
+				priceInterfaceViewer.setVendingMachineController(vendingMachineController);
+				priceInterfaceViewer.setStage(stage);
+				priceInterfaceViewer.openPriceInterface();
 			}
+			// Create viewer for money menu
 			case "money" ->
 			{
-				MoneyMenuController moneyMenuController = loader.getController();
-				moneyMenuController.setVendingMachineController(vendingMachineController);
-				moneyMenuController.setStage(stage);
-				moneyMenuController.openMoneyMenu();
+				MoneyMenuViewer moneyMenuViewer = loader.getController();
+				moneyMenuViewer.setVendingMachineController(vendingMachineController);
+				moneyMenuViewer.setStage(stage);
+				moneyMenuViewer.openMoneyMenu();
 			}
+			// Create viewer for withdraw interface
 			case "withdraw" ->
 			{
-				WithdrawInterfaceController withdrawInterfaceController = loader.getController();
-				withdrawInterfaceController.setVendingMachineController(vendingMachineController);
-				withdrawInterfaceController.setStage(stage);
-				withdrawInterfaceController.openWithdrawInterface();
+				WithdrawInterfaceViewer withdrawInterfaceViewer = loader.getController();
+				withdrawInterfaceViewer.setVendingMachineController(vendingMachineController);
+				withdrawInterfaceViewer.setStage(stage);
+				withdrawInterfaceViewer.openWithdrawInterface();
 			}
+			// Create viewer for dispense interface
 			case "dispense" ->
 			{
-				DispenseInterfaceController dispenseInterfaceController = loader.getController();
-				dispenseInterfaceController.setVendingMachineController(vendingMachineController);
-				dispenseInterfaceController.setStage(stage);
-				dispenseInterfaceController.openDispenseInterface();
+				DispenseInterfaceViewer dispenseInterfaceViewer = loader.getController();
+				dispenseInterfaceViewer.setVendingMachineController(vendingMachineController);
+				dispenseInterfaceViewer.setStage(stage);
+				dispenseInterfaceViewer.openDispenseInterface();
 			}
 			default ->
 			{
@@ -230,13 +258,16 @@ public abstract class MenuController
 	{
 		try
 		{
+			// Load the popup box's FXML.
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PopupBox.fxml"));
 			Parent root = loader.load();
 
+			// Create a new window for the popup.
 			Stage popupStage = new Stage(StageStyle.TRANSPARENT);
 			Scene scene = new Scene(root);
 			scene.setFill(Color.TRANSPARENT);
 
+			// Change the text in the popup.
 			Label popupLabel = (Label) root.lookup("#popupLabel");
 			popupLabel.setText(text);
 
@@ -265,6 +296,7 @@ public abstract class MenuController
 
 			moveApp(topBar, popupStage);
 
+			// Apply the application's CSS theme.
 			String css = Objects
 					.requireNonNull(this.getClass()
 							.getResource("/styles/application.css"))

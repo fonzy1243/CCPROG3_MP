@@ -1,27 +1,17 @@
-package Controller;
+package Viewer;
 
-import Model.Slot;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 
 import java.io.IOException;
-import java.util.Objects;
 
-public class MaintenanceMenuController extends MenuController
+public class MaintenanceMenuViewer extends MenuViewer
 {
-	@FXML
-	private Button historyButton;
 	@FXML
 	private AnchorPane topBar;
 	@FXML
@@ -37,32 +27,33 @@ public class MaintenanceMenuController extends MenuController
 	@FXML
 	private Button returnButton;
 
-	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
 
-	public MaintenanceMenuController()
+	public MaintenanceMenuViewer()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
-	}
-
+	/**
+	 * Opens the menu from which the user can select which feature to use.
+	 */
 	public void openMaintenanceMenu()
 	{
 		maintenanceMenuVbox.setSpacing(10);
 
-		buttonAnimator.resizeWhenHovered(stockButton);
-		buttonAnimator.resizeWhenHovered(priceButton);
-		buttonAnimator.resizeWhenHovered(moneyButton);
-		buttonAnimator.resizeWhenHovered(returnButton);
+		ButtonAnimator.resizeWhenHovered(stockButton);
+		ButtonAnimator.resizeWhenHovered(priceButton);
+		ButtonAnimator.resizeWhenHovered(moneyButton);
+		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(actionEvent -> minimizeApp(stage));
 	}
 
+	/**
+	 * Opens the interface for editing stock.
+	 * @param event button click
+	 * @throws IOException if error occurred while opening stock interface FXML
+	 */
 	@FXML
 	private void goToStockInterface(ActionEvent event) throws IOException
 	{
@@ -70,6 +61,11 @@ public class MaintenanceMenuController extends MenuController
 		openMenuScene(event, loader, "stock", vendingMachineController);
 	}
 
+	/**
+	 * Opens the interface for editing price
+	 * @param event button click
+	 * @throws IOException if error occurred while opening price interface FXML
+	 */
 	@FXML
 	private void goToPriceInterface(ActionEvent event) throws IOException
 	{
@@ -77,6 +73,11 @@ public class MaintenanceMenuController extends MenuController
 		openMenuScene(event, loader, "price", vendingMachineController);
 	}
 
+	/**
+	 * Opens the menu for picking between withdrawing or depositing money.
+	 * @param event button click
+	 * @throws IOException if error occurred while opening money menu FXML
+	 */
 	@FXML
 	private void goToMoneyMenu(ActionEvent event) throws IOException
 	{
@@ -84,6 +85,11 @@ public class MaintenanceMenuController extends MenuController
 		openMenuScene(event, loader, "money", vendingMachineController);
 	}
 
+	/**
+	 * Returns to the test menu
+	 * @param event button click
+	 * @throws IOException if error occurred while opening test menu FXML
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{

@@ -3,6 +3,9 @@ package Model;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * A Slot contains a list of items with the same item type.
+ */
 public class Slot
 {
 	private final List<Item> itemList;
@@ -12,22 +15,21 @@ public class Slot
 		itemList = new LinkedList<>();
 	}
 
+	/**
+	 * Get the list of items in the lost
+	 * @return item list
+	 */
 	public List<Item> getItemList()
 	{
 		return this.itemList;
 	}
 
-	// for testing
-	public void printSlotItems()
+	/**
+	 * Get the size of the item list
+	 * @return item count
+	 */
+	public int getItemsCount()
 	{
-		int count = 0;
-		for (Item item : itemList)
-		{
-			count++;
-			System.out.println("Model.Item " + count + ":");
-			System.out.println("Model.Item name: "+ item.getName());
-			System.out.println("Model.Item price: " + (float) item.getPrice() / 100);
-			System.out.println("Model.Item calories: " + item.getCalories());
-		}
+		return this.itemList.size();
 	}
 }

@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import Model.Slot;
 import javafx.animation.KeyFrame;
@@ -24,14 +24,12 @@ import java.util.List;
 
 /**
  * Controls user input in the vending features menu.
- * @see Controller.MenuController
+ * @see MenuViewer
  */
-public class VendingMenuController extends MenuController
+public class VendingMenuViewer extends MenuViewer
 {
 	private Parent root;
 	private final VBox vBox;
-	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
 	private GridPane buttonGrid;
 	private final AnchorPane rootAnchorPane;
 	private final AnchorPane titleBar;
@@ -41,8 +39,12 @@ public class VendingMenuController extends MenuController
 	private final List<Integer> paymentDenominations;
 	private int payment;
 
-	public VendingMenuController()
+	/**
+	 * A vending menu initializes some GUI elements when instantiated.
+	 */
+	public VendingMenuViewer()
 	{
+		// initialize GUI
 		uiManager = new UIManager();
 
 		rootAnchorPane = new AnchorPane();
@@ -59,23 +61,24 @@ public class VendingMenuController extends MenuController
 
 		vBox = new VBox();
 
+		// initialize list of coins/bills used for payment
 		paymentDenominations = new LinkedList<>();
 
 		UIManager.setVboxAnchors(vBox);
-
-		buttonAnimator = new ButtonAnimator();
 	}
 
-	public void setVendingMachineController(VendingMachineController controller)
-	{
-		this.vendingMachineController = controller;
-	}
-
+	/**
+	 * Get the scene's root node
+	 * @return root node
+	 */
 	public Parent getRoot()
 	{
 		return root;
 	}
 
+	/**
+	 * Menu for inserting coins/bills to access the machine.
+	 */
 	public void openCoinInsertionMenu()
 	{
 		payment = 0;
@@ -111,6 +114,9 @@ public class VendingMenuController extends MenuController
 		moveApp(titleBar, stage);
 	}
 
+	/**
+	 * Menu for selecting a slot.
+	 */
 	public void openVendingMenu()
 	{
 		Button backButton = new Button();
@@ -130,15 +136,22 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
-
+	/**
+	 * Menu for dispensing items
+	 * @param slot slot being purchased from
+	 * @param slotIndex index of slot
+	 */
 	public void openDispenseMenu(Slot slot, int slotIndex)
 	{
+		// Return if there are no items in the slot
 		if (slot.getItemList().size() == 0)
 		{
 			openPopup("Slot has no items.");
 			openVendingMenu();
 			return;
 		}
+
+		// Initialize GUI
 
 		String itemName = slot.getItemList().get(0).getName();
 
@@ -165,6 +178,7 @@ public class VendingMenuController extends MenuController
 		uiManager.setAnchors(itemNameLabel, itemPriceLabel, itemCalorieLabel,
 				paymentTitle, paymentLabel, addPaymentButtons, transactionButtons);
 
+		// Sets the cancel button to open the vending menu when clicked.
 		Button cancelButton = new Button("✕");
 		cancelButton.getStyleClass().add("item-back-button");
 		cancelButton.setOnAction(event ->
@@ -175,9 +189,10 @@ public class VendingMenuController extends MenuController
 
 		Button buyButton = new Button("Buy");
 		buyButton.getStyleClass().add("add-button");
-
+		// Sets the buy button to produce change and dispense an item when clicked.
 		buyButton.setOnAction(event -> produceChange(slot, slotIndex, itemName, sceneTitle, buyButton));
 
+		// Finish setting up GUI
 		uiManager.setupPaymentButtons("add-button", addPaymentButtons, paymentLabel);
 
 		transactionButtons.getChildren().addAll(cancelButton, buyButton);
@@ -191,13 +206,24 @@ public class VendingMenuController extends MenuController
 		root = vBox;
 	}
 
+	/**
+	 * Outputs change for the transaction through a popup box.
+	 * @param slot slot being purchased from
+	 * @param slotIndex index of slot
+	 * @param itemName name of item being purchased
+	 * @param sceneTitle label for scene prompt
+	 * @param button button used to purchase item
+	 */
 	private void produceChange(Slot slot, int slotIndex, String itemName, Label sceneTitle, Button button)
 	{
+		// Get the item's price
 		int itemPrice = slot.getItemList().get(0).getPrice();
 
+		// Get the list of coins/bills returned as change
 		List<Integer> changeList = vendingMachineController.getVendingMachines().getLast().
 				dispenseItem(slotIndex, payment);
 
+		// Error handling
 		if (changeList == null)
 		{
 			openPopup("Please insert more money.");
@@ -208,6 +234,7 @@ public class VendingMenuController extends MenuController
 			// to extract method
 			changeScene();
 		}
+		// If payment is exact
 		else if (payment == itemPrice)
 		{
 			Timeline timeline = showProcessingText(sceneTitle, button);
@@ -225,15 +252,18 @@ public class VendingMenuController extends MenuController
 				changeScene();
 			});
 		}
+		// If there is change
 		else
 		{
 			Timeline timeline = showProcessingText(sceneTitle, button);
 
+			// Append the list of coins onto string builder with currency symbol.
 			StringBuilder stringBuilder = new StringBuilder();
 			changeList.forEach((change) -> stringBuilder.append("₱").append((float) change / 100).append(" "));
 
 			timeline.playFromStart();
 
+			// Display popup when animation is finished
 			timeline.setOnFinished(actionEvent ->
 			{
 				for (Integer denomination : paymentDenominations)
@@ -242,6 +272,7 @@ public class VendingMenuController extends MenuController
 							.addDenomination(denomination, 1);
 				}
 
+				// If there is only 1 coin/bill for change
 				if (changeList.size() == 1)
 				{
 					openPopup("You have received " + itemName + ". Your change is " + stringBuilder);
@@ -251,12 +282,18 @@ public class VendingMenuController extends MenuController
 					openPopup("You have received " + itemName + ". Your change is ₱" +
 					          (float) (payment - itemPrice) / 100 + ": " + stringBuilder);
 				}
-
+				// return to coin insertion menu
 				changeScene();
 			});
 		}
 	}
 
+	/**
+	 * Creates an animation to show the machine's processing of the transaction.
+	 * @param sceneTitle label to display processing text
+	 * @param button button used in purchasing the item
+	 * @return animation of text displaying "Dispensing Item" with ellipsis gradually being completed
+	 */
 	private Timeline showProcessingText(Label sceneTitle, Button button)
 	{
 		button.setDisable(true);
@@ -269,6 +306,9 @@ public class VendingMenuController extends MenuController
 		);
 	}
 
+	/**
+	 * Changes the scene to the coin insertion menu.
+	 */
 	private void changeScene()
 	{
 		vBox.getChildren().clear();
@@ -282,7 +322,16 @@ public class VendingMenuController extends MenuController
 	 */
 	protected class UIManager
 	{
-
+		/**
+		 * Sets up the vending menu's GUI.
+		 * @param sceneTitle text title that serves as user prompt
+		 * @param itemDisplayBackground anchor pane managing alignment
+		 * @param itemNameLabel text displaying item name
+		 * @param itemPriceLabel text displaying item price
+		 * @param itemCalorieLabel text displaying item calories
+		 * @param paymentTitle text prompt for payment
+		 * @param paymentLabel text displaying payment
+		 */
 		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
 		{
 			sceneTitle.getStyleClass().add("title-label");
@@ -297,6 +346,16 @@ public class VendingMenuController extends MenuController
 			paymentLabel.getStyleClass().add("item-other");
 		}
 
+		/**
+		 * Sets the alignment of elements in their parent anchor pane.
+		 * @param itemNameLabel text displaying item name
+		 * @param itemPriceLabel text displaying item price
+		 * @param itemCalorieLabel text displaying item calories
+		 * @param paymentTitle text prompt for payment
+		 * @param paymentLabel text displaying payment
+		 * @param addPaymentButtons button for adding coin/bill to payment
+		 * @param transactionButtons button for cancelling or purchasing the displayed item
+		 */
 		private void setAnchors(Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel, GridPane addPaymentButtons, HBox transactionButtons)
 		{
 			AnchorPane.setTopAnchor(itemNameLabel, 42.0);
@@ -315,6 +374,10 @@ public class VendingMenuController extends MenuController
 			AnchorPane.setLeftAnchor(transactionButtons, 345.0);
 		}
 
+		/**
+		 * Adds a label to display current payment amount.
+		 * @return label with current payment amount
+		 */
 		private Label addPaymentLabel()
 		{
 			Label paymentLabel = new Label();
@@ -323,6 +386,10 @@ public class VendingMenuController extends MenuController
 			return paymentLabel;
 		}
 
+		/**
+		 * Sets a VBox's alignment.
+		 * @param vBox VBox to be formatted
+		 */
 		protected static void setVboxAnchors(VBox vBox)
 		{
 			AnchorPane.setTopAnchor(vBox, 20.0);
@@ -331,6 +398,10 @@ public class VendingMenuController extends MenuController
 			AnchorPane.setLeftAnchor(vBox, 0.0);
 		}
 
+		/**
+		 * Adds a text prompt for coin/bill insertion
+		 * @return text prompt for insertion
+		 */
 		private Label addPaymentPrompt()
 		{
 			Label title = new Label("INSERT HERE");
@@ -338,6 +409,9 @@ public class VendingMenuController extends MenuController
 			return title;
 		}
 
+		/**
+		 * Adds top bar button functionality and updates their styles.
+		 */
 		public void initializeTopBarButtons()
 		{
 			minimizeButton.getStyleClass().add("minimize-button");
@@ -347,6 +421,10 @@ public class VendingMenuController extends MenuController
 			closeButton.setOnAction(event -> closeApp());
 		}
 
+		/**
+		 * Dynamically generates a grid of buttons for the vending machine slots.
+		 * @param backButton button to return from menu
+		 */
 		public void setupSlotGrid(Button backButton)
 		{
 			int slotsLength = vendingMachineController.getVendingMachines().get(0).getSlots().length;
@@ -354,6 +432,7 @@ public class VendingMenuController extends MenuController
 			int backButtonRow = slotsLength / 3;  // Add the back button in the next row
 			int backButtonColumn = slotsLength % 3;
 
+			// Start from slotsLength - 1 such that the button order is increasing from bottom to top.
 			for (int i = slotsLength - 1; i >= 0; i--)
 			{
 				Button button = new Button();
@@ -364,8 +443,9 @@ public class VendingMenuController extends MenuController
 				int column = (slotsLength - i - 1) % 3;
 				buttonGrid.add(button, column, row);
 
-				buttonAnimator.resizeWhenHovered(button);
+				ButtonAnimator.resizeWhenHovered(button);
 
+				// Set each button to open the dispense menu for their respective slots when clicked.
 				int slotIndex = i;
 				button.setOnAction(event ->
 				{
@@ -391,9 +471,14 @@ public class VendingMenuController extends MenuController
 			});
 
 			buttonGrid.add(backButton, backButtonColumn, backButtonRow);
-			buttonAnimator.resizeWhenHovered(backButton);
+			ButtonAnimator.resizeWhenHovered(backButton);
 		}
 
+		/**
+		 * Set the gap between buttons in a grid pane.
+		 * @param buttonGrid grid pane to be formatted
+		 * @param gap size of gap
+		 */
 		protected static void setButtonGridGaps(GridPane buttonGrid, double gap)
 		{
 			buttonGrid.setAlignment(Pos.CENTER);
@@ -401,18 +486,26 @@ public class VendingMenuController extends MenuController
 			buttonGrid.setVgap(gap);
 		}
 
+		/**
+		 * Dynamically creates a grid of buttons to add coins/bills to the payment.
+		 * @param style CSS style of the grid buttons
+		 * @param addPaymentButtons grid pane to be added to
+		 * @param paymentLabel text displaying current payment amount
+		 */
 		private void setupPaymentButtons(String style, GridPane addPaymentButtons, Label paymentLabel)
 		{
 			int column = 0;
 			int row = 0;
 			int maxColumns = 3;
 
+			// Create a button for each denomination used.
 			for (int denomination : vendingMachineController.getVendingMachines().getLast().
 					getDenominations().getDenominationList())
 			{
 				Button button = new Button();
 				button.getStyleClass().add(style);
 
+				// Resize the font depending on the value of the coin/bill
 				if (denomination >= 100000 && !style.equals("add-button"))
 				{
 					button.setStyle("-fx-font-size: 19");
@@ -431,7 +524,7 @@ public class VendingMenuController extends MenuController
 					button.setText("₱" + denomination / 100);
 				}
 
-				buttonAnimator.resizeWhenHovered(button);
+				ButtonAnimator.resizeWhenHovered(button);
 
 				addPaymentButtons.add(button, column, row);
 
@@ -443,6 +536,7 @@ public class VendingMenuController extends MenuController
 					row++;
 				}
 
+				// Set each button to add its corresponding denomination to the payment when clicked.
 				button.setOnAction(event ->
 				{
 					paymentLabel.setText("₱" + (float) (payment + denomination) / 100);
@@ -500,8 +594,8 @@ public class VendingMenuController extends MenuController
 				}
 			});
 
-			buttonAnimator.resizeWhenHovered(backButton);
-			buttonAnimator.resizeWhenHovered(continueButton);
+			ButtonAnimator.resizeWhenHovered(backButton);
+			ButtonAnimator.resizeWhenHovered(continueButton);
 
 			navButtons.getChildren().addAll(backButton, continueButton);
 

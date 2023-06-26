@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import Model.Item;
 import Model.Slot;
@@ -17,7 +17,7 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
-public class PriceInterfaceController extends MenuController
+public class PriceInterfaceViewer extends MenuViewer
 {
 	@FXML
 	private HBox navButtons;
@@ -36,19 +36,14 @@ public class PriceInterfaceController extends MenuController
 	@FXML
 	private ComboBox<Slot> slotDropdown;
 
-	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
-
-	public PriceInterfaceController()
+	public PriceInterfaceViewer()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
-	}
-
+	/**
+	 * Opens the interface where a user can edit an item's price.
+	 */
 	public void openPriceInterface()
 	{
 		priceInterfaceVbox.setSpacing(15);
@@ -75,7 +70,7 @@ public class PriceInterfaceController extends MenuController
 
 		for (Node button : navButtons.getChildren())
 		{
-			buttonAnimator.resizeWhenHovered((Button) button);
+			ButtonAnimator.resizeWhenHovered((Button) button);
 		}
 
 		navButtons.setSpacing(7);
@@ -111,6 +106,9 @@ public class PriceInterfaceController extends MenuController
 		});
 	}
 
+	/**
+	 * Changes the prices of all the items in the slot.
+	 */
 	private void changeItemPrices()
 	{
 		int i = 0, slotIndex = -1;
@@ -133,6 +131,11 @@ public class PriceInterfaceController extends MenuController
 		}
 	}
 
+	/**
+	 * Returns to the maintenance menu
+	 * @param event button click
+	 * @throws IOException if error occurred while loading maintenance menu FXML
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{

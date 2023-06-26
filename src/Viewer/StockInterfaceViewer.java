@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import Model.Item;
 import Model.Slot;
@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -16,9 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.util.Arrays;
 
-public class StockInterfaceController extends MenuController
+public class StockInterfaceViewer extends MenuViewer
 {
 	@FXML
 	private Button addButton;
@@ -39,19 +37,14 @@ public class StockInterfaceController extends MenuController
 	@FXML
 	private ComboBox<Slot> slotDropdown;
 
-	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
-
-	public StockInterfaceController()
+	public StockInterfaceViewer()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
-	}
-
+	/**
+	 * Opens an interface where the user can add items to a slot.
+	 */
 	public void openStockInterface()
 	{
 		stockInterfaceVbox.setSpacing(15);
@@ -77,7 +70,7 @@ public class StockInterfaceController extends MenuController
 
 		for (Node button : navButtons.getChildren())
 		{
-			buttonAnimator.resizeWhenHovered((Button) button);
+			ButtonAnimator.resizeWhenHovered((Button) button);
 		}
 
 		navButtons.setSpacing(7);
@@ -119,6 +112,10 @@ public class StockInterfaceController extends MenuController
 		});
 	}
 
+	/**
+	 * Handles adding items to a slot.
+	 * @param slotIndex index of slot to be added to
+	 */
 	private void addItem(int slotIndex)
 	{
 		String numberString = priceTextField.getText();
@@ -157,6 +154,11 @@ public class StockInterfaceController extends MenuController
 		}
 	}
 
+	/**
+	 * Returns to the maintenance menu.
+	 * @param event button click
+	 * @throws IOException if error occurred while opening maintenance menu FXML
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{

@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +12,9 @@ import java.io.IOException;
 /**
  * Controls user input inside the test menu.
  * Allows the user to navigate to submenus.
- * @see Controller.MenuController
+ * @see MenuViewer
  */
-public class TestMenuController extends MenuController
+public class TestMenuViewer extends MenuViewer
 {
 	@FXML
 	private Button minimizeButton;
@@ -28,17 +28,9 @@ public class TestMenuController extends MenuController
 	private Button maintenanceButton;
 	@FXML
 	private Button returnButton;
-	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
 
-	public TestMenuController()
+	public TestMenuViewer()
 	{
-		this.buttonAnimator = new ButtonAnimator();
-	}
-
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**
@@ -48,18 +40,18 @@ public class TestMenuController extends MenuController
 	{
 		testMenuVbox.setSpacing(12);
 
-		buttonAnimator.resizeWhenHovered(vendingFeaturesButton);
-		buttonAnimator.resizeWhenHovered(maintenanceButton);
-		buttonAnimator.resizeWhenHovered(returnButton);
+		ButtonAnimator.resizeWhenHovered(vendingFeaturesButton);
+		ButtonAnimator.resizeWhenHovered(maintenanceButton);
+		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(event -> minimizeApp(stage));
 	}
 
 	/**
-	 * Opens the vending menu scenes and sets the controller to vendingMenuController.
+	 * Opens the vending menu scenes.
 	 * @param event button click
-	 * @throws IOException if error occurred while opening FXML
+	 * @throws IOException if error occurred while opening an FXML (should not happen)
 	 */
 	@FXML
 	private void goToVendingMenu(ActionEvent event) throws IOException
@@ -70,6 +62,11 @@ public class TestMenuController extends MenuController
 		openMenuScene(event, null, "vending", vendingMachineController);
 	}
 
+	/**
+	 * Opens the maintenance menu scene.
+	 * @param event button click
+	 * @throws IOException if error occurred while loading maintenance menu FXML
+	 */
 	@FXML
 	private void goToMaintenanceMenu(ActionEvent event) throws IOException
 	{
@@ -80,6 +77,10 @@ public class TestMenuController extends MenuController
 		openMenuScene(event, loader, "maintenance", vendingMachineController);
 	}
 
+	/**
+	 * Checks if the vending machine list is not empty.
+	 * @return true if the list is empty, else false
+	 */
 	private boolean hasNoMachine()
 	{
 		if (vendingMachineController == null)

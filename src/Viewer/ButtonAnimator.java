@@ -1,12 +1,19 @@
-package Controller;
+package Viewer;
 
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
 
-public class ButtonAnimator
+/**
+ * ButtonAnimator controls the resizing animation of buttons when hovered.
+ */
+public final class ButtonAnimator
 {
-	public void resizeWhenHovered(Button button)
+	/**
+	 * Resizes a button to at most 101% of its original size when hovered.
+	 * @param button button to be animated
+	 */
+	public static void resizeWhenHovered(Button button)
 	{
 		ScaleTransition newScale = new ScaleTransition(Duration.millis(25));
 		newScale.setToX(1.01);

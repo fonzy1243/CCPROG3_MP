@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -19,40 +18,26 @@ import java.util.Objects;
 /**
  * Controls user input in the main menu.
  * Allows the user to navigate to submenus.
- * @see Controller.MenuController
+ * @see MenuViewer
  */
-public class MainMenuController extends MenuController
+public class MainMenuViewer extends MenuViewer
 {
 	@FXML
-	AnchorPane topBar;
+	private AnchorPane topBar;
 	@FXML
-	Button minimizeButton;
+	private Button minimizeButton;
 	@FXML
-	Button testVendingMachineButton;
+	private Button testVendingMachineButton;
 	@FXML
-	Button createMenuButton;
+	private Button createMenuButton;
 	@FXML
-	Button exitButton;
+	private Button exitButton;
 	@FXML
-	VBox mainMenuVBox;
-	@FXML
-	Label mainMenuLabel;
+	private VBox mainMenuVBox;
 
-	private final ButtonAnimator buttonAnimator;
-	private static VendingMachineController vendingMachineController;
-
-	public MainMenuController()
+	public MainMenuViewer()
 	{
-		this.buttonAnimator = new ButtonAnimator();
-	}
 
-	/**
-	 * Passes the program's vending machine controller (static) to the main menu scene controller.
-	 * @param controller manages vending machine functions such as dispensing item.
-	 */
-	public void setVendingMachineController(VendingMachineController controller)
-	{
-		vendingMachineController = controller;
 	}
 
 	/**
@@ -93,21 +78,21 @@ public class MainMenuController extends MenuController
 				createMenuButton = (Button) root.lookup("#createMenuButton");
 			}
 
-			buttonAnimator.resizeWhenHovered(createMenuButton);
+			ButtonAnimator.resizeWhenHovered(createMenuButton);
 
 			if (testVendingMachineButton == null)
 			{
 				testVendingMachineButton = (Button) root.lookup("#testVendingMachineButton");
 			}
 
-			buttonAnimator.resizeWhenHovered(testVendingMachineButton);
+			ButtonAnimator.resizeWhenHovered(testVendingMachineButton);
 
 			if (exitButton == null)
 			{
 				exitButton = (Button) root.lookup("#exitButton");
 			}
 
-			buttonAnimator.resizeWhenHovered(exitButton);
+			ButtonAnimator.resizeWhenHovered(exitButton);
 
 			if (minimizeButton == null)
 			{
@@ -123,8 +108,6 @@ public class MainMenuController extends MenuController
 
 			// Allow the user to click and drag the app through the top bar.
 			moveApp(topBar, stage);
-
-			System.out.println(vendingMachineController.getVendingMachines().size());
 
 			stage.setScene(scene);
 			stage.setResizable(false);

@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-public class MoneyMenuController extends MenuController
+public class MoneyMenuViewer extends MenuViewer
 {
 	@FXML
 	private VBox moneyMenuVbox;
@@ -24,31 +24,31 @@ public class MoneyMenuController extends MenuController
 	@FXML
 	private Button minimizeButton;
 
-	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
-
-	public MoneyMenuController()
+	public MoneyMenuViewer()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
-	}
-
+	/**
+	 * Open the menu where a user can choose whether to withdraw or deposit money.
+	 */
 	public void openMoneyMenu()
 	{
 		moneyMenuVbox.setSpacing(10);
 
-		buttonAnimator.resizeWhenHovered(withdrawButton);
-		buttonAnimator.resizeWhenHovered(depositButton);
-		buttonAnimator.resizeWhenHovered(returnButton);
+		ButtonAnimator.resizeWhenHovered(withdrawButton);
+		ButtonAnimator.resizeWhenHovered(depositButton);
+		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(actionEvent -> minimizeApp(stage));
 	}
 
+	/**
+	 * Opens the withdraw interface
+	 * @param event button click
+	 * @throws IOException if error occurred while loading withdraw interface FXML
+	 */
 	@FXML
 	private void goToWithdrawInterface(ActionEvent event) throws IOException
 	{
@@ -56,6 +56,11 @@ public class MoneyMenuController extends MenuController
 		openMenuScene(event, loader, "withdraw", vendingMachineController);
 	}
 
+	/**
+	 * Opens the dispense interface
+	 * @param event button click
+	 * @throws IOException if error occurred while loading dispense interface FXML
+	 */
 	@FXML
 	private void goToDispenseInterface(ActionEvent event) throws IOException
 	{
@@ -63,6 +68,11 @@ public class MoneyMenuController extends MenuController
 		openMenuScene(event, loader, "dispense", vendingMachineController);
 	}
 
+	/**
+	 * Returns to the maintenance menu.
+	 * @param event button click
+	 * @throws IOException if error occurred while loading maintenance menu
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{
