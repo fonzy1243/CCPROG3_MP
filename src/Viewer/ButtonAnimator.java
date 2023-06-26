@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;

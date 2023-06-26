@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-public class MoneyMenuController extends MenuController
+public class MoneyMenuViewer extends MenuViewer
 {
 	@FXML
 	private VBox moneyMenuVbox;
@@ -24,7 +24,7 @@ public class MoneyMenuController extends MenuController
 	@FXML
 	private Button minimizeButton;
 
-	public MoneyMenuController()
+	public MoneyMenuViewer()
 	{
 
 	}

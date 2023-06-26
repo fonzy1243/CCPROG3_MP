@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -19,9 +18,9 @@ import java.util.Objects;
 /**
  * Controls user input in the main menu.
  * Allows the user to navigate to submenus.
- * @see Controller.MenuController
+ * @see MenuViewer
  */
-public class MainMenuController extends MenuController
+public class MainMenuViewer extends MenuViewer
 {
 	@FXML
 	private AnchorPane topBar;
@@ -36,7 +35,7 @@ public class MainMenuController extends MenuController
 	@FXML
 	private VBox mainMenuVBox;
 
-	public MainMenuController()
+	public MainMenuViewer()
 	{
 
 	}

@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import Model.Item;
 import Model.Slot;
@@ -16,7 +16,7 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
-public class StockInterfaceController extends MenuController
+public class StockInterfaceViewer extends MenuViewer
 {
 	@FXML
 	private Button addButton;
@@ -37,7 +37,7 @@ public class StockInterfaceController extends MenuController
 	@FXML
 	private ComboBox<Slot> slotDropdown;
 
-	public StockInterfaceController()
+	public StockInterfaceViewer()
 	{
 
 	}

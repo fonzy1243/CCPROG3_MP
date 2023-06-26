@@ -1,15 +1,15 @@
 package Viewer;
 
-import Controller.*;
+import Controller.VendingMachineController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class VendingMachineViewer extends Application
+public class VendingMachineAppViewer extends Application
 {
 	private static VendingMachineController controller;
 
-	public VendingMachineViewer()
+	public VendingMachineAppViewer()
 	{
 		controller = new VendingMachineController();
 	}
@@ -19,9 +19,10 @@ public class VendingMachineViewer extends Application
 	{
 		stage.initStyle(StageStyle.TRANSPARENT);
 
-		MainMenuController mainMenuController = new MainMenuController();
+		MainMenuViewer mainMenuViewer = new MainMenuViewer();
 
-		mainMenuController.setVendingMachineController(controller);
-		mainMenuController.openMainMenu(stage);
+		mainMenuViewer.setVendingMachineController(controller);
+		mainMenuViewer.openMainMenu(stage);
 	}
 }
+

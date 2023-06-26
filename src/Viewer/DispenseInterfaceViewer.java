@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * DispenseInterfaceController manages user input when adding dispensing coins/bills (restocking) into the machine.
  */
-public class DispenseInterfaceController extends MenuController
+public class DispenseInterfaceViewer extends MenuViewer
 {
 	@FXML
 	private VBox dispenseInterfaceVbox;
@@ -33,7 +33,7 @@ public class DispenseInterfaceController extends MenuController
 	private double totalMoney;
 
 
-	public DispenseInterfaceController()
+	public DispenseInterfaceViewer()
 	{
 
 	}
@@ -54,7 +54,7 @@ public class DispenseInterfaceController extends MenuController
 
 		navButtons.setSpacing(7);
 
-		VendingMenuController.UIManager.setButtonGridGaps(buttonGrid, 7);
+		VendingMenuViewer.UIManager.setButtonGridGaps(buttonGrid, 7);
 
 		setupButtonGrid(buttonGrid);
 

@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,9 +8,9 @@ import javafx.scene.layout.VBox;
 /**
  * Controls user input in the create menu.
  * Allows the user to create vending machines.
- * @see Controller.MenuController
+ * @see MenuViewer
  */
-public class CreateMenuController extends MenuController
+public class CreateMenuViewer extends MenuViewer
 {
 	@FXML
 	private AnchorPane topBar;
@@ -25,7 +25,7 @@ public class CreateMenuController extends MenuController
 	@FXML
 	private Button returnButton;
 
-	public CreateMenuController()
+	public CreateMenuViewer()
 	{
 
 	}

@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
-public class WithdrawInterfaceController extends MenuController
+public class WithdrawInterfaceViewer extends MenuViewer
 {
 	@FXML
 	private VBox withdrawInterfaceVbox;
@@ -31,7 +31,7 @@ public class WithdrawInterfaceController extends MenuController
 	@FXML
 	private Button minimizeButton;
 
-	public WithdrawInterfaceController()
+	public WithdrawInterfaceViewer()
 	{
 
 	}

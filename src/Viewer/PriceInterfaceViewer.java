@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import Model.Item;
 import Model.Slot;
@@ -17,7 +17,7 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
-public class PriceInterfaceController extends MenuController
+public class PriceInterfaceViewer extends MenuViewer
 {
 	@FXML
 	private HBox navButtons;
@@ -36,7 +36,7 @@ public class PriceInterfaceController extends MenuController
 	@FXML
 	private ComboBox<Slot> slotDropdown;
 
-	public PriceInterfaceController()
+	public PriceInterfaceViewer()
 	{
 
 	}

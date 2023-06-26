@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +12,9 @@ import java.io.IOException;
 /**
  * Controls user input inside the test menu.
  * Allows the user to navigate to submenus.
- * @see Controller.MenuController
+ * @see MenuViewer
  */
-public class TestMenuController extends MenuController
+public class TestMenuViewer extends MenuViewer
 {
 	@FXML
 	private Button minimizeButton;
@@ -29,7 +29,7 @@ public class TestMenuController extends MenuController
 	@FXML
 	private Button returnButton;
 
-	public TestMenuController()
+	public TestMenuViewer()
 	{
 	}
 

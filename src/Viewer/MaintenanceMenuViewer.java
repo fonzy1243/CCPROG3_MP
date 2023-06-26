@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-public class MaintenanceMenuController extends MenuController
+public class MaintenanceMenuViewer extends MenuViewer
 {
 	@FXML
 	private AnchorPane topBar;
@@ -28,7 +28,7 @@ public class MaintenanceMenuController extends MenuController
 	private Button returnButton;
 
 
-	public MaintenanceMenuController()
+	public MaintenanceMenuViewer()
 	{
 
 	}

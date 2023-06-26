@@ -1,4 +1,4 @@
-package Controller;
+package Viewer;
 
 import Model.Slot;
 import javafx.animation.KeyFrame;
@@ -24,9 +24,9 @@ import java.util.List;
 
 /**
  * Controls user input in the vending features menu.
- * @see Controller.MenuController
+ * @see MenuViewer
  */
-public class VendingMenuController extends MenuController
+public class VendingMenuViewer extends MenuViewer
 {
 	private Parent root;
 	private final VBox vBox;
@@ -42,7 +42,7 @@ public class VendingMenuController extends MenuController
 	/**
 	 * A vending menu initializes some GUI elements when instantiated.
 	 */
-	public VendingMenuController()
+	public VendingMenuViewer()
 	{
 		// initialize GUI
 		uiManager = new UIManager();

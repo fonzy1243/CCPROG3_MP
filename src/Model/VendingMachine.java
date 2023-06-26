@@ -207,20 +207,5 @@ public class VendingMachine
 	{
 		return getChange(withdrawAmount);
 	}
-
-	// for testing change
-	public void printChange(List<Integer> coinChangeValues)
-	{
-		int realChange = 0;
-
-		for (int coinValue : coinChangeValues)
-		{
-			realChange += coinValue;
-			System.out.print(((float) coinValue / 100) + ", ");
-		}
-		System.out.println();
-
-		System.out.println("Real change = " + ((float) realChange / 100));
-	}
 }
 

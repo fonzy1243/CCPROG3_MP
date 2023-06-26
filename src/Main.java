@@ -1,6 +1,4 @@
-package Model;
-
-import Viewer.VendingMachineViewer;
+import Viewer.VendingMachineAppViewer;
 import javafx.application.Application;
 
 public class Main
@@ -10,6 +8,6 @@ public class Main
 		// Change text antialiasing
 		System.setProperty("prism.lcdtext", "false");
 		// Launch the GUI application
-		Application.launch(VendingMachineViewer.class, args);
+		Application.launch(VendingMachineAppViewer.class, args);
 	}
 }
