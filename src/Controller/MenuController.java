@@ -33,6 +33,9 @@ import java.util.Objects;
  */
 public abstract class MenuController
 {
+	/**
+	 * Application window
+	 */
 	protected Stage stage;
 
 	/**
@@ -44,6 +47,9 @@ public abstract class MenuController
 		this.stage = stage;
 	}
 
+	// for the VendingMachineController, we use composition instead of inheritance in case
+	// we need to create a menu that does not handle the vending machines (i.e. an application settings menu)
+
 	/**
 	 * Goes from the menu controller's current scene to the main menu scene and returns control to the
 	 * mainMenuController.
@@ -53,16 +59,18 @@ public abstract class MenuController
 	@FXML
 	void returnToMainMenu(ActionEvent event) throws IOException
 	{
+		// Load the main menu's FXML
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
 		Parent root = loader.load();
 
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, 730, 730);
 
-
+		// Create a controller to handle user input.
 		MainMenuController mainMenuController = loader.getController();
 		mainMenuController.openMainMenu(stage);
 
+		// Apply the application's CSS style.
 		String css = Objects
 				.requireNonNull(this.getClass()
 						.getResource("/styles/application.css"))
@@ -86,8 +94,10 @@ public abstract class MenuController
 	void openMenuScene(ActionEvent event, FXMLLoader loader, String menu,
 	                   VendingMachineController vendingMachineController) throws IOException
 	{
+		// Scene's root node
 		Parent root;
 
+		// Vending menu does not use an FXML file.
 		if (!menu.equals("vending"))
 		{
 			root = loader.load();
@@ -101,11 +111,14 @@ public abstract class MenuController
 			root = vendingMenuController.getRoot();
 		}
 
+		// Create a new scene.
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, 730, 730);
 
+		// Change the new scene to its corresponding menu scene and creates a controller to handle user input.
 		switch (menu)
 		{
+			// Create controller for create menu
 			case "create" ->
 			{
 				CreateMenuController createMenuController = loader.getController();
@@ -113,6 +126,7 @@ public abstract class MenuController
 				createMenuController.setStage(stage);
 				createMenuController.openCreateMenu();
 			}
+			// Create controller for test menu
 			case "test" ->
 			{
 				TestMenuController testMenuController = loader.getController();
@@ -120,6 +134,7 @@ public abstract class MenuController
 				testMenuController.setStage(stage);
 				testMenuController.openTestMenu();
 			}
+			// Create controller for maintenance menu
 			case "maintenance" ->
 			{
 				MaintenanceMenuController maintenanceMenuController = loader.getController();
@@ -127,6 +142,7 @@ public abstract class MenuController
 				maintenanceMenuController.setStage(stage);
 				maintenanceMenuController.openMaintenanceMenu();
 			}
+			// Create controller for stock interface
 			case "stock" ->
 			{
 				StockInterfaceController stockInterfaceController = loader.getController();
@@ -134,6 +150,7 @@ public abstract class MenuController
 				stockInterfaceController.setStage(stage);
 				stockInterfaceController.openStockInterface();
 			}
+			// Create controller for price interface
 			case "price" ->
 			{
 				PriceInterfaceController priceInterfaceController = loader.getController();
@@ -141,6 +158,7 @@ public abstract class MenuController
 				priceInterfaceController.setStage(stage);
 				priceInterfaceController.openPriceInterface();
 			}
+			// Create controller for money menu
 			case "money" ->
 			{
 				MoneyMenuController moneyMenuController = loader.getController();
@@ -148,6 +166,7 @@ public abstract class MenuController
 				moneyMenuController.setStage(stage);
 				moneyMenuController.openMoneyMenu();
 			}
+			// Create controller for withdraw interface
 			case "withdraw" ->
 			{
 				WithdrawInterfaceController withdrawInterfaceController = loader.getController();
@@ -155,6 +174,7 @@ public abstract class MenuController
 				withdrawInterfaceController.setStage(stage);
 				withdrawInterfaceController.openWithdrawInterface();
 			}
+			// Create controller for dispense interface
 			case "dispense" ->
 			{
 				DispenseInterfaceController dispenseInterfaceController = loader.getController();
@@ -230,13 +250,16 @@ public abstract class MenuController
 	{
 		try
 		{
+			// Load the popup box's FXML.
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PopupBox.fxml"));
 			Parent root = loader.load();
 
+			// Create a new window for the popup.
 			Stage popupStage = new Stage(StageStyle.TRANSPARENT);
 			Scene scene = new Scene(root);
 			scene.setFill(Color.TRANSPARENT);
 
+			// Change the text in the popup.
 			Label popupLabel = (Label) root.lookup("#popupLabel");
 			popupLabel.setText(text);
 
@@ -265,6 +288,7 @@ public abstract class MenuController
 
 			moveApp(topBar, popupStage);
 
+			// Apply the application's CSS theme.
 			String css = Objects
 					.requireNonNull(this.getClass()
 							.getResource("/styles/application.css"))

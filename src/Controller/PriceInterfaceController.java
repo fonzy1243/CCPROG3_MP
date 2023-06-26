@@ -37,18 +37,25 @@ public class PriceInterfaceController extends MenuController
 	private ComboBox<Slot> slotDropdown;
 
 	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
 
 	public PriceInterfaceController()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
+	/**
+	 * Sets the vending machine controller for the scene.
+	 * @param vendingMachineController scene's vending machine controller
+	 * @see VendingMachineController
+	 */
 	public void setVendingMachineController(VendingMachineController vendingMachineController)
 	{
 		this.vendingMachineController = vendingMachineController;
 	}
 
+	/**
+	 * Opens the interface where a user can edit an item's price.
+	 */
 	public void openPriceInterface()
 	{
 		priceInterfaceVbox.setSpacing(15);
@@ -75,7 +82,7 @@ public class PriceInterfaceController extends MenuController
 
 		for (Node button : navButtons.getChildren())
 		{
-			buttonAnimator.resizeWhenHovered((Button) button);
+			ButtonAnimator.resizeWhenHovered((Button) button);
 		}
 
 		navButtons.setSpacing(7);
@@ -111,6 +118,9 @@ public class PriceInterfaceController extends MenuController
 		});
 	}
 
+	/**
+	 * Changes the prices of all the items in the slot.
+	 */
 	private void changeItemPrices()
 	{
 		int i = 0, slotIndex = -1;
@@ -133,6 +143,11 @@ public class PriceInterfaceController extends MenuController
 		}
 	}
 
+	/**
+	 * Returns to the maintenance menu
+	 * @param event button click
+	 * @throws IOException if error occurred while loading maintenance menu FXML
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{

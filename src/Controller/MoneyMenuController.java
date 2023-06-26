@@ -25,30 +25,42 @@ public class MoneyMenuController extends MenuController
 	private Button minimizeButton;
 
 	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
 
 	public MoneyMenuController()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
+	/**
+	 * Sets the menu's vending machine controller
+	 * @param vendingMachineController menu's vending machine controller
+	 * @see VendingMachineController
+	 */
 	public void setVendingMachineController(VendingMachineController vendingMachineController)
 	{
 		this.vendingMachineController = vendingMachineController;
 	}
 
+	/**
+	 * Open the menu where a user can choose whether to withdraw or deposit money.
+	 */
 	public void openMoneyMenu()
 	{
 		moneyMenuVbox.setSpacing(10);
 
-		buttonAnimator.resizeWhenHovered(withdrawButton);
-		buttonAnimator.resizeWhenHovered(depositButton);
-		buttonAnimator.resizeWhenHovered(returnButton);
+		ButtonAnimator.resizeWhenHovered(withdrawButton);
+		ButtonAnimator.resizeWhenHovered(depositButton);
+		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(actionEvent -> minimizeApp(stage));
 	}
 
+	/**
+	 * Opens the withdraw interface
+	 * @param event button click
+	 * @throws IOException if error occurred while loading withdraw interface FXML
+	 */
 	@FXML
 	private void goToWithdrawInterface(ActionEvent event) throws IOException
 	{
@@ -56,6 +68,11 @@ public class MoneyMenuController extends MenuController
 		openMenuScene(event, loader, "withdraw", vendingMachineController);
 	}
 
+	/**
+	 * Opens the dispense interface
+	 * @param event button click
+	 * @throws IOException if error occurred while loading dispense interface FXML
+	 */
 	@FXML
 	private void goToDispenseInterface(ActionEvent event) throws IOException
 	{
@@ -63,6 +80,11 @@ public class MoneyMenuController extends MenuController
 		openMenuScene(event, loader, "dispense", vendingMachineController);
 	}
 
+	/**
+	 * Returns to the maintenance menu.
+	 * @param event button click
+	 * @throws IOException if error occurred while loading maintenance menu
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{

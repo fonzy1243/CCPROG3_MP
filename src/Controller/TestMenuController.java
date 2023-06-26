@@ -29,13 +29,16 @@ public class TestMenuController extends MenuController
 	@FXML
 	private Button returnButton;
 	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
 
 	public TestMenuController()
 	{
-		this.buttonAnimator = new ButtonAnimator();
 	}
 
+	/**
+	 * Sets the controller's vending machine controller
+	 * @param vendingMachineController controller's vending machine controller
+	 * @see VendingMachineController
+	 */
 	public void setVendingMachineController(VendingMachineController vendingMachineController)
 	{
 		this.vendingMachineController = vendingMachineController;
@@ -48,18 +51,18 @@ public class TestMenuController extends MenuController
 	{
 		testMenuVbox.setSpacing(12);
 
-		buttonAnimator.resizeWhenHovered(vendingFeaturesButton);
-		buttonAnimator.resizeWhenHovered(maintenanceButton);
-		buttonAnimator.resizeWhenHovered(returnButton);
+		ButtonAnimator.resizeWhenHovered(vendingFeaturesButton);
+		ButtonAnimator.resizeWhenHovered(maintenanceButton);
+		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(event -> minimizeApp(stage));
 	}
 
 	/**
-	 * Opens the vending menu scenes and sets the controller to vendingMenuController.
+	 * Opens the vending menu scenes.
 	 * @param event button click
-	 * @throws IOException if error occurred while opening FXML
+	 * @throws IOException if error occurred while opening an FXML (should not happen)
 	 */
 	@FXML
 	private void goToVendingMenu(ActionEvent event) throws IOException
@@ -70,6 +73,11 @@ public class TestMenuController extends MenuController
 		openMenuScene(event, null, "vending", vendingMachineController);
 	}
 
+	/**
+	 * Opens the maintenance menu scene.
+	 * @param event button click
+	 * @throws IOException if error occurred while loading maintenance menu FXML
+	 */
 	@FXML
 	private void goToMaintenanceMenu(ActionEvent event) throws IOException
 	{
@@ -80,6 +88,10 @@ public class TestMenuController extends MenuController
 		openMenuScene(event, loader, "maintenance", vendingMachineController);
 	}
 
+	/**
+	 * Checks if the vending machine list is not empty.
+	 * @return true if the list is empty, else false
+	 */
 	private boolean hasNoMachine()
 	{
 		if (vendingMachineController == null)

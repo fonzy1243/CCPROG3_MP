@@ -38,12 +38,11 @@ public class MainMenuController extends MenuController
 	@FXML
 	Label mainMenuLabel;
 
-	private final ButtonAnimator buttonAnimator;
 	private static VendingMachineController vendingMachineController;
 
 	public MainMenuController()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
 	/**
@@ -93,21 +92,21 @@ public class MainMenuController extends MenuController
 				createMenuButton = (Button) root.lookup("#createMenuButton");
 			}
 
-			buttonAnimator.resizeWhenHovered(createMenuButton);
+			ButtonAnimator.resizeWhenHovered(createMenuButton);
 
 			if (testVendingMachineButton == null)
 			{
 				testVendingMachineButton = (Button) root.lookup("#testVendingMachineButton");
 			}
 
-			buttonAnimator.resizeWhenHovered(testVendingMachineButton);
+			ButtonAnimator.resizeWhenHovered(testVendingMachineButton);
 
 			if (exitButton == null)
 			{
 				exitButton = (Button) root.lookup("#exitButton");
 			}
 
-			buttonAnimator.resizeWhenHovered(exitButton);
+			ButtonAnimator.resizeWhenHovered(exitButton);
 
 			if (minimizeButton == null)
 			{
@@ -123,8 +122,6 @@ public class MainMenuController extends MenuController
 
 			// Allow the user to click and drag the app through the top bar.
 			moveApp(topBar, stage);
-
-			System.out.println(vendingMachineController.getVendingMachines().size());
 
 			stage.setScene(scene);
 			stage.setResizable(false);

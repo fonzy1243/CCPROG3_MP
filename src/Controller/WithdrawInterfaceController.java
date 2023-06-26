@@ -32,18 +32,25 @@ public class WithdrawInterfaceController extends MenuController
 	private Button minimizeButton;
 
 	private VendingMachineController vendingMachineController;
-	private final ButtonAnimator buttonAnimator;
 
 	public WithdrawInterfaceController()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
+	/**
+	 * Sets the scene's machine controller
+	 * @param vendingMachineController scene's machine controller
+	 * @see VendingMachineController
+	 */
 	public void setVendingMachineController(VendingMachineController vendingMachineController)
 	{
 		this.vendingMachineController = vendingMachineController;
 	}
 
+	/**
+	 * Opens the interface where a user can withdraw money from the vending machine.
+	 */
 	public void openWithdrawInterface()
 	{
 		withdrawInterfaceVbox.setSpacing(35);
@@ -51,13 +58,15 @@ public class WithdrawInterfaceController extends MenuController
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(actionEvent -> minimizeApp(stage));
 
+		// animate all nav buttons
 		for (Node button : navButtons.getChildren())
 		{
-			buttonAnimator.resizeWhenHovered((Button) button);
+			ButtonAnimator.resizeWhenHovered((Button) button);
 		}
 
 		navButtons.setSpacing(7);
 
+		// make total money effectively final for use in the lambda expression
 		final double[] totalMoney = {vendingMachineController.getVendingMachines().getLast().getDenominations()
 				                             .calculateTotal() / 100.0};
 
@@ -65,6 +74,7 @@ public class WithdrawInterfaceController extends MenuController
 
 		addButton.setOnAction(event ->
 		{
+			// Cannot withdraw negative value
 			if ((int) (Float.parseFloat(moneyTextField.getText()) * 100) <= 0)
 			{
 				openPopup("Invalid withdrawal.");
@@ -73,6 +83,8 @@ public class WithdrawInterfaceController extends MenuController
 
 			List<Integer> change = vendingMachineController.getVendingMachines().getLast()
 					.withdrawMoney((int) (Float.parseFloat(moneyTextField.getText()) * 100));
+
+			// convert total in cents to real total
 
 			float total = 0;
 
@@ -91,6 +103,11 @@ public class WithdrawInterfaceController extends MenuController
 		});
 	}
 
+	/**
+	 * Returns to the money menu
+	 * @param event button click
+	 * @throws IOException if error occurred while opening money menu FXML
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{

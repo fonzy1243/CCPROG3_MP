@@ -22,16 +22,28 @@ public class VendingMachineController
 		vendingMachines = new LinkedList<>();
 	}
 
+	/**
+	 * Creates a regular machine.
+	 * @param slotCount amount of slots in the vending machine
+	 */
 	public void createRegularMachine(int slotCount)
 	{
 		vendingMachines.addFirst(new RegularVendingMachine(slotCount));
 	}
 
+	/**
+	 * Creates a special vending machine.
+	 * @param slotCount amount of slots in the vending machine
+	 */
 	public void createSpecialMachine(int slotCount)
 	{
 		vendingMachines.addFirst(new SpecialVendingMachine(slotCount));
 	}
 
+	/**
+	 * Gets the list of vending machines.
+	 * @return vending machine linked list
+	 */
 	public LinkedList<VendingMachine> getVendingMachines()
 	{
 		return vendingMachines;

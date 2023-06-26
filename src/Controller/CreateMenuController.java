@@ -24,35 +24,44 @@ public class CreateMenuController extends MenuController
 	Button createSpecialButton;
 	@FXML
 	Button returnButton;
-
-	private final ButtonAnimator buttonAnimator;
 	private VendingMachineController vendingMachineController;
 
 	public CreateMenuController()
 	{
-		this.buttonAnimator = new ButtonAnimator();
+
 	}
 
+	/**
+	 * Sets the machine controller for the menu.
+	 * @param vendingMachineController menu's machine controller
+	 * @see VendingMachineController
+	 */
 	public void setVendingMachineController(VendingMachineController vendingMachineController)
 	{
 		this.vendingMachineController = vendingMachineController;
 	}
 
+	/**
+	 * Opens the menu for creating vending machines.
+	 */
 	public void openCreateMenu()
 	{
 		createMenuVBox.setSpacing(12);
 		createSpecialButton.setDisable(true);
 
-		buttonAnimator.resizeWhenHovered(createRegularButton);
-		buttonAnimator.resizeWhenHovered(returnButton);
+		ButtonAnimator.resizeWhenHovered(createRegularButton);
+		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
 		minimizeButton.setOnAction(event -> minimizeApp(stage));
 	}
+
+	/**
+	 * Creates a new regular vending machine for the current machine controller.
+	 */
 	@FXML
 	private void createRegularMachine()
 	{
 		vendingMachineController.createRegularMachine(10);
 	}
-
 }
