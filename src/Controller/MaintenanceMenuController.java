@@ -13,8 +13,6 @@ import java.io.IOException;
 public class MaintenanceMenuController extends MenuController
 {
 	@FXML
-	private Button historyButton;
-	@FXML
 	private AnchorPane topBar;
 	@FXML
 	private Button minimizeButton;
@@ -29,21 +27,10 @@ public class MaintenanceMenuController extends MenuController
 	@FXML
 	private Button returnButton;
 
-	private VendingMachineController vendingMachineController;
 
 	public MaintenanceMenuController()
 	{
 
-	}
-
-	/**
-	 * Sets the menu's vending machine controller
-	 * @param vendingMachineController menu's vending machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**

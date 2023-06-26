@@ -30,7 +30,6 @@ public class VendingMenuController extends MenuController
 {
 	private Parent root;
 	private final VBox vBox;
-	private VendingMachineController vendingMachineController;
 	private GridPane buttonGrid;
 	private final AnchorPane rootAnchorPane;
 	private final AnchorPane titleBar;
@@ -66,16 +65,6 @@ public class VendingMenuController extends MenuController
 		paymentDenominations = new LinkedList<>();
 
 		UIManager.setVboxAnchors(vBox);
-	}
-
-	/**
-	 * Sets the menu controller's machine controller.
-	 * @param controller menu's machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController controller)
-	{
-		this.vendingMachineController = controller;
 	}
 
 	/**

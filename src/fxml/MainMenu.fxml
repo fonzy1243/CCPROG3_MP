@@ -24,8 +24,7 @@
     </AnchorPane>
     <VBox fx:id="mainMenuVBox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label fx:id="mainMenuLabel"
-               text="Main Menu"
+        <Label text="Main Menu"
                styleClass="title-label"/>
         <Button fx:id="createMenuButton"
                 text="Create Vending Machine"

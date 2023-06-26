@@ -37,6 +37,7 @@ public abstract class MenuController
 	 * Application window
 	 */
 	protected Stage stage;
+	protected static VendingMachineController vendingMachineController;
 
 	/**
 	 * Sets the stage (window) used by the menu controller.
@@ -47,8 +48,14 @@ public abstract class MenuController
 		this.stage = stage;
 	}
 
-	// for the VendingMachineController, we use composition instead of inheritance in case
-	// we need to create a menu that does not handle the vending machines (i.e. an application settings menu)
+	/**
+	 * Passes the program's vending machine controller (static) to the main menu scene controller.
+	 * @param controller manages vending machine functions such as dispensing item.
+	 */
+	public void setVendingMachineController(VendingMachineController controller)
+	{
+		vendingMachineController = controller;
+	}
 
 	/**
 	 * Goes from the menu controller's current scene to the main menu scene and returns control to the

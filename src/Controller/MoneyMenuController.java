@@ -24,21 +24,9 @@ public class MoneyMenuController extends MenuController
 	@FXML
 	private Button minimizeButton;
 
-	private VendingMachineController vendingMachineController;
-
 	public MoneyMenuController()
 	{
 
-	}
-
-	/**
-	 * Sets the menu's vending machine controller
-	 * @param vendingMachineController menu's vending machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**

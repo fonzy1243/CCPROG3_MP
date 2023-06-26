@@ -13,32 +13,21 @@ import javafx.scene.layout.VBox;
 public class CreateMenuController extends MenuController
 {
 	@FXML
-	AnchorPane topBar;
+	private AnchorPane topBar;
 	@FXML
-	Button minimizeButton;
+	private Button minimizeButton;
 	@FXML
-	VBox createMenuVBox;
+	private VBox createMenuVBox;
 	@FXML
-	Button createRegularButton;
+	private Button createRegularButton;
 	@FXML
-	Button createSpecialButton;
+	private Button createSpecialButton;
 	@FXML
-	Button returnButton;
-	private VendingMachineController vendingMachineController;
+	private Button returnButton;
 
 	public CreateMenuController()
 	{
 
-	}
-
-	/**
-	 * Sets the machine controller for the menu.
-	 * @param vendingMachineController menu's machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**

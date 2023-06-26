@@ -31,21 +31,9 @@ public class WithdrawInterfaceController extends MenuController
 	@FXML
 	private Button minimizeButton;
 
-	private VendingMachineController vendingMachineController;
-
 	public WithdrawInterfaceController()
 	{
 
-	}
-
-	/**
-	 * Sets the scene's machine controller
-	 * @param vendingMachineController scene's machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**

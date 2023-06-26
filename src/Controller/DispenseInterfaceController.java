@@ -18,34 +18,24 @@ import java.io.IOException;
  */
 public class DispenseInterfaceController extends MenuController
 {
-	public Button addButton;
-	public VBox dispenseInterfaceVbox;
-	public GridPane buttonGrid;
-	public Label totalMoneyLabel;
+	@FXML
+	private VBox dispenseInterfaceVbox;
+	@FXML
+	private GridPane buttonGrid;
+	@FXML
+	private Label totalMoneyLabel;
 	@FXML
 	private HBox navButtons;
 	@FXML
 	private AnchorPane topBar;
 	@FXML
 	private Button minimizeButton;
-
-	private VendingMachineController vendingMachineController;
 	private double totalMoney;
 
 
 	public DispenseInterfaceController()
 	{
 
-	}
-
-	/**
-	 * Sets the menu's vending machine controller
-	 * @param vendingMachineController menu's vending machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**

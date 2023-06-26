@@ -28,20 +28,9 @@ public class TestMenuController extends MenuController
 	private Button maintenanceButton;
 	@FXML
 	private Button returnButton;
-	private VendingMachineController vendingMachineController;
 
 	public TestMenuController()
 	{
-	}
-
-	/**
-	 * Sets the controller's vending machine controller
-	 * @param vendingMachineController controller's vending machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**

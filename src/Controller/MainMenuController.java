@@ -24,34 +24,21 @@ import java.util.Objects;
 public class MainMenuController extends MenuController
 {
 	@FXML
-	AnchorPane topBar;
+	private AnchorPane topBar;
 	@FXML
-	Button minimizeButton;
+	private Button minimizeButton;
 	@FXML
-	Button testVendingMachineButton;
+	private Button testVendingMachineButton;
 	@FXML
-	Button createMenuButton;
+	private Button createMenuButton;
 	@FXML
-	Button exitButton;
+	private Button exitButton;
 	@FXML
-	VBox mainMenuVBox;
-	@FXML
-	Label mainMenuLabel;
-
-	private static VendingMachineController vendingMachineController;
+	private VBox mainMenuVBox;
 
 	public MainMenuController()
 	{
 
-	}
-
-	/**
-	 * Passes the program's vending machine controller (static) to the main menu scene controller.
-	 * @param controller manages vending machine functions such as dispensing item.
-	 */
-	public void setVendingMachineController(VendingMachineController controller)
-	{
-		vendingMachineController = controller;
 	}
 
 	/**

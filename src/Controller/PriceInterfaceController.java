@@ -36,21 +36,9 @@ public class PriceInterfaceController extends MenuController
 	@FXML
 	private ComboBox<Slot> slotDropdown;
 
-	private VendingMachineController vendingMachineController;
-
 	public PriceInterfaceController()
 	{
 
-	}
-
-	/**
-	 * Sets the vending machine controller for the scene.
-	 * @param vendingMachineController scene's vending machine controller
-	 * @see VendingMachineController
-	 */
-	public void setVendingMachineController(VendingMachineController vendingMachineController)
-	{
-		this.vendingMachineController = vendingMachineController;
 	}
 
 	/**
