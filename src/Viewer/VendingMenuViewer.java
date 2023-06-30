@@ -184,6 +184,7 @@ public class VendingMenuViewer extends MenuViewer
 		cancelButton.setOnAction(event ->
 		{
 			vBox.getChildren().clear();
+			openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
 			openVendingMenu();
 		});
 
@@ -332,7 +333,8 @@ public class VendingMenuViewer extends MenuViewer
 		 * @param paymentTitle text prompt for payment
 		 * @param paymentLabel text displaying payment
 		 */
-		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
+		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel,
+		                              Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
 		{
 			sceneTitle.getStyleClass().add("title-label");
 			sceneTitle.setPadding(new Insets(0, 0, 25,0));
@@ -356,7 +358,8 @@ public class VendingMenuViewer extends MenuViewer
 		 * @param addPaymentButtons button for adding coin/bill to payment
 		 * @param transactionButtons button for cancelling or purchasing the displayed item
 		 */
-		private void setAnchors(Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel, GridPane addPaymentButtons, HBox transactionButtons)
+		private void setAnchors(Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle,
+		                        Label paymentLabel, GridPane addPaymentButtons, HBox transactionButtons)
 		{
 			AnchorPane.setTopAnchor(itemNameLabel, 42.0);
 			AnchorPane.setLeftAnchor(itemNameLabel, 40.0);
@@ -464,6 +467,7 @@ public class VendingMenuViewer extends MenuViewer
 				try
 				{
 					returnToMainMenu(event);
+					openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
 				} catch (IOException e)
 				{
 					throw new RuntimeException(e);

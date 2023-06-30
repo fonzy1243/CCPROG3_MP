@@ -85,8 +85,7 @@ public class TestMenuViewer extends MenuViewer
 	{
 		if (vendingMachineController == null)
 		{
-			System.out.println("Error: No vending machine controller.");
-			return true;
+			throw new RuntimeException("Vending machine controller object is null");
 		}
 
 		if (vendingMachineController.getVendingMachines().size() == 0)
