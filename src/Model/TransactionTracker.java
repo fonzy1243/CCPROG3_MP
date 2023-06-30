@@ -7,13 +7,37 @@ import java.io.IOException;
 public class TransactionTracker
 {
     private int totalAmountCollected;
-    private final Slot[] initialSlots;
-    private final Slot[] currentSlots;
+    private Slot[] initialSlots;
+    private Slot[] currentSlots;
 
-    public TransactionTracker(Slot[] initialSlots, Slot[] currentSlots)
+    public TransactionTracker(Slot[] initialSlots)
     {
         this.initialSlots = initialSlots;
+    }
+
+    public void setInitialSlots(Slot[] initialSlots)
+    {
+        this.initialSlots = initialSlots;
+    }
+
+    public void setCurrentSlots(Slot[] currentSlots)
+    {
         this.currentSlots = currentSlots;
+    }
+
+    public int getTotalAmountCollected()
+    {
+        return totalAmountCollected;
+    }
+
+    public void setTotalAmountCollected()
+    {
+        totalAmountCollected = 0;
+
+        for (int i = 0; i < initialSlots.length; i++)
+        {
+            totalAmountCollected += (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) * initialSlots[i].getItemList().get(0).getPrice();
+        }
     }
 
     public void createTransactionFile()
@@ -49,10 +73,8 @@ public class TransactionTracker
             try
             {
                 FileWriter writer = new FileWriter(transactionFile, true);
-                writer.write((initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) + "\n");
+                writer.write(initialSlots[i].getItemList().get(0).getName() + ": " + (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) + "\n");
                 writer.close();
-
-                totalAmountCollected += (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) * initialSlots[i].getItemList().get(0).getPrice();
             } catch (IOException exception)
             {
                 System.out.println("Error occurred while writing to file.");
@@ -72,18 +94,7 @@ public class TransactionTracker
         }
     }
 
-    public void displayTransactionDetails()
-    {
-        System.out.println("Transaction Details");
-
-        for (int i = 0; i < initialSlots.length; i++)
-        {
-            System.out.println(initialSlots[i].getItemList().get(0).getName() + ": " + (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()));
-        }
-
-        System.out.println("Total amount collected: PhP" + (float) totalAmountCollected / 100);
-    }
-
+    // TODO: do i need this... ill see later
     public Slot[] readTransactionFile()
     {
         File transactionFile = new File("transactions.txt");

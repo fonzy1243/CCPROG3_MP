@@ -18,6 +18,8 @@ public class VendingMachine
 
 	private final Denomination denominations;
 
+	private final TransactionTracker transactionTracker;
+
 	public VendingMachine(int slotCount)
 	{
 		slots = new Slot[slotCount];
@@ -28,6 +30,17 @@ public class VendingMachine
 		}
 
 		denominations = new Denomination();
+
+		transactionTracker = new TransactionTracker(slots);
+	}
+
+	/**
+	 * Get the transaction tracker
+	 * @return transaction tracker object
+	 */
+	public TransactionTracker getTransactionTracker()
+	{
+		return transactionTracker;
 	}
 
 	/**

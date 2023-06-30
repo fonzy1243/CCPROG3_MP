@@ -152,6 +152,8 @@ public class StockInterfaceViewer extends MenuViewer
 		{
 			openPopup("Cannot add item.");
 		}
+
+		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().setInitialSlots(vendingMachineController.getVendingMachines().getLast().getSlots());
 	}
 
 	/**

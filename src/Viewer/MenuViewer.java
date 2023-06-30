@@ -174,6 +174,14 @@ public abstract class MenuViewer
 				moneyMenuViewer.setStage(stage);
 				moneyMenuViewer.openMoneyMenu();
 			}
+			// Create viewer for transaction interface
+			case "transaction" ->
+			{
+				TransactionInterfaceViewer transactionInterfaceViewer = loader.getController();
+				transactionInterfaceViewer.setVendingMachineController(vendingMachineController);
+				transactionInterfaceViewer.setStage(stage);
+				transactionInterfaceViewer.openTransactionInterface();
+			}
 			// Create viewer for withdraw interface
 			case "withdraw" ->
 			{
