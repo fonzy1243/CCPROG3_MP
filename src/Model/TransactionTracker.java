@@ -36,7 +36,10 @@ public class TransactionTracker
 
         for (int i = 0; i < initialSlots.length; i++)
         {
-            totalAmountCollected += (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) * initialSlots[i].getItemList().get(0).getPrice();
+            if (initialSlots[i].getItemList().size() > 0)
+            {
+                totalAmountCollected += (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) * initialSlots[i].getItemList().get(0).getPrice();
+            }
         }
     }
 
@@ -73,8 +76,11 @@ public class TransactionTracker
             try
             {
                 FileWriter writer = new FileWriter(transactionFile, true);
-                writer.write(initialSlots[i].getItemList().get(0).getName() + ": " + (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) + "\n");
-                writer.close();
+                if (initialSlots[i].getItemsCount() > 0)
+                {
+                    writer.write(initialSlots[i].getItemList().get(0).getName() + ": " + (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) + "\n");
+                    writer.close();
+                }
             } catch (IOException exception)
             {
                 System.out.println("Error occurred while writing to file.");
