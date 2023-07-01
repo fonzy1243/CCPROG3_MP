@@ -52,7 +52,7 @@ public class TransactionInterfaceViewer extends MenuViewer
     public void openTransactionInterface()
     {
 		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().setCurrentSlots(vendingMachineController.getVendingMachines().getLast().getSlots());
-		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().setTotalAmountCollected();
+		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().calculateTotalAmountCollected();
 		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().createTransactionFile();
 
 		transactionInterfaceVbox.setSpacing(15);
