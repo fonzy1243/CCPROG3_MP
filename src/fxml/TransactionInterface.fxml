@@ -22,15 +22,16 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <!--TODO: Fix interface below-->
     <VBox fx:id="transactionInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
         <Label text="Transaction History"
                styleClass="title-label"/>
         <TableView fx:id="transactionTable" prefHeight="200.0" maxWidth="450.0">
             <columns>
-                <TableColumn fx:id="transactionItemColumn" prefWidth="360" text="Item" />
-                <TableColumn fx:id="transactionSoldColumn" prefWidth="80" text="Units" />
+                <TableColumn fx:id="transactionItemColumn" prefWidth="200" text="Item" />
+                <TableColumn fx:id="transactionInitialStockColumn" prefWidth="100" text="Initial" />
+                <TableColumn fx:id="transactionCurrentStockColumn" prefWidth="100" text="Current" />
+                <TableColumn fx:id="transactionSoldColumn" prefWidth="80" text="Sold" />
             </columns>
         </TableView>
         <Label fx:id="totalPriceLabel" text="Total amount collected: ₱ 0.00" />
