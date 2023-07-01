@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class VendingMachine
 {
-	private static final int itemLimit = 69;
+	private static final int itemLimit = 10;
 
 	private final Slot[] slots;
 
@@ -108,14 +108,7 @@ public class VendingMachine
 			throw new IllegalStateException("Different item found in slot. Please submit a bug report.");
 		}
 
-		int totalItemCount = 0;
-
-		for (Slot slot : slots)
-		{
-			totalItemCount += slot.getItemList().size();
-		}
-
-		if (totalItemCount + quantity > itemLimit)
+		if (slots[slotIndex].getItemList().size() + quantity > itemLimit)
 		{
 			return false;
 		}
@@ -201,6 +194,14 @@ public class VendingMachine
 		{
 			// Error handling here for insufficient payment
 			return null;
+		}
+
+		for (int denom : denominations.getDenominationList())
+		{
+			if (denominations.isDenomEmpty(denom))
+			{
+				return Collections.emptyList();
+			}
 		}
 
 		List<Integer> coinChangeValues = getChange(paymentAmount -
