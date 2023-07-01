@@ -18,6 +18,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/**
+ * TransactionInterfaceViewer manages the Transaction Interface's GUI.
+ */
 public class TransactionInterfaceViewer extends MenuViewer
 {
 	@FXML

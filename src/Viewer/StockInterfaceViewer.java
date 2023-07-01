@@ -16,6 +16,9 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
+/**
+ * StockInterfaceViewer manages the Stock Interface's GUI.
+ */
 public class StockInterfaceViewer extends MenuViewer
 {
 	@FXML

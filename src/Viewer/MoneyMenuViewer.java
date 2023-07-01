@@ -9,6 +9,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/**
+ * WithdrawInterfaceViewer manages the Money Menu's GUI.
+ */
 public class MoneyMenuViewer extends MenuViewer
 {
 	@FXML
