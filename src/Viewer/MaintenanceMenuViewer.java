@@ -10,6 +10,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/**
+ * MaintenanceMenuViewer manages the Maintenance Menu's GUI.
+ */
 public class MaintenanceMenuViewer extends MenuViewer
 {
 	@FXML

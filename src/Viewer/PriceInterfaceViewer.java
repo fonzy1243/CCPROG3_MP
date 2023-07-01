@@ -17,6 +17,9 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
+/**
+ * PriceInterfaceViewer manages the Price Interface's GUI.
+ */
 public class PriceInterfaceViewer extends MenuViewer
 {
 	@FXML

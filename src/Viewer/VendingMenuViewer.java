@@ -82,7 +82,9 @@ public class VendingMenuViewer extends MenuViewer
 	public void openCoinInsertionMenu()
 	{
 		payment = 0;
-		
+
+		// initialize GUI
+
 		Tooltip backButtonTooltip = new Tooltip("Cancel transaction and return money.");
 
 		Button backButton = new Button("Back");
@@ -119,6 +121,7 @@ public class VendingMenuViewer extends MenuViewer
 	 */
 	public void openVendingMenu()
 	{
+		// initialize GUI
 		Button backButton = new Button();
 
 		Label label = new Label("Select a slot:");
@@ -550,6 +553,12 @@ public class VendingMenuViewer extends MenuViewer
 			}
 		}
 
+		/**
+		 * Initialize app title bar and its buttons.
+		 * @param titleBar title bar pane
+		 * @param titleBarButtons minimize and close button hbox
+		 * @param rootAnchorPane parent pane
+		 */
 		protected static void initializeTitleBar(AnchorPane titleBar, HBox titleBarButtons, AnchorPane rootAnchorPane)
 		{
 			titleBar.getStyleClass().add("top-bar");

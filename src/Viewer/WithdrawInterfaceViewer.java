@@ -14,6 +14,9 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * WithdrawInterfaceViewer manages the Withdraw Interface's GUI.
+ */
 public class WithdrawInterfaceViewer extends MenuViewer
 {
 	@FXML
