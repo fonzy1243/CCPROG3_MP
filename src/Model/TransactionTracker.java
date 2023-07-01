@@ -82,7 +82,7 @@ public class TransactionTracker
     /**
      * Sets the total amount collected.
      */
-    public void setTotalAmountCollected()
+    public void calculateTotalAmountCollected()
     {
         totalAmountCollected = 0;
 
