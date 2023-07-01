@@ -21,17 +21,17 @@ import java.io.IOException;
 public class TransactionInterfaceViewer extends MenuViewer
 {
 	@FXML
-	public TableView transactionTable;
+	private TableView transactionTable;
 	@FXML
-	public TableColumn<Object, Object> transactionItemColumn;
+	private TableColumn<Object, Object> transactionItemColumn;
 	@FXML
-	public TableColumn<Object, Object> transactionInitialStockColumn;
+	private TableColumn<Object, Object> transactionInitialStockColumn;
 	@FXML
-	public TableColumn<Object, Object> transactionCurrentStockColumn;
+	private TableColumn<Object, Object> transactionCurrentStockColumn;
 	@FXML
-	public TableColumn<Object, Object> transactionSoldColumn;
+	private TableColumn<Object, Object> transactionSoldColumn;
 	@FXML
-	public Label totalPriceLabel;
+	private Label totalPriceLabel;
 	@FXML
 	private VBox transactionInterfaceVbox;
 	@FXML
@@ -52,7 +52,7 @@ public class TransactionInterfaceViewer extends MenuViewer
     public void openTransactionInterface()
     {
 		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().setCurrentSlots(vendingMachineController.getVendingMachines().getLast().getSlots());
-		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().calculateTotalAmountCollected();
+		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().setTotalAmountCollected();
 		vendingMachineController.getVendingMachines().getLast().getTransactionTracker().createTransactionFile();
 
 		transactionInterfaceVbox.setSpacing(15);
