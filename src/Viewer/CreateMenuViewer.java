@@ -36,9 +36,9 @@ public class CreateMenuViewer extends MenuViewer
 	public void openCreateMenu()
 	{
 		createMenuVBox.setSpacing(12);
-		createSpecialButton.setDisable(true);
 
 		ButtonAnimator.resizeWhenHovered(createRegularButton);
+		ButtonAnimator.resizeWhenHovered(createSpecialButton);
 		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
@@ -52,5 +52,11 @@ public class CreateMenuViewer extends MenuViewer
 	private void createRegularMachine()
 	{
 		vendingMachineController.createRegularMachine(10);
+	}
+
+	@FXML
+	private void createSpecialMachine()
+	{
+		vendingMachineController.createSpecialMachine(10);
 	}
 }

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -93,14 +94,15 @@ public abstract class MenuViewer
 	/**
 	 * Opens a menu scene and hands UI control to its respective viewer. It maintains the same stage used
 	 * in the previous scene.
-	 * @param event button click
-	 * @param loader FXML loader (if used)
-	 * @param menu menu to be loaded, for example: <ul><li>vending</li><li>create</li><li>test</li></ul>
-	 * @param vendingMachineController controller for application's vending machines
+	 *
+	 * @param event                button click
+	 * @param loader               FXML loader (if used)
+	 * @param menu                 menu to be loaded, for example: <ul><li>vending</li><li>create</li><li>test</li></ul>
+	 * @param payment
+	 * @param paymentDenominations
 	 * @throws IOException if error occurred while loading FXML
 	 */
-	void openMenuScene(ActionEvent event, FXMLLoader loader, String menu,
-	                   VendingMachineController vendingMachineController) throws IOException
+	void openMenuScene(ActionEvent event, FXMLLoader loader, String menu, Integer payment, List<Integer> paymentDenominations) throws IOException
 	{
 		// Scene's root node
 		Parent root;
@@ -113,7 +115,6 @@ public abstract class MenuViewer
 		else
 		{
 			VendingMenuViewer vendingMenuViewer = new VendingMenuViewer();
-			vendingMenuViewer.setVendingMachineController(vendingMachineController);
 			vendingMenuViewer.setStage(stage);
 			vendingMenuViewer.openCoinInsertionMenu();
 			root = vendingMenuViewer.getRoot();
@@ -130,7 +131,6 @@ public abstract class MenuViewer
 			case "create" ->
 			{
 				CreateMenuViewer createMenuViewer = loader.getController();
-				createMenuViewer.setVendingMachineController(vendingMachineController);
 				createMenuViewer.setStage(stage);
 				createMenuViewer.openCreateMenu();
 			}
@@ -138,7 +138,6 @@ public abstract class MenuViewer
 			case "test" ->
 			{
 				TestMenuViewer testMenuController = loader.getController();
-				testMenuController.setVendingMachineController(vendingMachineController);
 				testMenuController.setStage(stage);
 				testMenuController.openTestMenu();
 			}
@@ -146,7 +145,6 @@ public abstract class MenuViewer
 			case "maintenance" ->
 			{
 				MaintenanceMenuViewer maintenanceMenuController = loader.getController();
-				maintenanceMenuController.setVendingMachineController(vendingMachineController);
 				maintenanceMenuController.setStage(stage);
 				maintenanceMenuController.openMaintenanceMenu();
 			}
@@ -154,7 +152,6 @@ public abstract class MenuViewer
 			case "stock" ->
 			{
 				StockInterfaceViewer stockInterfaceViewer = loader.getController();
-				stockInterfaceViewer.setVendingMachineController(vendingMachineController);
 				stockInterfaceViewer.setStage(stage);
 				stockInterfaceViewer.openStockInterface();
 			}
@@ -162,7 +159,7 @@ public abstract class MenuViewer
 			case "price" ->
 			{
 				PriceInterfaceViewer priceInterfaceViewer = loader.getController();
-				priceInterfaceViewer.setVendingMachineController(vendingMachineController);
+
 				priceInterfaceViewer.setStage(stage);
 				priceInterfaceViewer.openPriceInterface();
 			}
@@ -170,7 +167,6 @@ public abstract class MenuViewer
 			case "money" ->
 			{
 				MoneyMenuViewer moneyMenuViewer = loader.getController();
-				moneyMenuViewer.setVendingMachineController(vendingMachineController);
 				moneyMenuViewer.setStage(stage);
 				moneyMenuViewer.openMoneyMenu();
 			}
@@ -178,7 +174,6 @@ public abstract class MenuViewer
 			case "transaction" ->
 			{
 				TransactionInterfaceViewer transactionInterfaceViewer = loader.getController();
-				transactionInterfaceViewer.setVendingMachineController(vendingMachineController);
 				transactionInterfaceViewer.setStage(stage);
 				transactionInterfaceViewer.openTransactionInterface();
 			}
@@ -186,7 +181,6 @@ public abstract class MenuViewer
 			case "withdraw" ->
 			{
 				WithdrawInterfaceViewer withdrawInterfaceViewer = loader.getController();
-				withdrawInterfaceViewer.setVendingMachineController(vendingMachineController);
 				withdrawInterfaceViewer.setStage(stage);
 				withdrawInterfaceViewer.openWithdrawInterface();
 			}
@@ -194,9 +188,16 @@ public abstract class MenuViewer
 			case "dispense" ->
 			{
 				DispenseInterfaceViewer dispenseInterfaceViewer = loader.getController();
-				dispenseInterfaceViewer.setVendingMachineController(vendingMachineController);
 				dispenseInterfaceViewer.setStage(stage);
 				dispenseInterfaceViewer.openDispenseInterface();
+			}
+			case "ramen" ->
+			{
+				RamenMenuViewer ramenMenuViewer = loader.getController();
+				ramenMenuViewer.setStage(stage);
+				ramenMenuViewer.setPayment(payment);
+				ramenMenuViewer.setPaymentDenominations(paymentDenominations);
+				ramenMenuViewer.openRamenMenu();
 			}
 			default ->
 			{

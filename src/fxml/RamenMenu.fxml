@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Viewer.RamenMenuViewer"
+            prefHeight="400.0" prefWidth="600.0"
+            styleClass="rounded-pane">
+    <AnchorPane styleClass="top-bar"
+                fx:id="topBar">
+        <HBox alignment="BASELINE_RIGHT" prefWidth="709" style="-fx-hgap: 25">
+            <Button text="—"
+                    styleClass="minimize-button"
+                    fx:id="minimizeButton"/>
+            <Button text="✕"
+                    styleClass="close-button"
+                    onAction="#closeApp"/>
+        </HBox>
+    </AnchorPane>
+    <VBox fx:id="ramenMenuVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" spacing="12">
+        <Label text="Buy Ramen" styleClass="title-label"/>
+        <HBox fx:id="customItemButtons" alignment="CENTER" spacing="5">
+            <Button fx:id="tonkotsuButton" text="Tonkotsu" styleClass="nav-continue-button" onAction="#buyTonkotsuRamen"/>
+            <Button fx:id="misoButton" text="Miso" styleClass="nav-continue-button" onAction="#buyMisoRamen"/>
+            <Button fx:id="shioButton" text="Shio" styleClass="nav-continue-button" onAction="#buyShioRamen"/>
+        </HBox>
+        <Label fx:id="paymentLabel" styleClass="title-label"/>
+        <GridPane fx:id="buttonGrid" styleClass="input-field">
+
+        </GridPane>
+        <Button fx:id="backButton" text="Back" styleClass="nav-back-button" onAction="#back"/>
+    </VBox>
+</AnchorPane>

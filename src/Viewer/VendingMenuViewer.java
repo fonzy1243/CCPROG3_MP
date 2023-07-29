@@ -1,8 +1,10 @@
 package Viewer;
 
 import Model.Slot;
+import Model.SpecialVendingMachine;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -132,9 +134,32 @@ public class VendingMenuViewer extends MenuViewer
 		UIManager.setButtonGridGaps(buttonGrid, 5);
 		uiManager.setupSlotGrid(backButton);
 
+
 		vBox.getChildren().addAll(label, buttonGrid);
 		vBox.setStyle("-fx-alignment: Center");
 		vBox.setMinSize(720, 720);
+
+		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine)
+		{
+			Button customItemButton = new Button("Ramen");
+			ButtonAnimator.resizeWhenHovered(customItemButton);
+
+			customItemButton.getStyleClass().add("nav-continue-button");
+			customItemButton.setStyle("-fx-font-size: 23");
+			customItemButton.setOnAction(event ->
+			{
+				try
+				{
+					goToRamenMenu(event);
+				} catch (IOException e)
+				{
+					throw new RuntimeException(e);
+				}
+			});
+
+			vBox.getChildren().add(customItemButton);
+			vBox.setSpacing(25);
+		}
 
 		root = vBox;
 	}
@@ -318,6 +343,12 @@ public class VendingMenuViewer extends MenuViewer
 		vBox.getChildren().clear();
 		rootAnchorPane.getChildren().remove(vBox);
 		openCoinInsertionMenu();
+	}
+
+	private void goToRamenMenu(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RamenMenu.fxml"));
+		openMenuScene(event, loader, "ramen", payment, paymentDenominations);
 	}
 
 	/**
@@ -580,7 +611,7 @@ public class VendingMenuViewer extends MenuViewer
 				try
 				{
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
-					openMenuScene(event, loader, "test", vendingMachineController);
+					openMenuScene(event, loader, "test", null, null);
 				} catch (IOException exception)
 				{
 					throw new RuntimeException(exception);

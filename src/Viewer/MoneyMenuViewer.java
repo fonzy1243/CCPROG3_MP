@@ -56,7 +56,7 @@ public class MoneyMenuViewer extends MenuViewer
 	private void goToWithdrawInterface(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/WithdrawInterface.fxml"));
-		openMenuScene(event, loader, "withdraw", vendingMachineController);
+		openMenuScene(event, loader, "withdraw", null, null);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class MoneyMenuViewer extends MenuViewer
 	private void goToDispenseInterface(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/DispenseInterface.fxml"));
-		openMenuScene(event, loader, "dispense", vendingMachineController);
+		openMenuScene(event, loader, "dispense", null, null);
 	}
 
 	/**
@@ -80,6 +80,6 @@ public class MoneyMenuViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
-		openMenuScene(event, loader, "maintenance", vendingMachineController);
+		openMenuScene(event, loader, "maintenance", null, null);
 	}
 }

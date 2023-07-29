@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Viewer.StockInterfaceViewer"
+            fx:controller="Viewer.UnbuyableInterfaceViewer"
             prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
@@ -22,17 +22,10 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <VBox fx:id="stockInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+    <VBox fx:id="interfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label text="Edit Stock"
+        <Label text="Add Unbuyable Item"
                styleClass="title-label"/>
-        <Button fx:id="unbuyableItemButton"
-                styleClass="nav-continue-button"
-                text="Unbuyable"
-                style="-fx-font-size: 17.5"
-                visible="false" managed="false"
-                onAction="#goToUnbuyableItemInterface"/>
-
         <ComboBox fx:id="slotDropdown" promptText="Slot"/>
         <HBox fx:id="nameBox" styleClass="input-field">
             <TextField fx:id="nameTextField" promptText="Item Name"/>
@@ -46,8 +39,8 @@
         <HBox fx:id="navButtons" alignment="CENTER">
             <Button fx:id="backButton"
                     styleClass="nav-back-button"
-                    text="Back"
-                    onAction="#back"/>
+                    text="Back"/>
+<!--                    onAction="#back"/>-->
             <Button fx:id="addButton"
                     styleClass="nav-continue-button"
                     text="Add"/>

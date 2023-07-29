@@ -143,6 +143,6 @@ public class PriceInterfaceViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
-		openMenuScene(event, loader, "maintenance", vendingMachineController);
+		openMenuScene(event, loader, "maintenance", null, null);
 	}
 }

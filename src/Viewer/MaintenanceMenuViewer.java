@@ -64,7 +64,7 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void goToStockInterface(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StockInterface.fxml"));
-		openMenuScene(event, loader, "stock", vendingMachineController);
+		openMenuScene(event, loader, "stock", null, null);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void goToPriceInterface(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PriceInterface.fxml"));
-		openMenuScene(event, loader, "price", vendingMachineController);
+		openMenuScene(event, loader, "price", null, null);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void goToMoneyMenu(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MoneyMenu.fxml"));
-		openMenuScene(event, loader, "money", vendingMachineController);
+		openMenuScene(event, loader, "money", null, null);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void goToTransactionInterface(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TransactionInterface.fxml"));
-		openMenuScene(event, loader, "transaction", vendingMachineController);
+		openMenuScene(event, loader, "transaction", null, null);
 	}
 
 	/**
@@ -112,6 +112,6 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
-		openMenuScene(event, loader, "test", vendingMachineController);
+		openMenuScene(event, loader, "test", null, null);
 	}
 }

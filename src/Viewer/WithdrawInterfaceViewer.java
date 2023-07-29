@@ -103,6 +103,6 @@ public class WithdrawInterfaceViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MoneyMenu.fxml"));
-		openMenuScene(event, loader, "money", vendingMachineController);
+		openMenuScene(event, loader, "money", null, null);
 	}
 }

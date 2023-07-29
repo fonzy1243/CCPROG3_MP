@@ -2,6 +2,7 @@ package Viewer;
 
 import Model.Item;
 import Model.Slot;
+import Model.SpecialVendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,8 @@ public class StockInterfaceViewer extends MenuViewer
 {
 	@FXML
 	private Button addButton;
+	@FXML
+	private Button unbuyableItemButton;
 	@FXML
 	private TextField nameTextField;
 	@FXML
@@ -77,6 +80,14 @@ public class StockInterfaceViewer extends MenuViewer
 		}
 
 		navButtons.setSpacing(7);
+
+		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine)
+		{
+			ButtonAnimator.resizeWhenHovered(unbuyableItemButton);
+
+			unbuyableItemButton.setVisible(true);
+			unbuyableItemButton.setManaged(true);
+		}
 
 		addButton.setOnAction(event ->
 		{
@@ -170,6 +181,13 @@ public class StockInterfaceViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
-		openMenuScene(event, loader, "maintenance", vendingMachineController);
+		openMenuScene(event, loader, "maintenance", null, null);
+	}
+
+	@FXML
+	private void goToUnbuyableItemInterface(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UnbuyableItemInterface.fxml"));
+		openMenuScene(event, loader, "unbuyable", null, null);
 	}
 }
