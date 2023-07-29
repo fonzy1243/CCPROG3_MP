@@ -27,6 +27,9 @@
         <Label text="Transaction History"
                styleClass="title-label"/>
         <TableView fx:id="transactionTable" prefHeight="200.0" maxWidth="450.0">
+            <placeholder>
+                <Label text="There are currently no items." styleClass="text-field-label"/>
+            </placeholder>
             <columns>
                 <TableColumn fx:id="transactionItemColumn" prefWidth="200" text="Item" />
                 <TableColumn fx:id="transactionInitialStockColumn" prefWidth="100" text="Initial" />
@@ -34,7 +37,7 @@
                 <TableColumn fx:id="transactionSoldColumn" prefWidth="80" text="Sold" />
             </columns>
         </TableView>
-        <Label fx:id="totalPriceLabel" text="Total amount collected: ₱ 0.00" />
+        <Label fx:id="totalPriceLabel" text="Total amount collected: ₱ 0.00" styleClass="text-field-label"/>
         <HBox fx:id="navButtons" alignment="CENTER">
             <Button fx:id="backButton"
                     styleClass="nav-back-button"

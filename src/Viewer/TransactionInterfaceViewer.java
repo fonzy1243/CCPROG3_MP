@@ -61,8 +61,11 @@ public class TransactionInterfaceViewer extends MenuViewer
 		transactionInterfaceVbox.setSpacing(15);
 
 		transactionTable.setEditable(false);
+		transactionTable.setSelectionModel(null);
+		transactionTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		transactionItemColumn.setCellValueFactory(new PropertyValueFactory<>("item"));
+		transactionItemColumn.setStyle("-fx-alignment: CENTER-LEFT;");
 		transactionInitialStockColumn.setCellValueFactory(new PropertyValueFactory<>("initialStock"));
 		transactionCurrentStockColumn.setCellValueFactory(new PropertyValueFactory<>("currentStock"));
 		transactionSoldColumn.setCellValueFactory(new PropertyValueFactory<>("sold"));
