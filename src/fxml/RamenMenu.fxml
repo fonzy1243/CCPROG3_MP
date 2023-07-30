@@ -26,9 +26,9 @@
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" spacing="12">
         <Label text="Buy Ramen" styleClass="title-label"/>
         <HBox fx:id="customItemButtons" alignment="CENTER" spacing="5">
-            <Button fx:id="tonkotsuButton" text="Tonkotsu" styleClass="nav-continue-button" onAction="#buyTonkotsuRamen"/>
-            <Button fx:id="misoButton" text="Miso" styleClass="nav-continue-button" onAction="#buyMisoRamen"/>
-            <Button fx:id="shioButton" text="Shio" styleClass="nav-continue-button" onAction="#buyShioRamen"/>
+            <Button fx:id="tonkotsuButton" text="Tonkotsu" styleClass="nav-continue-button"/>
+            <Button fx:id="misoButton" text="Miso" styleClass="nav-continue-button"/>
+            <Button fx:id="shioButton" text="Shio" styleClass="nav-continue-button"/>
         </HBox>
         <Label fx:id="paymentLabel" styleClass="title-label"/>
         <GridPane fx:id="buttonGrid" styleClass="input-field">

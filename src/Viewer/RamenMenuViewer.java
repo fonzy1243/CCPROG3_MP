@@ -19,6 +19,12 @@ import java.util.Map;
 public class RamenMenuViewer extends MenuViewer
 {
 	@FXML
+	private Button tonkotsuButton;
+	@FXML
+	private Button misoButton;
+	@FXML
+	private Button shioButton;
+	@FXML
 	private GridPane buttonGrid;
 	@FXML
 	private Button minimizeButton;
@@ -45,6 +51,10 @@ public class RamenMenuViewer extends MenuViewer
 		VendingMenuViewer.UIManager.setButtonGridGaps(buttonGrid, 10);
 		System.out.println(this.payment);
 		paymentLabel.setText("₱" + (float) payment / 100);
+
+		tonkotsuButton.setOnAction(event -> buyRamen("tonkotsu broth"));
+		misoButton.setOnAction(event -> buyRamen("miso broth"));
+		shioButton.setOnAction(event -> buyRamen("shio broth"));
 	}
 
 	public void setPayment(int payment)
@@ -58,31 +68,33 @@ public class RamenMenuViewer extends MenuViewer
 		this.paymentDenominations = paymentDenominations;
 	}
 
-	@FXML
-	private void buyTonkotsuRamen()
+	private boolean hasEnoughIngredients(String ramenBroth)
 	{
 		boolean hasBroth = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				.getSpecialItemStock().get("tonkotsu broth").size() >= 1;
+				                   .getSpecialItemStock().get(ramenBroth).size() >= 1;
 
 		boolean hasNoodles = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                   .getSpecialItemStock().get("noodles").size() >= 1;
+				                     .getSpecialItemStock().get("noodles").size() >= 1;
 
 		boolean hasEnoughEggs = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                                           .getSpecialItemStock().get("egg").size() >= 2;
+				                        .getSpecialItemStock().get("egg").size() >= 2;
 
 		boolean hasEnoughChashu = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                   .getSpecialItemStock().get("chashu").size() >= 4;
+				                          .getSpecialItemStock().get("chashu").size() >= 4;
 
 		boolean hasSpringOnions = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                   .getSpecialItemStock().get("spring onion").size() >= 1;
+				                          .getSpecialItemStock().get("spring onion").size() >= 1;
 
 		boolean hasEnoughFishCake = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                   .getSpecialItemStock().get("fish cake").size() >= 2;
+				                            .getSpecialItemStock().get("fish cake").size() >= 2;
 
-		boolean hasEnoughIngredients = hasBroth && hasNoodles && hasEnoughEggs && hasEnoughChashu && hasSpringOnions &&
-		                               hasEnoughFishCake;
+		return hasBroth && hasNoodles && hasEnoughEggs && hasEnoughChashu && hasSpringOnions && hasEnoughFishCake;
+	}
 
-		if (!hasEnoughIngredients)
+	@FXML
+	private void buyRamen(String ramenBroth)
+	{
+		if (!hasEnoughIngredients(ramenBroth))
 		{
 			openPopup("Not enough items.");
 			return;
@@ -90,33 +102,29 @@ public class RamenMenuViewer extends MenuViewer
 
 		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
 		{
-			if (item.equals("miso broth") || item.equals("shio broth") || item.equals("water"))
+			if ((item.contains("broth") && !item.trim().split("\\s+")[0].equals(ramenBroth.trim().split("\\s+")[0]))
+			    || item.equals("water"))
 			{
 				continue;
 			}
 
-			int quantity = switch (item)
+			int quantity;
+
+			if (item.equals(ramenBroth) || item.equals("noodles") || item.equals("spring onion"))
 			{
-				case "noodles", "tonkotsu broth", "spring onions" -> 1;
-				case "egg", "fish cake" -> 2;
-				case "chashu" -> 4;
-				default -> throw new IllegalStateException("Unexpected value: " + item);
-			};
+				quantity = 1;
+			}
+			else if (item.equals("egg") || item.equals("fish cake"))
+			{
+				quantity = 2;
+			}
+			else
+			{
+				quantity = 4;
+			}
 
 			((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).removeSpecialItem(item, quantity);
 		}
-	}
-
-	@FXML
-	private void buyMisoRamen()
-	{
-
-	}
-
-	@FXML
-	private void buyShioRamen()
-	{
-
 	}
 
 	private void setupButtonGrid(GridPane buttonGrid)
