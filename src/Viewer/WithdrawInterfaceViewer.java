@@ -87,7 +87,9 @@ public class WithdrawInterfaceViewer extends MenuViewer
 			StringBuilder stringBuilder = new StringBuilder();
 			change.forEach((changeValue) -> stringBuilder.append("₱").append((float) changeValue / 100).append(" "));
 
-			totalMoney[0] -= total;
+			totalMoney[0] = vendingMachineController.getVendingMachines().getLast()
+					.getDenominations().calculateTotal();
+
 			moneyLabel.setText("₱" + totalMoney[0]);
 
 			openPopup("You have withdrawn ₱" + total + ": " + stringBuilder);

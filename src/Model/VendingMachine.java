@@ -155,7 +155,7 @@ public class VendingMachine
 				{
 					dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
 					coinsUsed[i] = coin;
-					denominations.removeDenomination(i, 1);
+					denominations.removeDenomination(coin, 1);
 				}
 			}
 		}
