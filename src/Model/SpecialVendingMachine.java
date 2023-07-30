@@ -33,14 +33,15 @@ public class SpecialVendingMachine extends VendingMachine
 	@Override
 	public boolean addItemToSlot(Item item, int slotIndex, int quantity)
 	{
-		boolean isAdded = super.addItemToSlot(item, slotIndex, quantity);
-
-		if (specialItems.contains(item.getName().toLowerCase()) && isAdded)
+		if (!specialItems.contains(item.getName().toLowerCase()))
 		{
-			addSpecialItem(item, quantity);
+			return false;
 		}
 
-		return isAdded;
+		super.addItemToSlot(item, slotIndex, quantity);
+		addSpecialItem(item, quantity);
+
+		return true;
 	}
 
 	public void addSpecialItem(Item item, int quantity)
