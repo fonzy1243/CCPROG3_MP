@@ -131,54 +131,50 @@ public class VendingMachine
 	 * @param changeValue value of change used for calculating coins/bills returned
 	 * @return list of change coins/bills
 	 */
-	private List<Integer> getChange(int changeValue)
-	{
-		if (denominations.calculateTotal() == 0)
-		{
-			return Collections.emptyList();
-		}
-
-		int[] dp = new int[changeValue + 1];
-		Arrays.fill(dp, Integer.MAX_VALUE);
-
-		int[] coinsUsed = new int[changeValue + 1];
-
-		// base case
-		dp[0] = 0;
-
-		for (int i = 1; i < changeValue + 1; i++)
-		{
-			for (int coin : denominations.getDenominationList())
-			{
-				if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE && dp[i - coin] + 1 < dp[i] &&
-				    !denominations.isDenomEmpty(coin))
-				{
-					dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
-					coinsUsed[i] = coin;
-					denominations.removeDenomination(coin, 1);
-				}
+	private List<Integer> getChange(int changeValue) {
+		List<Integer> selectedCoins = new ArrayList<>();
+		List<Integer> currentCoins = new ArrayList<>();
+		if (backtrack(changeValue, currentCoins, selectedCoins)) {
+			// Update the stock of denominations based on the selected coins
+			for (int coin : selectedCoins) {
+				denominations.removeDenomination(coin, 1);
 			}
 		}
-
-		if (dp[changeValue] != Integer.MAX_VALUE)
-		{
-			List<Integer> selectedCoins = new ArrayList<>();
-			int value = changeValue;
-
-			while (value > 0)
-			{
-				selectedCoins.add(coinsUsed[value]);
-				value -= coinsUsed[value];
-			}
-
-			return selectedCoins;
-		}
-		else
-		{
-			// Error handling here
-			return Collections.emptyList();
-		}
+		return selectedCoins;
 	}
+
+	private boolean backtrack(int remainingValue, List<Integer> currentCoins, List<Integer> selectedCoins) {
+		if (remainingValue == 0) {
+			// Base case: Change value reached, check if it's better than the current selected coins
+			if (selectedCoins.isEmpty() || currentCoins.size() < selectedCoins.size()) {
+				selectedCoins.clear();
+				selectedCoins.addAll(currentCoins);
+			}
+			return true;
+		}
+
+		for (int coin : denominations.getNonEmptyDenominations()) {
+			int stock = denominations.getDenominationStock().get(coin);
+			if (stock > 0 && remainingValue >= coin) {
+				// Choose the coin and decrement its stock
+				currentCoins.add(coin);
+				denominations.removeDenomination(coin, 1);
+
+				// Continue exploring with the remaining value
+				if (backtrack(remainingValue - coin, currentCoins, selectedCoins)) {
+					return true;
+				}
+
+				// Backtrack: Undo the choice
+				currentCoins.remove(currentCoins.size() - 1);
+				denominations.addDenomination(coin, 1);
+			}
+		}
+
+		return false;
+	}
+
+
 
 	/**
 	 * Dispense an item from a slot.

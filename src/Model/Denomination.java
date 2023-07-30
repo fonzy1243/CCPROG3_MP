@@ -121,8 +121,6 @@ public class Denomination
 
 		int newDenominationQuantity = denominationStock.get(value) - quantity;
 
-
-		denominationStock.remove(value);
 		denominationStock.put(value, newDenominationQuantity);
 	}
 
@@ -135,6 +133,21 @@ public class Denomination
 		return denominationList;
 	}
 
+	public List<Integer> getNonEmptyDenominations()
+	{
+		List<Integer> nonEmptydenominationList = new LinkedList<>();
+
+		for (int denomination : denominationList)
+		{
+			if (denominationStock.get(denomination) > 0)
+			{
+				nonEmptydenominationList.add(denomination);
+			}
+		}
+
+		return nonEmptydenominationList;
+	}
+
 	/**
 	 * Calculate the summation of all denominations
 	 * @return denomination total
@@ -142,6 +155,11 @@ public class Denomination
 	public long calculateTotal()
 	{
 		long total = 0;
+
+		if (denominationStock.isEmpty())
+		{
+			return total;
+		}
 
 		for (Map.Entry<Integer, Integer> entry : denominationStock.entrySet())
 		{
