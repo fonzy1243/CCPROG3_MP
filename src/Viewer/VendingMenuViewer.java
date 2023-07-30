@@ -171,6 +171,17 @@ public class VendingMenuViewer extends MenuViewer
 	 */
 	public void openDispenseMenu(Slot slot, int slotIndex)
 	{
+		// Return if the item is unbuyable
+		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine)
+		{
+			if (((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getUnbuyableItems().contains(slot.getItemList().get(0).getName()))
+			{
+				openPopup("This item is unbuyable.");
+				openVendingMenu();
+				return;
+			}
+		}
+
 		// Return if there are no items in the slot
 		if (slot.getItemList().size() == 0)
 		{
