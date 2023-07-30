@@ -11,10 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RamenMenuViewer extends MenuViewer
 {
@@ -70,23 +67,14 @@ public class RamenMenuViewer extends MenuViewer
 
 	private boolean hasEnoughIngredients(String ramenBroth)
 	{
-		boolean hasBroth = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                   .getSpecialItemStock().get(ramenBroth).size() >= 1;
+		HashMap<String, LinkedList<Item>> specialItemStock = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItemStock();
 
-		boolean hasNoodles = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                     .getSpecialItemStock().get("noodles").size() >= 1;
-
-		boolean hasEnoughEggs = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                        .getSpecialItemStock().get("egg").size() >= 2;
-
-		boolean hasEnoughChashu = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                          .getSpecialItemStock().get("chashu").size() >= 4;
-
-		boolean hasSpringOnions = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                          .getSpecialItemStock().get("spring onion").size() >= 1;
-
-		boolean hasEnoughFishCake = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-				                            .getSpecialItemStock().get("fish cake").size() >= 2;
+		boolean hasBroth = specialItemStock.containsKey(ramenBroth) && specialItemStock.get(ramenBroth).size() >= 1;
+		boolean hasNoodles = specialItemStock.containsKey("noodles") && specialItemStock.get("noodles").size() >= 1;
+		boolean hasEnoughEggs = specialItemStock.containsKey("egg") && specialItemStock.get("egg").size() >= 2;
+		boolean hasEnoughChashu = specialItemStock.containsKey("chashu") && specialItemStock.get("chashu").size() >= 4;
+		boolean hasSpringOnions = specialItemStock.containsKey("spring onion") && specialItemStock.get("spring onion").size() >= 1;
+		boolean hasEnoughFishCake = specialItemStock.containsKey("fish cake") && specialItemStock.get("fish cake").size() >= 2;
 
 		return hasBroth && hasNoodles && hasEnoughEggs && hasEnoughChashu && hasSpringOnions && hasEnoughFishCake;
 	}
