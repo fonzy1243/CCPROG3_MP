@@ -110,7 +110,7 @@ public class RamenMenuViewer extends MenuViewer
 		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
 		{
 			if ((item.contains("broth") && !item.trim().split("\\s+")[0].equals(ramenBroth.trim().split("\\s+")[0]))
-			    || item.equals("water") || item.equals("salt"))
+			    || item.equals("water") || item.equals("salt") || item.contains("bones"))
 			{
 				continue;
 			}
