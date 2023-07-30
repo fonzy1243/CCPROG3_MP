@@ -166,6 +166,8 @@ public class RamenMenuViewer extends MenuViewer
 				}
 
 				openPopup("You paid the exact amount and have received " + ramenBroth.trim().split("\\s+")[0] + " ramen.");
+				payment = 0;
+				openRamenMenu();
 			});
 		}
 		else
@@ -197,11 +199,11 @@ public class RamenMenuViewer extends MenuViewer
 					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + ". Your change is ₱" +
 					          (float) (payment - finalPrice) / 100 + ": " + stringBuilder);
 				}
+
+				payment = 0;
+				openRamenMenu();
 			});
 		}
-
-		payment = 0;
-		openRamenMenu();
 	}
 
 
