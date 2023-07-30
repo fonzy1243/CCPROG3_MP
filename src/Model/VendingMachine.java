@@ -229,5 +229,9 @@ public class VendingMachine
 	{
 		return getChange(withdrawAmount);
 	}
+	public List<Integer> getRamenChange(int paymentAmount)
+	{
+		return getChange(paymentAmount);
+	}
 }
 

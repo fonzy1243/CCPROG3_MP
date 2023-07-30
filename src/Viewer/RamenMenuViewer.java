@@ -2,19 +2,28 @@ package Viewer;
 
 import Model.Item;
 import Model.SpecialVendingMachine;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.*;
 
 public class RamenMenuViewer extends MenuViewer
 {
+	@FXML
+	private HBox customItemButtons;
+	@FXML
+	private Label processingText;
 	@FXML
 	private Button tonkotsuButton;
 	@FXML
@@ -88,6 +97,8 @@ public class RamenMenuViewer extends MenuViewer
 			return;
 		}
 
+		int price = 0;
+
 		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
 		{
 			if ((item.contains("broth") && !item.trim().split("\\s+")[0].equals(ramenBroth.trim().split("\\s+")[0]))
@@ -112,7 +123,94 @@ public class RamenMenuViewer extends MenuViewer
 			}
 
 			((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).removeSpecialItem(item, quantity);
+
+			price += ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
+					         .getSpecialItemStock().get(item).get(0).getPrice() * quantity;
 		}
+
+		if (payment < price)
+		{
+			openPopup("Payment insufficient.");;
+			return;
+		}
+
+		List<Integer> change = vendingMachineController.getVendingMachines().getLast().getRamenChange(payment - price);
+
+		if (change.isEmpty())
+		{
+			openPopup("Could not produce change. Your ₱" + (float) payment / 100 + " has been returned. " +
+			          "Try again at a later date.");
+		}
+		else if (payment == price)
+		{
+			processingText.setVisible(true);
+			processingText.setManaged(true);
+
+			Timeline timeline = processRamen(processingText, customItemButtons);
+			timeline.playFromStart();
+
+			timeline.setOnFinished(actionEvent ->
+			{
+				for (Integer denomination : paymentDenominations)
+				{
+					vendingMachineController.getVendingMachines().getLast().getDenominations().addDenomination(denomination, 1);
+				}
+
+				openPopup("You paid the exact amount and have received " + ramenBroth.trim().split("\\s+")[0] + " ramen.");
+			});
+		}
+		else
+		{
+			processingText.setVisible(true);
+			processingText.setManaged(true);
+
+			Timeline timeline = processRamen(processingText, customItemButtons);
+			timeline.playFromStart();
+
+			StringBuilder stringBuilder = new StringBuilder();
+			change.forEach((changeDenom) -> stringBuilder.append("₱").append((float) changeDenom / 100).append(" "));
+
+			int finalPrice = price;
+			timeline.setOnFinished(actionEvent ->
+			{
+				for (Integer denomination : paymentDenominations)
+				{
+					vendingMachineController.getVendingMachines().getLast().getDenominations()
+							.addDenomination(denomination, 1);
+				}
+
+				if (change.size() == 1)
+				{
+					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + ". Your change is" + stringBuilder);
+				}
+				else
+				{
+					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + ". Your change is ₱" +
+					          (float) (payment - finalPrice) / 100 + ": " + stringBuilder);
+				}
+			});
+		}
+
+		payment = 0;
+
+		openRamenMenu();
+	}
+
+	private Timeline processRamen(Label processingText, HBox ramenButtons)
+	{
+		for (Node button : ramenButtons.getChildren())
+		{
+			button.setDisable(true);
+		}
+
+		return new Timeline(
+				new KeyFrame(Duration.ZERO, event -> processingText.setText("Boiling noodles...")),
+				new KeyFrame(Duration.millis(600), event -> processingText.setText("Simmering broth...")),
+				new KeyFrame(Duration.millis(1200), event -> processingText.setText("Pouring noodles...")),
+				new KeyFrame(Duration.millis(1800), event -> processingText.setText("Pouring broth...")),
+				new KeyFrame(Duration.millis(2400), event -> processingText.setText("Adding toppings...")),
+				new KeyFrame(Duration.millis(3000), event -> processingText.setText("DONE!"))
+		);
 	}
 
 	private void setupButtonGrid(GridPane buttonGrid)
@@ -162,7 +260,7 @@ public class RamenMenuViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
-		openPopup("Your " + payment + " has been returned.");
 		openMenuScene(event, loader, "test", null, null);
+		openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
 	}
 }

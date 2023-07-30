@@ -259,7 +259,8 @@ public class VendingMenuViewer extends MenuViewer
 		}
 		else if (changeList.size() == 0 && payment > itemPrice)
 		{
-			openPopup("Could not produce change. Try again at a later date.");
+			openPopup("Could not produce change. Your ₱" + (float) payment / 100 + " has been returned. " +
+			          "Try again at a later date.");
 			// to extract method
 			changeScene();
 		}
