@@ -82,8 +82,16 @@ public class RamenMenuViewer extends MenuViewer
 		boolean hasNoodles = specialItemStock.containsKey("noodles") && specialItemStock.get("noodles").size() >= 1;
 		boolean hasEnoughEggs = specialItemStock.containsKey("egg") && specialItemStock.get("egg").size() >= 2;
 		boolean hasEnoughChashu = specialItemStock.containsKey("chashu") && specialItemStock.get("chashu").size() >= 4;
-		boolean hasSpringOnions = specialItemStock.containsKey("spring onion") && specialItemStock.get("spring onion").size() >= 1;
+		boolean hasSpringOnions = specialItemStock.containsKey("spring onions") && specialItemStock.get("spring onions").size() >= 1;
 		boolean hasEnoughFishCake = specialItemStock.containsKey("fish cake") && specialItemStock.get("fish cake").size() >= 2;
+
+		System.out.println(hasBroth);
+		System.out.println(hasNoodles);
+		System.out.println(hasEnoughEggs);
+		System.out.println(hasEnoughChashu);
+		System.out.println(hasSpringOnions);
+		System.out.println(hasEnoughFishCake);
+
 
 		return hasBroth && hasNoodles && hasEnoughEggs && hasEnoughChashu && hasSpringOnions && hasEnoughFishCake;
 	}
@@ -122,10 +130,12 @@ public class RamenMenuViewer extends MenuViewer
 				quantity = 4;
 			}
 
-			((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).removeSpecialItem(item, quantity);
-
+			System.out.println(item);
 			price += ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
 					         .getSpecialItemStock().get(item).get(0).getPrice() * quantity;
+
+			((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).removeSpecialItem(item, quantity);
+
 		}
 
 		if (payment < price)
