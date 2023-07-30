@@ -119,7 +119,6 @@ public class RamenMenuViewer extends MenuViewer
 		{
 			openPopup("Could not produce change. Your ₱" + (float) payment / 100 + " has been returned. " +
 			          "Try again at a later date.");
-			return;
 		}
 		else if (payment == price)
 		{
@@ -137,6 +136,7 @@ public class RamenMenuViewer extends MenuViewer
 				}
 
 				openPopup("You paid the exact amount and have received " + ramenBroth.trim().split("\\s+")[0] + " ramen.");
+				processItems(ramenBroth, price);
 			});
 		}
 		else
@@ -168,10 +168,17 @@ public class RamenMenuViewer extends MenuViewer
 					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + ". Your change is ₱" +
 					          (float) (payment - finalPrice) / 100 + ": " + stringBuilder);
 				}
+
+				processItems(ramenBroth, price);
 			});
 		}
 
 
+
+	}
+
+	private void processItems(String ramenBroth, int price)
+	{
 		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
 		{
 			if ((item.contains("broth") && !item.trim().split("\\s+")[0].equals(ramenBroth.trim().split("\\s+")[0]))
