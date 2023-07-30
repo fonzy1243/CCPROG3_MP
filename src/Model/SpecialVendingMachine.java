@@ -90,14 +90,14 @@ public class SpecialVendingMachine extends VendingMachine
 
 		for (int i = 0; i < quantity; i++)
 		{
-			specialItemStock.get(itemName).remove();
+			System.out.println("Removed from special stock " + specialItemStock.get(itemName).remove());
 		}
 
 		if (!unbuyableItems.contains(itemName.toLowerCase()))
 		{
 			for (int i = 0; i < quantity; i++)
 			{
-				this.slots[slotIndex].getItemList().remove(0);
+				System.out.println("Removed from machine " + this.slots[slotIndex].getItemList().remove(0));
 			}
 		}
 	}

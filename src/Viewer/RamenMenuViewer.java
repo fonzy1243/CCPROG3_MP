@@ -117,7 +117,7 @@ public class RamenMenuViewer extends MenuViewer
 
 			int quantity;
 
-			if (item.equals(ramenBroth) || item.equals("noodles") || item.equals("spring onion"))
+			if (item.equals(ramenBroth) || item.equals("noodles") || item.equals("spring onions"))
 			{
 				quantity = 1;
 			}
