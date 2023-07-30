@@ -72,7 +72,7 @@ public class SpecialVendingMachine extends VendingMachine
 		boolean machineHasItem = false;
 		int slotIndex = 0;
 
-		for(Slot slot : this.slots)
+		for (Slot slot : this.slots)
 		{
 			if (slot.getItemList().get(0).getName().equalsIgnoreCase(itemName))
 			{
@@ -93,12 +93,9 @@ public class SpecialVendingMachine extends VendingMachine
 			System.out.println("Removed from special stock " + specialItemStock.get(itemName).remove());
 		}
 
-		if (!unbuyableItems.contains(itemName.toLowerCase()))
+		for (int i = 0; i < quantity; i++)
 		{
-			for (int i = 0; i < quantity; i++)
-			{
-				System.out.println("Removed from machine " + this.slots[slotIndex].getItemList().remove(0));
-			}
+			System.out.println("Removed from machine " + this.slots[slotIndex].getItemList().remove(0));
 		}
 	}
 

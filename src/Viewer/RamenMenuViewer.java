@@ -171,7 +171,6 @@ public class RamenMenuViewer extends MenuViewer
 			});
 		}
 
-		payment = 0;
 
 		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
 		{
@@ -205,6 +204,7 @@ public class RamenMenuViewer extends MenuViewer
 		}
 
 
+		payment = 0;
 		openRamenMenu();
 	}
 
