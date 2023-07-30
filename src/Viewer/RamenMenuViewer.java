@@ -166,8 +166,7 @@ public class RamenMenuViewer extends MenuViewer
 				}
 
 				openPopup("You paid the exact amount and have received " + ramenBroth.trim().split("\\s+")[0] + " ramen.");
-				payment = 0;
-				openRamenMenu();
+				resetMenu();
 			});
 		}
 		else
@@ -192,20 +191,31 @@ public class RamenMenuViewer extends MenuViewer
 
 				if (change.size() == 1)
 				{
-					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + ". Your change is" + stringBuilder);
+					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + " ramen. Your change is" + stringBuilder);
 				}
 				else
 				{
-					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + ". Your change is ₱" +
+					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + " ramen. Your change is ₱" +
 					          (float) (payment - finalPrice) / 100 + ": " + stringBuilder);
 				}
 
-				payment = 0;
-				openRamenMenu();
+				resetMenu();
 			});
 		}
 	}
 
+	private void resetMenu()
+	{
+		payment = 0;
+
+		for (Node button : customItemButtons.getChildren())
+		{
+			button.setDisable(false);
+		}
+
+		processingText.setVisible(false);
+		processingText.setManaged(false);
+	}
 
 	private Timeline processRamen(Label processingText, HBox ramenButtons)
 	{
