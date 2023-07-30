@@ -74,13 +74,13 @@ public class SpecialVendingMachine extends VendingMachine
 
 		for(Slot slot : this.slots)
 		{
-			slotIndex++;
-
 			if (slot.getItemList().get(0).getName().equalsIgnoreCase(itemName))
 			{
 				machineHasItem = true;
 				break;
 			}
+
+			slotIndex++;
 		}
 
 		if (!machineHasItem && !unbuyableItems.contains(itemName.toLowerCase()))
