@@ -31,7 +31,7 @@
             <Button fx:id="shioButton" text="Shio" styleClass="nav-continue-button"/>
         </HBox>
         <Label fx:id="paymentLabel" styleClass="title-label"/>
-        <Label fx:id="processingText" visible="false" managed="false"/>
+        <Label fx:id="processingText" visible="false" managed="false" styleClass="title-label"/>
         <GridPane fx:id="buttonGrid" styleClass="input-field">
 
         </GridPane>
