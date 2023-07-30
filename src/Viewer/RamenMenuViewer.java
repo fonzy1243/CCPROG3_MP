@@ -119,6 +119,7 @@ public class RamenMenuViewer extends MenuViewer
 		{
 			openPopup("Could not produce change. Your ₱" + (float) payment / 100 + " has been returned. " +
 			          "Try again at a later date.");
+			return;
 		}
 		else if (payment == price)
 		{
