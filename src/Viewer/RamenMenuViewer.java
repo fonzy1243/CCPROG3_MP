@@ -107,6 +107,36 @@ public class RamenMenuViewer extends MenuViewer
 
 		int price = 0;
 
+		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
+		{
+			if ((item.contains("broth") && !item.trim().split("\\s+")[0].equals(ramenBroth.trim().split("\\s+")[0]))
+			    || item.equals("water") || item.equals("salt") || item.contains("bones"))
+			{
+				continue;
+			}
+
+			int quantity;
+
+			if (item.equals(ramenBroth) || item.equals("noodles") || item.equals("spring onions"))
+			{
+				quantity = 1;
+			}
+			else if (item.equals("egg") || item.equals("fish cake"))
+			{
+				quantity = 2;
+			}
+			else
+			{
+				quantity = 4;
+			}
+
+			System.out.println(item);
+			price += ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
+					         .getSpecialItemStock().get(item).get(0).getPrice() * quantity;
+
+			((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).removeSpecialItem(item, quantity);
+		}
+
 		if (payment < price)
 		{
 			openPopup("Payment insufficient.");;
@@ -136,7 +166,6 @@ public class RamenMenuViewer extends MenuViewer
 				}
 
 				openPopup("You paid the exact amount and have received " + ramenBroth.trim().split("\\s+")[0] + " ramen.");
-				processItems(ramenBroth, price);
 			});
 		}
 		else
@@ -168,52 +197,13 @@ public class RamenMenuViewer extends MenuViewer
 					openPopup("You have received " + ramenBroth.trim().split("\\s+")[0] + ". Your change is ₱" +
 					          (float) (payment - finalPrice) / 100 + ": " + stringBuilder);
 				}
-
-				processItems(ramenBroth, price);
 			});
 		}
-
-
-
-	}
-
-	private void processItems(String ramenBroth, int price)
-	{
-		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
-		{
-			if ((item.contains("broth") && !item.trim().split("\\s+")[0].equals(ramenBroth.trim().split("\\s+")[0]))
-			    || item.equals("water") || item.equals("salt") || item.contains("bones"))
-			{
-				continue;
-			}
-
-			int quantity;
-
-			if (item.equals(ramenBroth) || item.equals("noodles") || item.equals("spring onions"))
-			{
-				quantity = 1;
-			}
-			else if (item.equals("egg") || item.equals("fish cake"))
-			{
-				quantity = 2;
-			}
-			else
-			{
-				quantity = 4;
-			}
-
-			System.out.println(item);
-			price += ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast())
-					         .getSpecialItemStock().get(item).get(0).getPrice() * quantity;
-
-			((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).removeSpecialItem(item, quantity);
-
-		}
-
 
 		payment = 0;
 		openRamenMenu();
 	}
+
 
 	private Timeline processRamen(Label processingText, HBox ramenButtons)
 	{
