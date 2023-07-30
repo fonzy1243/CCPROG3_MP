@@ -171,6 +171,14 @@ public class VendingMenuViewer extends MenuViewer
 	 */
 	public void openDispenseMenu(Slot slot, int slotIndex)
 	{
+		// Return if there are no items in the slot
+		if (slot.getItemList().size() == 0)
+		{
+			openPopup("Slot has no items.");
+			openVendingMenu();
+			return;
+		}
+
 		// Return if the item is unbuyable
 		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine)
 		{
@@ -181,14 +189,6 @@ public class VendingMenuViewer extends MenuViewer
 				openVendingMenu();
 				return;
 			}
-		}
-
-		// Return if there are no items in the slot
-		if (slot.getItemList().size() == 0)
-		{
-			openPopup("Slot has no items.");
-			openVendingMenu();
-			return;
 		}
 
 		// Initialize GUI
