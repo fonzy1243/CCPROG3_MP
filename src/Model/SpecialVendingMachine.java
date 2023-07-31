@@ -13,10 +13,10 @@ public class SpecialVendingMachine extends VendingMachine
 	private final HashMap<String, LinkedList<Item>> specialItemStock;
 
 	private final HashSet<String> specialItems = new HashSet<>(Set.of("noodles", "egg", "chashu", "tonkotsu broth",
-			"miso broth", "shio broth", "spring onions", "fish cake", "pork bones", "chicken bones", "salt", "water"));
+			"miso broth", "shio broth", "spring onions", "fish cake", "pork bones", "chicken bones", "miso paste", "salt", "water"));
 
 	private final HashSet<String> unbuyableItems = new HashSet<>(Set.of("tonkotsu broth", "miso broth", "shio broth",
-			"spring onions", "pork bones", "salt", "chicken bones"));
+			"spring onions", "pork bones", "salt", "chicken bones", "miso paste"));
 
 	public SpecialVendingMachine(int slotCount)
 	{
@@ -112,5 +112,51 @@ public class SpecialVendingMachine extends VendingMachine
 	public HashSet<String> getUnbuyableItems()
 	{
 		return unbuyableItems;
+	}
+
+	public boolean enoughBrothIngredients(String brothName)
+	{
+		switch (brothName)
+		{
+			case "tonkotsu broth" -> {
+				return specialItemStock.get("pork bones").size() >= 1 && specialItemStock.get("water").size() >= 5;
+			}
+			case "shio broth" -> {
+				return specialItemStock.get("salt").size() >= 1 &&
+						specialItemStock.get("chicken bones").size() >= 2 &&
+						specialItemStock.get("water").size() >= 5;
+			}
+			case "miso broth" -> {
+				return specialItemStock.get("salt").size() >= 1 &&
+						specialItemStock.get("chicken bones").size() >= 2 &&
+						specialItemStock.get("water").size() >= 5 &&
+						specialItemStock.get("miso paste").size() >= 1;
+			}
+			default -> {
+				return false;
+			}
+		}
+	}
+
+	public void removeBrothIngredients(String brothName)
+	{
+		switch (brothName)
+		{
+			case "tonkotsu broth" -> {
+				this.removeSpecialItem("pork bones", 1);
+				this.removeSpecialItem("water", 5);
+			}
+			case "shio broth" -> {
+				this.removeSpecialItem("salt", 1);
+				this.removeSpecialItem("chicken bones", 2);
+				this.removeSpecialItem("water", 5);
+			}
+			case "miso broth" -> {
+				this.removeSpecialItem("salt", 1);
+				this.removeSpecialItem("chicken bones", 2);
+				this.removeSpecialItem("water", 5);
+				this.removeSpecialItem("miso paste", 1);
+			}
+		}
 	}
 }

@@ -2,6 +2,7 @@ package Viewer;
 
 import Model.Item;
 import Model.Slot;
+import Model.SpecialVendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -139,6 +140,19 @@ public class StockInterfaceViewer extends MenuViewer
 				(int) (Float.parseFloat(priceTextField.getText()) * 100),
 				Integer.parseInt(calorieTextField.getText()));
 
+		// TODO: Check if there is enough ingredients for adding a broth.
+		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine &&
+			(newItem.getName().equals("tonkotsu broth") || newItem.getName().equals("shio broth") ||
+					newItem.getName().equals("miso broth")))
+		{
+			if (!((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).
+					enoughBrothIngredients(newItem.getName()))
+			{
+				openPopup("Not enough ingredients for adding a broth.");
+				return;
+			}
+		}
+
 		if (slotDropdown.getValue().getItemList().size() > 0)
 		{
 			Item slotItem = vendingMachineController.getVendingMachines().getLast().getSlots()[slotIndex]
@@ -157,6 +171,14 @@ public class StockInterfaceViewer extends MenuViewer
 		}
 		else
 		{
+			if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine &&
+					(newItem.getName().equals("tonkotsu broth") || newItem.getName().equals("shio broth") ||
+							newItem.getName().equals("miso broth")))
+			{
+				((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).
+						removeBrothIngredients(newItem.getName());
+			}
+
 			vendingMachineController.getVendingMachines().getLast().getTransactionTracker().setInitialSlots(vendingMachineController.getVendingMachines().getLast().getSlots());
 		}
 	}
