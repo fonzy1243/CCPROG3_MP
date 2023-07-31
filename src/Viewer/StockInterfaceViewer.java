@@ -140,7 +140,6 @@ public class StockInterfaceViewer extends MenuViewer
 				(int) (Float.parseFloat(priceTextField.getText()) * 100),
 				Integer.parseInt(calorieTextField.getText()));
 
-		// TODO: Check if there is enough ingredients for adding a broth.
 		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine &&
 			(newItem.getName().equals("tonkotsu broth") || newItem.getName().equals("shio broth") ||
 					newItem.getName().equals("miso broth")))

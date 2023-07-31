@@ -110,7 +110,7 @@ public class RamenMenuViewer extends MenuViewer
 		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
 		{
 			if ((item.contains("broth") && !item.trim().split("\\s+")[0].equals(ramenBroth.trim().split("\\s+")[0]))
-			    || item.equals("water") || item.equals("salt") || item.contains("bones"))
+			    || item.equals("water") || item.equals("salt") || item.contains("bones") || item.contains("miso paste"))
 			{
 				continue;
 			}
@@ -137,13 +137,13 @@ public class RamenMenuViewer extends MenuViewer
 
 		if (payment < price)
 		{
-			openPopup("Payment insufficient.");;
+			openPopup("Payment insufficient.");
 			return;
 		}
 
 		List<Integer> change = vendingMachineController.getVendingMachines().getLast().getRamenChange(payment - price);
 
-		if (change.isEmpty())
+		if (change.isEmpty() && payment > price)
 		{
 			openPopup("Could not produce change. Your ₱" + (float) payment / 100 + " has been returned. " +
 			          "Try again at a later date.");
@@ -311,6 +311,9 @@ public class RamenMenuViewer extends MenuViewer
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
 		openMenuScene(event, loader, "test", null, null);
-		openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
+		if (payment > 0)
+		{
+			 openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
+		}
 	}
 }
