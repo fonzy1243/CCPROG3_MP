@@ -143,6 +143,14 @@ public class VendingMachine
 		return selectedCoins;
 	}
 
+	/**
+	 * Backtracking algorithm to find the minimum number of coins/bills to return as change
+	 *
+	 * @param remainingValue remaining value to be returned as change
+	 * @param currentCoins   current list of coins/bills
+	 * @param selectedCoins  selected list of coins/bills
+	 * @return true if change value is reached, false otherwise
+	 */
 	private boolean backtrack(int remainingValue, List<Integer> currentCoins, List<Integer> selectedCoins) {
 		if (remainingValue == 0) {
 			// Base case: Change value reached, check if it's better than the current selected coins
@@ -173,8 +181,6 @@ public class VendingMachine
 
 		return false;
 	}
-
-
 
 	/**
 	 * Dispense an item from a slot.
@@ -225,6 +231,13 @@ public class VendingMachine
 	{
 		return getChange(withdrawAmount);
 	}
+
+	/**
+	 * Get the list of coins/bills used for change when buying ramen.
+	 *
+	 * @param paymentAmount amount paid by the user
+	 * @return list of coins/bills received from the machine
+	 */
 	public List<Integer> getRamenChange(int paymentAmount)
 	{
 		return getChange(paymentAmount);

@@ -30,6 +30,14 @@ public class SpecialVendingMachine extends VendingMachine
 		}
 	}
 
+	/**
+	 * Adds an item to the vending machine in both the slot and the special item stock.
+	 *
+	 * @param item     The item to be added
+	 * @param slotIndex The slot index where the item will be added
+	 * @param quantity The quantity of the item to be added
+	 * @return true if the item was successfully added, false otherwise
+	 */
 	@Override
 	public boolean addItemToSlot(Item item, int slotIndex, int quantity)
 	{
@@ -44,6 +52,12 @@ public class SpecialVendingMachine extends VendingMachine
 		return true;
 	}
 
+	/**
+	 * Adds an item in the special item stock.
+	 *
+	 * @param item The item to be added in the stock
+	 * @param quantity The quantity of the item to be added
+	 */
 	public void addSpecialItem(Item item, int quantity)
 	{
 		for (int i = 0; i < quantity; i++)
@@ -52,6 +66,12 @@ public class SpecialVendingMachine extends VendingMachine
 		}
 	}
 
+	/**
+	 * Removes an item from the vending machine in both the slot and the special item stock.
+	 *
+	 * @param itemName The name of the item to be removed
+	 * @param quantity The quantity of the item to be removed
+	 */
 	public void removeSpecialItem(String itemName, int quantity)
 	{
 		if (!specialItemStock.containsKey(itemName.toLowerCase()))
@@ -105,21 +125,42 @@ public class SpecialVendingMachine extends VendingMachine
 		}
 	}
 
+	/**
+	 * Gets the special item stock.
+	 *
+	 * @return The special item stock
+	 */
 	public HashMap<String, LinkedList<Item>> getSpecialItemStock()
 	{
 		return specialItemStock;
 	}
 
+	/**
+	 * Gets the special items.
+	 *
+	 * @return The special items
+	 */
 	public HashSet<String> getSpecialItems()
 	{
 		return specialItems;
 	}
 
+	/**
+	 * Gets the unbuyable items.
+	 *
+	 * @return The unbuyable items
+	 */
 	public HashSet<String> getUnbuyableItems()
 	{
 		return unbuyableItems;
 	}
 
+	/**
+	 * Checks if the vending machine has enough ingredients to make a broth.
+	 *
+	 * @param brothName The name of the broth to be checked
+	 * @return true if the vending machine has enough ingredients to make a broth, false otherwise
+	 */
 	public boolean enoughBrothIngredients(String brothName)
 	{
 		switch (brothName)
@@ -144,6 +185,11 @@ public class SpecialVendingMachine extends VendingMachine
 		}
 	}
 
+	/**
+	 * Removes the ingredients needed to make a broth.
+	 *
+	 * @param brothName The name of the broth to be made
+	 */
 	public void removeBrothIngredients(String brothName)
 	{
 		switch (brothName)
