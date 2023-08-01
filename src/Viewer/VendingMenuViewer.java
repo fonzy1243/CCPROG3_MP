@@ -615,6 +615,13 @@ public class VendingMenuViewer extends MenuViewer
 			rootAnchorPane.getChildren().add(titleBar);
 		}
 
+		/**
+		 * Initialize the navigation buttons.
+		 * @param backButton back button
+		 * @param continueButton continue button
+		 * @param backButtonTooltip tooltip for back button
+		 * @param navButtons hbox containing the buttons
+		 */
 		protected void setupNavButtons(Button backButton, Button continueButton, Tooltip backButtonTooltip, HBox navButtons)
 		{
 			backButton.getStyleClass().add("nav-back-button");

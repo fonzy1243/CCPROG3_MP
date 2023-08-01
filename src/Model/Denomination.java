@@ -114,6 +114,10 @@ public class Denomination
 		return denominationList;
 	}
 
+	/**
+	 * Get the list of non-empty denominations
+	 * @return non-empty denomination list
+	 */
 	public List<Integer> getNonEmptyDenominations()
 	{
 		List<Integer> nonEmptydenominationList = new LinkedList<>();

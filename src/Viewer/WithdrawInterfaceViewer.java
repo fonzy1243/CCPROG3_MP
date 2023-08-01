@@ -132,6 +132,11 @@ public class WithdrawInterfaceViewer extends MenuViewer
 		openMenuScene(event, loader, "money", null, null);
 	}
 
+	/**
+	 * Checks if the input string has more than two decimal places.
+	 * @param numberString the input string
+	 * @return true if the input string has more than two decimal places, false otherwise
+	 */
 	public static boolean hasMoreThanTwoDecimalPlaces(String numberString) {
 		// Regular expression to match numbers with two or more decimal places
 		String regex = "^\\d*\\.\\d{3,}$";
