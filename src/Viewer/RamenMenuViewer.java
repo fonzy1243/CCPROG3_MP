@@ -18,6 +18,11 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * RamenMenuViewer manages user input when buying ramen.
+ *
+ * @see Viewer.MenuViewer
+ */
 public class RamenMenuViewer extends MenuViewer
 {
 	@FXML
@@ -47,6 +52,9 @@ public class RamenMenuViewer extends MenuViewer
 
 	}
 
+	/**
+	 * Opens and displays the ramen menu.
+	 */
 	public void openRamenMenu()
 	{
 		moveApp(topBar, stage);
@@ -63,17 +71,30 @@ public class RamenMenuViewer extends MenuViewer
 		shioButton.setOnAction(event -> buyRamen("shio broth"));
 	}
 
+	/**
+	 * Sets the payment used to purchase ramen.
+	 * @param payment payment in cents
+	 */
 	public void setPayment(int payment)
 	{
 		this.payment = payment;
 		paymentLabel.setText("₱" + (float) payment / 100);
 	}
 
+	/**
+	 * Sets the list of denominations used in paying
+	 * @param paymentDenominations denominations used in paying
+	 */
 	public void setPaymentDenominations(List<Integer> paymentDenominations)
 	{
 		this.paymentDenominations = paymentDenominations;
 	}
 
+	/**
+	 * Cheks if there are enough ingredients for a particular ramen, given the broth used.
+	 * @param ramenBroth broth used
+	 * @return true if there are enough ingredients, otherwise false
+	 */
 	private boolean hasEnoughIngredients(String ramenBroth)
 	{
 		HashMap<String, LinkedList<Item>> specialItemStock = ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItemStock();
@@ -96,6 +117,10 @@ public class RamenMenuViewer extends MenuViewer
 		return hasBroth && hasNoodles && hasEnoughEggs && hasEnoughChashu && hasSpringOnions && hasEnoughFishCake;
 	}
 
+	/**
+	 * Buys a ramen and removes its corresponding ingredients.
+	 * @param ramenBroth broth of ramen to be purchased
+	 */
 	@FXML
 	private void buyRamen(String ramenBroth)
 	{
@@ -204,6 +229,10 @@ public class RamenMenuViewer extends MenuViewer
 		}
 	}
 
+	/**
+	 * Helper method for removing ramen ingredients.
+	 * @param ramenBroth broth of ramen to be purchased
+	 */
 	private void processItems(String ramenBroth)
 	{
 		for (String item : ((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getSpecialItems())
@@ -233,6 +262,9 @@ public class RamenMenuViewer extends MenuViewer
 		}
 	}
 
+	/**
+	 * Resets UI elements in the menu.
+	 */
 	private void resetMenu()
 	{
 		payment = 0;
@@ -246,6 +278,12 @@ public class RamenMenuViewer extends MenuViewer
 		processingText.setManaged(false);
 	}
 
+	/**
+	 * Displays the processing text when dispensing ramen.
+	 * @param processingText text label object
+	 * @param ramenButtons buttons to disable
+	 * @return text animation as Timeline
+	 */
 	private Timeline processRamen(Label processingText, HBox ramenButtons)
 	{
 		for (Node button : ramenButtons.getChildren())
@@ -263,6 +301,10 @@ public class RamenMenuViewer extends MenuViewer
 		);
 	}
 
+	/**
+	 * Sets up buttons for the denomination grid.
+	 * @param buttonGrid GridPane object containing buttons
+	 */
 	private void setupButtonGrid(GridPane buttonGrid)
 	{
 		int column = 0;
@@ -306,6 +348,11 @@ public class RamenMenuViewer extends MenuViewer
 		}
 	}
 
+	/**
+	 * Returns to the previous menu
+	 * @param event button click
+	 * @throws IOException if error occurred while loading fxml
+	 */
 	@FXML
 	private void back(ActionEvent event) throws IOException
 	{
