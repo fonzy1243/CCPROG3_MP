@@ -32,7 +32,8 @@
                 onAction="#createRegularMachine"/>
         <Button fx:id="createSpecialButton"
                 text="Create Special Machine"
-                styleClass="regular-button"/>
+                styleClass="regular-button"
+                onAction="#createSpecialMachine"/>
         <Button fx:id="returnButton"
                 text="Back"
                 styleClass="nav-back-button"

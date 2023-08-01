@@ -129,7 +129,7 @@ public class MainMenuViewer extends MenuViewer
 	private void goToCreateMenu(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateMenu.fxml"));
-		openMenuScene(event, loader, "create", vendingMachineController);
+		openMenuScene(event, loader, "create", null, null);
 	}
 
 	/**
@@ -141,6 +141,6 @@ public class MainMenuViewer extends MenuViewer
 	private void goToTestMenu(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
-		openMenuScene(event, loader, "test", vendingMachineController);
+		openMenuScene(event, loader, "test", null, null);
 	}
 }

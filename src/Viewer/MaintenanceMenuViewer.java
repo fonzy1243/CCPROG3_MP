@@ -10,6 +10,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/**
+ * MaintenanceMenuViewer manages the Maintenance Menu's GUI.
+ */
 public class MaintenanceMenuViewer extends MenuViewer
 {
 	@FXML
@@ -24,6 +27,8 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private Button priceButton;
 	@FXML
 	private Button moneyButton;
+	@FXML
+	private Button historyButton;
 	@FXML
 	private Button returnButton;
 
@@ -43,6 +48,7 @@ public class MaintenanceMenuViewer extends MenuViewer
 		ButtonAnimator.resizeWhenHovered(stockButton);
 		ButtonAnimator.resizeWhenHovered(priceButton);
 		ButtonAnimator.resizeWhenHovered(moneyButton);
+		ButtonAnimator.resizeWhenHovered(historyButton);
 		ButtonAnimator.resizeWhenHovered(returnButton);
 
 		moveApp(topBar, stage);
@@ -58,7 +64,7 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void goToStockInterface(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StockInterface.fxml"));
-		openMenuScene(event, loader, "stock", vendingMachineController);
+		openMenuScene(event, loader, "stock", null, null);
 	}
 
 	/**
@@ -70,7 +76,7 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void goToPriceInterface(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PriceInterface.fxml"));
-		openMenuScene(event, loader, "price", vendingMachineController);
+		openMenuScene(event, loader, "price", null, null);
 	}
 
 	/**
@@ -82,7 +88,19 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void goToMoneyMenu(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MoneyMenu.fxml"));
-		openMenuScene(event, loader, "money", vendingMachineController);
+		openMenuScene(event, loader, "money", null, null);
+	}
+
+	/**
+	 * Opens the interface for viewing transaction history.
+	 * @param event button click
+	 * @throws IOException if error occurred while opening transaction interface FXML
+	 */
+	@FXML
+	private void goToTransactionInterface(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TransactionInterface.fxml"));
+		openMenuScene(event, loader, "transaction", null, null);
 	}
 
 	/**
@@ -94,6 +112,6 @@ public class MaintenanceMenuViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
-		openMenuScene(event, loader, "test", vendingMachineController);
+		openMenuScene(event, loader, "test", null, null);
 	}
 }

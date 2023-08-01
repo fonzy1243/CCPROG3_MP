@@ -59,7 +59,7 @@ public class TestMenuViewer extends MenuViewer
 		if (hasNoMachine())
 			return;
 
-		openMenuScene(event, null, "vending", vendingMachineController);
+		openMenuScene(event, null, "vending", null, null);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class TestMenuViewer extends MenuViewer
 			return;
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
-		openMenuScene(event, loader, "maintenance", vendingMachineController);
+		openMenuScene(event, loader, "maintenance", null, null);
 	}
 
 	/**
@@ -85,8 +85,7 @@ public class TestMenuViewer extends MenuViewer
 	{
 		if (vendingMachineController == null)
 		{
-			System.out.println("Error: No vending machine controller.");
-			return true;
+			throw new RuntimeException("Vending machine controller object is null");
 		}
 
 		if (vendingMachineController.getVendingMachines().size() == 0)

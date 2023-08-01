@@ -55,11 +55,12 @@
 }
 
 #createMenuVBox, #mainMenuVBox, #testMenuVbox, #maintenanceMenuVbox,
-#stockInterfaceVbox, #priceInterfaceVbox, #moneyMenuVbox, #withdrawInterfaceVbox, #dispenseInterfaceVbox {
+#stockInterfaceVbox, #priceInterfaceVbox, #moneyMenuVbox, #withdrawInterfaceVbox, #dispenseInterfaceVbox,
+#transactionInterfaceVbox, #ramenMenuVbox {
     -fx-alignment: Center;
 }
 
-.close-button, .minimize-button, .top-bar, .top-bar-popup {
+.close-button, .minimize-button, .top-bar, .top-bar-popup, .table-view .column-header {
     -fx-background-color: #34364f;
 }
 
@@ -225,10 +226,10 @@
     -fx-background-color: #313349;
 }
 
-.text-field-label
+.text-field-label,  .table-view .label
 {
     -fx-font-family: "Nunito SemiBold";
-    -fx-font-size: 22;
+    -fx-font-size: 18;
     -fx-text-fill: white;
 }
 
@@ -243,4 +244,40 @@
 
 .combo-box .list-cell:hover {
     -fx-background-color: #313349;
+}
+
+.table-view, .table-view .column-header, .table-view .column-header-background, .table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell, .table-view .column-header-background .label, .table-view .filler {
+    -fx-text-fill: white;
+}
+
+.table-row-cell, .table-view .column-header {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
+}
+
+.table-view .table-column {
+  -fx-alignment: CENTER;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: #282a3d;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+.table-view {
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+}
+
+.table-row-cell {
+    -fx-font-family: "Nunito SemiBold";
+    -fx-background-color: #282a3d;
+    -fx-font-size: 18;
 }

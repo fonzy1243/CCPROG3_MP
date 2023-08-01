@@ -14,6 +14,9 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * WithdrawInterfaceViewer manages the Withdraw Interface's GUI.
+ */
 public class WithdrawInterfaceViewer extends MenuViewer
 {
 	@FXML
@@ -69,8 +72,25 @@ public class WithdrawInterfaceViewer extends MenuViewer
 				return;
 			}
 
-			List<Integer> change = vendingMachineController.getVendingMachines().getLast()
-					.withdrawMoney((int) (Float.parseFloat(moneyTextField.getText()) * 100));
+			List<Integer> change;
+
+			if (hasMoreThanTwoDecimalPlaces(moneyTextField.getText()))
+			{
+				openPopup("Cannot have more than 2 decimal places.");
+				return;
+			}
+
+			if (!moneyTextField.getText().contains("."))
+			{
+				change = vendingMachineController.getVendingMachines().getLast()
+						.withdrawMoney(Integer.parseInt(moneyTextField.getText()) * 100);
+			}
+			else
+			{
+				String moneyText = moneyTextField.getText().replace(".", "");
+
+				change = vendingMachineController.getVendingMachines().getLast().withdrawMoney(Integer.parseInt(moneyText));
+			}
 
 			// convert total in cents to real total
 
@@ -84,8 +104,17 @@ public class WithdrawInterfaceViewer extends MenuViewer
 			StringBuilder stringBuilder = new StringBuilder();
 			change.forEach((changeValue) -> stringBuilder.append("₱").append((float) changeValue / 100).append(" "));
 
-			totalMoney[0] -= total;
-			moneyLabel.setText("₱" + totalMoney[0]);
+			totalMoney[0] = (float) vendingMachineController.getVendingMachines().getLast()
+					.getDenominations().calculateTotal() / 100;
+
+			String formattedTotal = String.format("%.2f", totalMoney[0]);
+			moneyLabel.setText("₱" + formattedTotal);
+
+			if (change.isEmpty())
+			{
+				openPopup("Cannot withdraw that amount.");
+				return;
+			}
 
 			openPopup("You have withdrawn ₱" + total + ": " + stringBuilder);
 		});
@@ -100,6 +129,14 @@ public class WithdrawInterfaceViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MoneyMenu.fxml"));
-		openMenuScene(event, loader, "money", vendingMachineController);
+		openMenuScene(event, loader, "money", null, null);
+	}
+
+	public static boolean hasMoreThanTwoDecimalPlaces(String numberString) {
+		// Regular expression to match numbers with two or more decimal places
+		String regex = "^\\d*\\.\\d{3,}$";
+
+		// Check if the input string matches the regular expression
+		return numberString.matches(regex);
 	}
 }

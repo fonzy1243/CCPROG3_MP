@@ -1,8 +1,10 @@
 package Viewer;
 
 import Model.Slot;
+import Model.SpecialVendingMachine;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -82,7 +84,9 @@ public class VendingMenuViewer extends MenuViewer
 	public void openCoinInsertionMenu()
 	{
 		payment = 0;
-		
+
+		// initialize GUI
+
 		Tooltip backButtonTooltip = new Tooltip("Cancel transaction and return money.");
 
 		Button backButton = new Button("Back");
@@ -119,6 +123,7 @@ public class VendingMenuViewer extends MenuViewer
 	 */
 	public void openVendingMenu()
 	{
+		// initialize GUI
 		Button backButton = new Button();
 
 		Label label = new Label("Select a slot:");
@@ -129,9 +134,32 @@ public class VendingMenuViewer extends MenuViewer
 		UIManager.setButtonGridGaps(buttonGrid, 5);
 		uiManager.setupSlotGrid(backButton);
 
+
 		vBox.getChildren().addAll(label, buttonGrid);
 		vBox.setStyle("-fx-alignment: Center");
 		vBox.setMinSize(720, 720);
+
+		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine)
+		{
+			Button customItemButton = new Button("Ramen");
+			ButtonAnimator.resizeWhenHovered(customItemButton);
+
+			customItemButton.getStyleClass().add("nav-continue-button");
+			customItemButton.setStyle("-fx-font-size: 23");
+			customItemButton.setOnAction(event ->
+			{
+				try
+				{
+					goToRamenMenu(event);
+				} catch (IOException e)
+				{
+					throw new RuntimeException(e);
+				}
+			});
+
+			vBox.getChildren().add(customItemButton);
+			vBox.setSpacing(25);
+		}
 
 		root = vBox;
 	}
@@ -149,6 +177,18 @@ public class VendingMenuViewer extends MenuViewer
 			openPopup("Slot has no items.");
 			openVendingMenu();
 			return;
+		}
+
+		// Return if the item is unbuyable
+		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine)
+		{
+			if (((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).getUnbuyableItems().
+					contains(slot.getItemList().get(0).getName()))
+			{
+				openPopup("This item is unbuyable.");
+				openVendingMenu();
+				return;
+			}
 		}
 
 		// Initialize GUI
@@ -184,6 +224,7 @@ public class VendingMenuViewer extends MenuViewer
 		cancelButton.setOnAction(event ->
 		{
 			vBox.getChildren().clear();
+			openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
 			openVendingMenu();
 		});
 
@@ -230,7 +271,8 @@ public class VendingMenuViewer extends MenuViewer
 		}
 		else if (changeList.size() == 0 && payment > itemPrice)
 		{
-			openPopup("Could not produce change. Try again at a later date.");
+			openPopup("Could not produce change. Your ₱" + (float) payment / 100 + " has been returned. " +
+			          "Try again at a later date.");
 			// to extract method
 			changeScene();
 		}
@@ -316,6 +358,12 @@ public class VendingMenuViewer extends MenuViewer
 		openCoinInsertionMenu();
 	}
 
+	private void goToRamenMenu(ActionEvent event) throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RamenMenu.fxml"));
+		openMenuScene(event, loader, "ramen", payment, paymentDenominations);
+	}
+
 	/**
 	 * Nested class for additional abstraction as this menu has a lot of UI elements.
 	 * Its static methods can be reused for other menu controllers.
@@ -332,7 +380,8 @@ public class VendingMenuViewer extends MenuViewer
 		 * @param paymentTitle text prompt for payment
 		 * @param paymentLabel text displaying payment
 		 */
-		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
+		private void setupGUIElements(Label sceneTitle, AnchorPane itemDisplayBackground, Label itemNameLabel,
+		                              Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel)
 		{
 			sceneTitle.getStyleClass().add("title-label");
 			sceneTitle.setPadding(new Insets(0, 0, 25,0));
@@ -356,7 +405,8 @@ public class VendingMenuViewer extends MenuViewer
 		 * @param addPaymentButtons button for adding coin/bill to payment
 		 * @param transactionButtons button for cancelling or purchasing the displayed item
 		 */
-		private void setAnchors(Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle, Label paymentLabel, GridPane addPaymentButtons, HBox transactionButtons)
+		private void setAnchors(Label itemNameLabel, Label itemPriceLabel, Label itemCalorieLabel, Label paymentTitle,
+		                        Label paymentLabel, GridPane addPaymentButtons, HBox transactionButtons)
 		{
 			AnchorPane.setTopAnchor(itemNameLabel, 42.0);
 			AnchorPane.setLeftAnchor(itemNameLabel, 40.0);
@@ -464,6 +514,7 @@ public class VendingMenuViewer extends MenuViewer
 				try
 				{
 					returnToMainMenu(event);
+					openPopup("Your ₱" + (float) payment / 100 + " has been returned.");
 				} catch (IOException e)
 				{
 					throw new RuntimeException(e);
@@ -546,6 +597,12 @@ public class VendingMenuViewer extends MenuViewer
 			}
 		}
 
+		/**
+		 * Initialize app title bar and its buttons.
+		 * @param titleBar title bar pane
+		 * @param titleBarButtons minimize and close button hbox
+		 * @param rootAnchorPane parent pane
+		 */
 		protected static void initializeTitleBar(AnchorPane titleBar, HBox titleBarButtons, AnchorPane rootAnchorPane)
 		{
 			titleBar.getStyleClass().add("top-bar");
@@ -567,7 +624,7 @@ public class VendingMenuViewer extends MenuViewer
 				try
 				{
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TestMenu.fxml"));
-					openMenuScene(event, loader, "test", vendingMachineController);
+					openMenuScene(event, loader, "test", null, null);
 				} catch (IOException exception)
 				{
 					throw new RuntimeException(exception);

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Viewer.StockInterfaceViewer"
+            fx:controller="Viewer.TransactionInterfaceViewer"
             prefHeight="720.0" prefWidth="720.0"
             styleClass="rounded-pane">
     <AnchorPane styleClass="top-bar"
@@ -19,28 +22,27 @@
                     onAction="#closeApp"/>
         </HBox>
     </AnchorPane>
-    <VBox fx:id="stockInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
+    <VBox fx:id="transactionInterfaceVbox" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label text="Edit Stock"
+        <Label text="Transaction History"
                styleClass="title-label"/>
-        <ComboBox fx:id="slotDropdown" promptText="Slot"/>
-        <HBox fx:id="nameBox" styleClass="input-field">
-            <TextField fx:id="nameTextField" promptText="Item Name"/>
-        </HBox>
-        <HBox fx:id="priceBox" styleClass="input-field">
-            <TextField fx:id="priceTextField" promptText="Item Price"/>
-        </HBox>
-        <HBox fx:id="calorieBox" styleClass="input-field">
-            <TextField fx:id="calorieTextField" promptText="Item Calories"/>
-        </HBox>
+        <TableView fx:id="transactionTable" prefHeight="200.0" maxWidth="450.0">
+            <placeholder>
+                <Label text="There are currently no items." styleClass="text-field-label"/>
+            </placeholder>
+            <columns>
+                <TableColumn fx:id="transactionItemColumn" prefWidth="200" text="Item" />
+                <TableColumn fx:id="transactionInitialStockColumn" prefWidth="100" text="Initial" />
+                <TableColumn fx:id="transactionCurrentStockColumn" prefWidth="100" text="Current" />
+                <TableColumn fx:id="transactionSoldColumn" prefWidth="80" text="Sold" />
+            </columns>
+        </TableView>
+        <Label fx:id="totalPriceLabel" text="Total amount collected: ₱ 0.00" styleClass="text-field-label"/>
         <HBox fx:id="navButtons" alignment="CENTER">
             <Button fx:id="backButton"
                     styleClass="nav-back-button"
                     text="Back"
                     onAction="#back"/>
-            <Button fx:id="addButton"
-                    styleClass="nav-continue-button"
-                    text="Add"/>
         </HBox>
     </VBox>
 </AnchorPane>

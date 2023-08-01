@@ -1,21 +1,104 @@
 package Model;
 
+import Viewer.TransactionInterfaceViewer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * TransactionTracker keeps track of the transactions that occur in the vending machine every time a restocking occurs.
+ */
 public class TransactionTracker
 {
     private int totalAmountCollected;
-    private final Slot[] initialSlots;
-    private final Slot[] currentSlots;
+    private Slot[] initialSlots;
+    private Slot[] currentSlots;
 
-    public TransactionTracker(Slot[] initialSlots, Slot[] currentSlots)
+    public TransactionTracker(Slot[] initialSlots)
     {
-        this.initialSlots = initialSlots;
-        this.currentSlots = currentSlots;
+        this.initialSlots = new Slot[initialSlots.length];
+
+        for (int i = 0; i < initialSlots.length; i++)
+        {
+            this.initialSlots[i] = new Slot();
+
+            for (int j = 0; j < initialSlots[i].getItemList().size(); j++)
+            {
+                this.initialSlots[i].getItemList().add(initialSlots[i].getItemList().get(j));
+            }
+        }
     }
 
+    /**
+     * Sets the initialSlots array.
+     * @param initialSlots array of slots
+     */
+    public void setInitialSlots(Slot[] initialSlots)
+    {
+        this.initialSlots = new Slot[initialSlots.length];
+
+        for (int i = 0; i < initialSlots.length; i++)
+        {
+            this.initialSlots[i] = new Slot();
+
+            for (int j = 0; j < initialSlots[i].getItemList().size(); j++)
+            {
+                this.initialSlots[i].getItemList().add(initialSlots[i].getItemList().get(j));
+            }
+        }
+    }
+
+    /**
+     * Sets the currentSlots array.
+     * @param currentSlots array of slots
+     */
+    public void setCurrentSlots(Slot[] currentSlots)
+    {
+        this.currentSlots = new Slot[currentSlots.length];
+
+        for (int i = 0; i < currentSlots.length; i++)
+        {
+            this.currentSlots[i] = new Slot();
+
+            for (int j = 0; j < currentSlots[i].getItemList().size(); j++)
+            {
+                this.currentSlots[i].getItemList().add(currentSlots[i].getItemList().get(j));
+            }
+        }
+    }
+
+    /**
+     * Gets the total amount collected.
+     * @return total amount collected
+     */
+    public int getTotalAmountCollected()
+    {
+        return totalAmountCollected;
+    }
+
+    /**
+     * Sets the total amount collected.
+     */
+    public void setTotalAmountCollected()
+    {
+        totalAmountCollected = 0;
+
+        for (int i = 0; i < initialSlots.length; i++)
+        {
+            if (initialSlots[i].getItemList().size() > 0)
+            {
+                totalAmountCollected += (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) * initialSlots[i].getItemList().get(0).getPrice();
+            }
+        }
+    }
+
+    /**
+     * Creates a text file that contains the transactions that occurred during the restocking.
+     * @throws IOException if an I/O error occurs
+     */
     public void createTransactionFile()
     {
         File transactionFile = new File("transactions.txt");
@@ -49,10 +132,16 @@ public class TransactionTracker
             try
             {
                 FileWriter writer = new FileWriter(transactionFile, true);
-                writer.write((initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) + "\n");
-                writer.close();
-
-                totalAmountCollected += (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) * initialSlots[i].getItemList().get(0).getPrice();
+                if (initialSlots[i].getItemsCount() > 0)
+                {
+                    writer.write("Slot " + (i + 1) + ". " + initialSlots[i].getItemList().get(0).getName() + ": " + (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()) + "\n");
+                    writer.close();
+                }
+                else
+                {
+                    writer.write("Slot " + (i + 1) + ". N/A: -1\n");
+                    writer.close();
+                }
             } catch (IOException exception)
             {
                 System.out.println("Error occurred while writing to file.");
@@ -72,64 +161,24 @@ public class TransactionTracker
         }
     }
 
-    public void displayTransactionDetails()
+    /**
+     * Gets the transaction list.
+     * @return transaction list
+     */
+    public ObservableList getTransactionList()
     {
-        System.out.println("Transaction Details");
+        ObservableList<TransactionInterfaceViewer.Transaction> transactionList = FXCollections.observableArrayList();
 
         for (int i = 0; i < initialSlots.length; i++)
         {
-            System.out.println(initialSlots[i].getItemList().get(0).getName() + ": " + (initialSlots[i].getItemsCount() - currentSlots[i].getItemsCount()));
-        }
-
-        System.out.println("Total amount collected: PhP" + (float) totalAmountCollected / 100);
-    }
-
-    public Slot[] readTransactionFile()
-    {
-        File transactionFile = new File("transactions.txt");
-        Slot[] slots = new Slot[10];
-
-        for (int i = 0; i < slots.length; i++)
-        {
-            slots[i] = new Slot();
-        }
-
-        if (transactionFile.exists())
-        {
-            try
+            if (initialSlots[i].getItemsCount() > 0)
             {
-                java.util.Scanner scanner = new java.util.Scanner(transactionFile);
+                TransactionInterfaceViewer.Transaction transaction = new TransactionInterfaceViewer.Transaction(initialSlots[i].getItemList().get(0).getName(), initialSlots[i].getItemsCount(), currentSlots[i].getItemsCount());
 
-                for (int i = 0; i < slots.length; i++)
-                {
-                    if (scanner.hasNextInt())
-                    {
-                        int count = scanner.nextInt();
-
-                        if (count > 0)
-                        {
-                            slots[i] = initialSlots[i];
-
-                            while (slots[i].getItemsCount() != count)
-                            {
-                                slots[i].getItemList().remove(0);
-                            }
-                        }
-                    }
-                }
-
-                scanner.close();
-            } catch (IOException exception)
-            {
-                System.out.println("Error occurred while reading file.");
-                exception.printStackTrace();
+                transactionList.add(transaction);
             }
         }
-        else
-        {
-            System.out.println("File does not exist.");
-        }
 
-        return slots;
+        return transactionList;
     }
 }

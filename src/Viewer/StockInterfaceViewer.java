@@ -2,6 +2,7 @@ package Viewer;
 
 import Model.Item;
 import Model.Slot;
+import Model.SpecialVendingMachine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,9 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
+/**
+ * StockInterfaceViewer manages the Stock Interface's GUI.
+ */
 public class StockInterfaceViewer extends MenuViewer
 {
 	@FXML
@@ -136,6 +140,18 @@ public class StockInterfaceViewer extends MenuViewer
 				(int) (Float.parseFloat(priceTextField.getText()) * 100),
 				Integer.parseInt(calorieTextField.getText()));
 
+		if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine &&
+			(newItem.getName().equals("tonkotsu broth") || newItem.getName().equals("shio broth") ||
+					newItem.getName().equals("miso broth")))
+		{
+			if (!((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).
+					enoughBrothIngredients(newItem.getName()))
+			{
+				openPopup("Not enough ingredients for adding a broth.");
+				return;
+			}
+		}
+
 		if (slotDropdown.getValue().getItemList().size() > 0)
 		{
 			Item slotItem = vendingMachineController.getVendingMachines().getLast().getSlots()[slotIndex]
@@ -152,6 +168,18 @@ public class StockInterfaceViewer extends MenuViewer
 		{
 			openPopup("Cannot add item.");
 		}
+		else
+		{
+			if (vendingMachineController.getVendingMachines().getLast() instanceof SpecialVendingMachine &&
+					(newItem.getName().equals("tonkotsu broth") || newItem.getName().equals("shio broth") ||
+							newItem.getName().equals("miso broth")))
+			{
+				((SpecialVendingMachine) vendingMachineController.getVendingMachines().getLast()).
+						removeBrothIngredients(newItem.getName());
+			}
+
+			vendingMachineController.getVendingMachines().getLast().getTransactionTracker().setInitialSlots(vendingMachineController.getVendingMachines().getLast().getSlots());
+		}
 	}
 
 	/**
@@ -163,6 +191,6 @@ public class StockInterfaceViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
-		openMenuScene(event, loader, "maintenance", vendingMachineController);
+		openMenuScene(event, loader, "maintenance", null, null);
 	}
 }

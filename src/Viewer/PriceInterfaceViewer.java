@@ -17,6 +17,9 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 
+/**
+ * PriceInterfaceViewer manages the Price Interface's GUI.
+ */
 public class PriceInterfaceViewer extends MenuViewer
 {
 	@FXML
@@ -140,6 +143,6 @@ public class PriceInterfaceViewer extends MenuViewer
 	private void back(ActionEvent event) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MaintenanceMenu.fxml"));
-		openMenuScene(event, loader, "maintenance", vendingMachineController);
+		openMenuScene(event, loader, "maintenance", null, null);
 	}
 }

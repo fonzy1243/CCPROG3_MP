@@ -28,7 +28,7 @@ public class VendingMachineController
 	 */
 	public void createRegularMachine(int slotCount)
 	{
-		vendingMachines.addFirst(new RegularVendingMachine(slotCount));
+		vendingMachines.addLast(new RegularVendingMachine(slotCount));
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class VendingMachineController
 	 */
 	public void createSpecialMachine(int slotCount)
 	{
-		vendingMachines.addFirst(new SpecialVendingMachine(slotCount));
+		vendingMachines.addLast(new SpecialVendingMachine(slotCount));
 	}
 
 	/**

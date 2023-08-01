@@ -12,11 +12,13 @@ import java.util.*;
  */
 public class VendingMachine
 {
-	private static final int itemLimit = 69;
+	private static final int itemLimit = 10;
 
-	private final Slot[] slots;
+	protected final Slot[] slots;
 
 	private final Denomination denominations;
+
+	private final TransactionTracker transactionTracker;
 
 	public VendingMachine(int slotCount)
 	{
@@ -28,10 +30,23 @@ public class VendingMachine
 		}
 
 		denominations = new Denomination();
+
+		transactionTracker = new TransactionTracker(slots);
+	}
+
+	/**
+	 * Get the transaction tracker
+	 *
+	 * @return transaction tracker object
+	 */
+	public TransactionTracker getTransactionTracker()
+	{
+		return transactionTracker;
 	}
 
 	/**
 	 * Get the denominations used in the machine
+	 *
 	 * @return denomination object
 	 */
 	public Denomination getDenominations()
@@ -41,6 +56,7 @@ public class VendingMachine
 
 	/**
 	 * Get the array of slots in the machine
+	 *
 	 * @return slot array
 	 */
 	public Slot[] getSlots()
@@ -50,6 +66,7 @@ public class VendingMachine
 
 	/**
 	 * Get the current quantity of an item
+	 *
 	 * @param itemName item to be searched
 	 * @return item quantity
 	 */
@@ -71,14 +88,14 @@ public class VendingMachine
 
 	/**
 	 * Adds an item to the slot
-	 * @param item item to be added to a slot.
+	 *
+	 * @param item      item to be added to a slot.
 	 * @param slotIndex index of slot to be added to.
-	 * @param quantity amount of items to be added to the slot.
+	 * @param quantity  amount of items to be added to the slot.
 	 * @return true if successful, false if error occurred
 	 */
 	public boolean addItemToSlot(Item item, int slotIndex, int quantity)
 	{
-
 		for (Slot slot : slots)
 		{
 			if (slot.getItemList().size() > 0 &&
@@ -95,14 +112,7 @@ public class VendingMachine
 			throw new IllegalStateException("Different item found in slot. Please submit a bug report.");
 		}
 
-		int totalItemCount = 0;
-
-		for (Slot slot : slots)
-		{
-			totalItemCount += slot.getItemList().size();
-		}
-
-		if (totalItemCount + quantity > itemLimit)
+		if (slots[slotIndex].getItemList().size() + quantity > itemLimit)
 		{
 			return false;
 		}
@@ -117,60 +127,59 @@ public class VendingMachine
 
 	/**
 	 * Get the list of coins/bills used for change
+	 *
 	 * @param changeValue value of change used for calculating coins/bills returned
 	 * @return list of change coins/bills
 	 */
-	private List<Integer> getChange(int changeValue)
-	{
-		int[] dp = new int[changeValue + 1];
-		Arrays.fill(dp, Integer.MAX_VALUE);
-
-		int[] coinsUsed = new int[changeValue + 1];
-
-		// base case
-		dp[0] = 0;
-
-		for (int i = 1; i < changeValue + 1; i++)
-		{
-			for (int coin : denominations.getDenominationList())
-			{
-				if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE && dp[i - coin] + 1 < dp[i] &&
-				    denominations.getDenominationStock().get(coin) > 0)
-				{
-					dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
-					coinsUsed[i] = coin;
-				}
-			}
-		}
-
-		if (dp[changeValue] != Integer.MAX_VALUE)
-		{
-			List<Integer> selectedCoins = new ArrayList<>();
-			int value = changeValue;
-
-			while (value > 0)
-			{
-				selectedCoins.add(coinsUsed[value]);
-				value -= coinsUsed[value];
-			}
-
-			for (int coin : selectedCoins)
-			{
+	private List<Integer> getChange(int changeValue) {
+		List<Integer> selectedCoins = new ArrayList<>();
+		List<Integer> currentCoins = new ArrayList<>();
+		if (backtrack(changeValue, currentCoins, selectedCoins)) {
+			// Update the stock of denominations based on the selected coins
+			for (int coin : selectedCoins) {
 				denominations.removeDenomination(coin, 1);
 			}
-
-			return selectedCoins;
 		}
-		else
-		{
-			// Error handling here
-			return Collections.emptyList();
-		}
+		return selectedCoins;
 	}
+
+	private boolean backtrack(int remainingValue, List<Integer> currentCoins, List<Integer> selectedCoins) {
+		if (remainingValue == 0) {
+			// Base case: Change value reached, check if it's better than the current selected coins
+			if (selectedCoins.isEmpty() || currentCoins.size() < selectedCoins.size()) {
+				selectedCoins.clear();
+				selectedCoins.addAll(currentCoins);
+			}
+			return true;
+		}
+
+		for (int coin : denominations.getNonEmptyDenominations()) {
+			int stock = denominations.getDenominationStock().get(coin);
+			if (stock > 0 && remainingValue >= coin) {
+				// Choose the coin and decrement its stock
+				currentCoins.add(coin);
+				denominations.removeDenomination(coin, 1);
+
+				// Continue exploring with the remaining value
+				if (backtrack(remainingValue - coin, currentCoins, selectedCoins)) {
+					return true;
+				}
+
+				// Backtrack: Undo the choice
+				currentCoins.remove(currentCoins.size() - 1);
+				denominations.addDenomination(coin, 1);
+			}
+		}
+
+		return false;
+	}
+
+
 
 	/**
 	 * Dispense an item from a slot.
-	 * @param slotIndex slot index of the item to be dispensed.
+	 *
+	 * @param slotIndex     slot index of the item to be dispensed.
 	 * @param paymentAmount amount paid by the buyer.
 	 * @return list of change coins/bills
 	 */
@@ -190,6 +199,14 @@ public class VendingMachine
 			return null;
 		}
 
+		for (int denom : denominations.getDenominationList())
+		{
+			if (denominations.isDenomEmpty(denom))
+			{
+				return Collections.emptyList();
+			}
+		}
+
 		List<Integer> coinChangeValues = getChange(paymentAmount -
 		                                           slots[slotIndex].getItemList().get(0).getPrice());
 
@@ -200,12 +217,17 @@ public class VendingMachine
 
 	/**
 	 * Withdraws money from the machine.
+	 *
 	 * @param withdrawAmount amount to be withdrawn
 	 * @return list of coins/bills received from the machine
 	 */
 	public List<Integer> withdrawMoney(int withdrawAmount)
 	{
 		return getChange(withdrawAmount);
+	}
+	public List<Integer> getRamenChange(int paymentAmount)
+	{
+		return getChange(paymentAmount);
 	}
 }
 
