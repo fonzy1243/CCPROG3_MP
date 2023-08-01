@@ -19,42 +19,23 @@ public class Denomination
 	{
 		denominationStock = new HashMap<>();
 
-//		// Centavo coins
-//		denominationStock.put(1, 501);
-//		denominationStock.put(5, 500);
-//		denominationStock.put(10, 500);
-//		denominationStock.put(25, 500);
-//
-//		// Peso bills
-//		denominationStock.put(100, 250);
-//		denominationStock.put(500, 250);
-//		denominationStock.put(1000, 250);
-//
-//		// Peso bills
-//		denominationStock.put(2000, 100);
-//		denominationStock.put(5000, 100);
-//		denominationStock.put(10000, 100);
-//		denominationStock.put(50000, 100);
-//		denominationStock.put(100000, 100);
-
 		// Centavo coins
-		denominationStock.put(1, 0);
-		denominationStock.put(5, 0);
-		denominationStock.put(10, 0);
-		denominationStock.put(25, 0);
+		denominationStock.put(1, 501);
+		denominationStock.put(5, 500);
+		denominationStock.put(10, 500);
+		denominationStock.put(25, 500);
 
 		// Peso bills
-		denominationStock.put(100, 0);
-		denominationStock.put(500, 0);
-		denominationStock.put(1000, 0);
+		denominationStock.put(100, 250);
+		denominationStock.put(500, 250);
+		denominationStock.put(1000, 250);
 
 		// Peso bills
-		denominationStock.put(2000, 0);
-		denominationStock.put(5000, 0);
-		denominationStock.put(10000, 0);
-		denominationStock.put(50000, 0);
-		denominationStock.put(100000, 0);
-
+		denominationStock.put(2000, 100);
+		denominationStock.put(5000, 100);
+		denominationStock.put(10000, 100);
+		denominationStock.put(50000, 100);
+		denominationStock.put(100000, 100);
 
 		denominationList = new ArrayList<>(denominationStock.keySet());
 		denominationList.sort(Collections.reverseOrder());
@@ -172,6 +153,11 @@ public class Denomination
 		return total;
 	}
 
+	/**
+	 * Check if denomination of a certain value is empty
+	 * @param denom value of denomination to be checked
+	 * @return true if denomination is empty, false otherwise
+	 */
 	public boolean isDenomEmpty(int denom)
 	{
 		return denominationStock.get(denom) == 0;
