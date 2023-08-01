@@ -97,7 +97,6 @@ public class TransactionTracker
 
     /**
      * Creates a text file that contains the transactions that occurred during the restocking.
-     * @throws IOException if an I/O error occurs
      */
     public void createTransactionFile()
     {
